@@ -7,7 +7,7 @@ getAddress
 
 .. code:: ts
 
-   web3bch.wallet.getAddress(changeType, index, serviceId)
+   web3bch.wallet.getAddress(changeType, index, dAppTxId)
 
 Returns the current wallet address.
 
@@ -46,7 +46,7 @@ getAddressIndex
 
 .. code:: ts
 
-   web3bch.wallet.getAddressIndex(changeType, serviceId)
+   web3bch.wallet.getAddressIndex(changeType, dAppTxId)
 
 Returns the current wallet address index.
 
@@ -83,7 +83,7 @@ getAddresses
 
 .. code:: ts
 
-   web3bch.wallet.getAddresses(changeType, startIndex, size, serviceId)
+   web3bch.wallet.getAddresses(changeType, startIndex, size, dAppTxId)
 
 Returns the wallet address list.
 
@@ -124,7 +124,7 @@ getRedeemScript
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScript(p2shAddress, serviceId)
+   web3bch.wallet.getRedeemScript(p2shAddress, dAppTxId)
 
 Returns the stored redeem script.
 
@@ -161,7 +161,7 @@ getRedeemScript
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScript(p2shAddress, serviceId)
+   web3bch.wallet.getRedeemScript(p2shAddress, dAppTxId)
 
 Returns the stored redeem script.
 
@@ -198,7 +198,7 @@ getRedeemScripts
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScripts(serviceId)
+   web3bch.wallet.getRedeemScripts(dAppTxId)
 
 Returns the stored redeem scripts belong to the DAppTxId.
 
@@ -233,7 +233,7 @@ addRedeemScript
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScripts(redeemScript, serviceId)
+   web3bch.wallet.getRedeemScripts(redeemScript, dAppTxId)
 
 Add the redeem script into the wallet.
 
@@ -266,7 +266,7 @@ getUtxos
 
 .. code:: ts
 
-   web3bch.wallet.getUtxos(serviceId)
+   web3bch.wallet.getUtxos(dAppTxId)
 
 Returns the unspent transaction outputs.
 
@@ -315,7 +315,7 @@ getBalance
 
 .. code:: ts
 
-   web3bch.wallet.getBalance(serviceId)
+   web3bch.wallet.getBalance(dAppTxId)
 
 Returns the balance of the addresses.
 
@@ -488,7 +488,7 @@ advancedSend
 
 .. code:: ts
 
-   web3bch.wallet.advancedSend(outputs, serviceId)
+   web3bch.wallet.advancedSend(outputs, dAppTxId)
 
 Create a transaction with specified outputs and send it to the network.
 The provider will not add any outputs. The ordering of outputs remains
@@ -654,12 +654,12 @@ Example
 
 --------------
 
-currentServiceId
+currentDAppTxId
 =====================
 
 .. code:: ts
 
-   web3bch.wallet.currentServiceId()
+   web3bch.wallet.currentDAppTxId()
 
 Returns the current DAppTxId the provider uses. The default value is
 ``undefined``.
@@ -676,18 +676,18 @@ Example
 
 .. code:: ts
 
-   const serviceId = await web3bch.wallet.currentServiceId()
-   console.log(serviceId)
+   const dAppTxId = await web3bch.wallet.currentDAppTxId()
+   console.log(dAppTxId)
    > "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
 
 --------------
 
-setServiceId
+setDAppTxId
 =====================
 
 .. code:: ts
 
-   web3bch.wallet.setServiceId(serviceId)
+   web3bch.wallet.setDAppTxId(dAppTxId)
 
 Changes the setvice ID for the provider.
 
@@ -709,6 +709,6 @@ Example
 
 .. code:: ts
 
-   const result = await web3bch.wallet.setServiceId("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+   const result = await web3bch.wallet.setDAppTxId("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
    console.log(result)
    > true

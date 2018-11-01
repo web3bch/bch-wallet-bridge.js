@@ -13,14 +13,14 @@ Example
 
 .. code:: ts
 
-   import Web3BCH from "web3bch"
+   import Web3bch from "web3bch"
 
    const injected = window.web3bch
    if (!injected || !injected.currentProvider) {
-     console.log("Web3BCH provider doesn't injected!")
+     console.log("Web3bch provider doesn't injected!")
      return
    }
-   const web3bch = new Web3BCH(provider)
+   const web3bch = new Web3bch(provider)
 
 After that you can use the ``web3bch`` object.
 
