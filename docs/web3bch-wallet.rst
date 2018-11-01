@@ -17,7 +17,7 @@ Parameters
 
 1. ``"receive" | "change"`` - The BIP44 change path type.
 2. ``number | undefined`` - The BIP44 address_index path.
-3. ``string | undefined`` - The DAppId.
+3. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -55,7 +55,7 @@ Parameters
 ----------
 
 1. ``"receive" | "change"`` - The BIP44 change path type.
-2. ``string | undefined`` - The DAppId.
+2. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -94,7 +94,7 @@ Parameters
 1. ``"receive" | "change"`` - The BIP44 change path type.
 2. ``number | undefined`` - The BIP44 address_index path.
 3. ``number | undefined`` - The address amount you want.
-4. ``string | undefined`` - The DAppId.
+4. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -133,7 +133,7 @@ Parameters
 ----------
 
 1. ``string`` - The P2SH Address
-2. ``string | undefined`` - The DAppId.
+2. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -170,7 +170,7 @@ Parameters
 ----------
 
 1. ``string`` - The P2SH Address
-2. ``string | undefined`` - The DAppId.
+2. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -200,13 +200,13 @@ getRedeemScripts
 
    web3bch.wallet.getRedeemScripts(dAppId)
 
-Returns the stored redeem scripts belong to the DAppId.
+Returns the stored redeem scripts belong to the DApp ID.
 
 ----------
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppId.
+1. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -274,7 +274,7 @@ Returns the unspent transaction outputs.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppId.
+1. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -323,7 +323,7 @@ Returns the balance of the addresses.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppId.
+1. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
@@ -503,7 +503,7 @@ Parameters
    - ``lockScript``: ``string`` - The hex format of lock script.
    - ``amount``:  ``number`` - The value transferred to the lock script in satoshi.
 
-2. ``string`` - The DAppId.
+2. ``string`` - The DApp ID.
 
 -------
 Returns
@@ -654,21 +654,21 @@ Example
 
 --------------
 
-currentDAppId
+getDefaultDAppId
 =====================
 
 .. code:: ts
 
-   web3bch.wallet.currentDAppId()
+   web3bch.wallet.getDefaultDAppId()
 
-Returns the current DAppId the provider uses. The default value is
+Returns the default DApp ID the provider uses. The default value is
 ``undefined``.
 
 -------
 Returns
 -------
 
-``Promise<string>`` - the DAppId
+``Promise<string | undefined>`` - the DApp ID
 
 -------
 Example
@@ -676,32 +676,32 @@ Example
 
 .. code:: ts
 
-   const dAppId = await web3bch.wallet.currentDAppId()
+   const dAppId = await web3bch.wallet.defaultDAppId()
    console.log(dAppId)
    > "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
 
 --------------
 
-setDAppId
+setDefaultDAppId
 =====================
 
 .. code:: ts
 
-   web3bch.wallet.setDAppId(dAppId)
+   web3bch.wallet.setDefaultDAppId(dAppId)
 
-Changes the setvice ID for the provider.
+Changes the default DApp ID for the provider.
 
 ----------
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppId.
+1. ``string | undefined`` - The DApp ID.
 
 -------
 Returns
 -------
 
-``Promise<boolean>`` - whether the DAppId was changed
+``Promise<boolean>`` - whether the DApp ID was changed
 
 -------
 Example
@@ -709,6 +709,6 @@ Example
 
 .. code:: ts
 
-   const result = await web3bch.wallet.setDAppId("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+   const result = await web3bch.wallet.setDefaultDAppId("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
    console.log(result)
    > true
