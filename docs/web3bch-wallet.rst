@@ -15,15 +15,15 @@ Returns the current wallet address.
 Parameters
 ----------
 
-1. ``"receive" | "change"`` - The BIP44 change path type.
-2. ``number | undefined`` - The BIP44 address_index path.
-3. ``string | undefined`` - The DApp ID.
+1. ``changeType`` : ``"receive" | "change"`` : The BIP44 change path type.
+2. ``index`` : ``number`` : (optional) The BIP44 address_index path.
+3. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
 
 -------
 Returns
 -------
 
-``Promise<String>`` - The current wallet address.
+``Promise<string>`` - The current wallet address.
 
 -------
 Example
@@ -54,8 +54,9 @@ Returns the current wallet address index.
 Parameters
 ----------
 
-1. ``"receive" | "change"`` - The BIP44 change path type.
-2. ``string | undefined`` - The DApp ID.
+1. ``changeType`` : ``"receive" | "change"`` : The BIP44 change path type.
+2. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
@@ -91,10 +92,11 @@ Returns the wallet address list.
 Parameters
 ----------
 
-1. ``"receive" | "change"`` - The BIP44 change path type.
-2. ``number | undefined`` - The BIP44 address_index path.
-3. ``number | undefined`` - The address amount you want.
-4. ``string | undefined`` - The DApp ID.
+1. ``changeType`` : ``"receive" | "change"`` : The BIP44 change path type.
+2. ``startIndex`` : ``number`` : (optional) The BIP44 address_index path.
+3. ``size`` : ``number`` : (optional) The address amount you want.
+4. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
@@ -132,14 +134,15 @@ Returns the stored redeem script.
 Parameters
 ----------
 
-1. ``string`` - The P2SH Address
-2. ``string | undefined`` - The DApp ID.
+1. ``p2shAddress`` : ``string`` : The P2SH Address
+2. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
 -------
 
-``Promise<String>`` - The stored redeem script.
+``Promise<string>`` - The stored redeem script.
 
 -------
 Example
@@ -169,14 +172,15 @@ Returns the stored redeem script.
 Parameters
 ----------
 
-1. ``string`` - The P2SH Address
-2. ``string | undefined`` - The DApp ID.
+1. ``p2shAddress`` : ``string`` : The P2SH Address
+2. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
 -------
 
-``Promise<String>`` - The stored redeem script.
+``Promise<string>`` - The stored redeem script.
 
 -------
 Example
@@ -206,7 +210,8 @@ Returns the stored redeem scripts belong to the DApp ID.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DApp ID.
+1. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
@@ -241,7 +246,9 @@ Add the redeem script into the wallet.
 Parameters
 ----------
 
-1. ``string`` - The redeem script you want to add.
+1. ``redeemScript`` : ``string`` : The redeem script you want to add.
+2. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
@@ -274,7 +281,8 @@ Returns the unspent transaction outputs.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DApp ID.
+1. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
@@ -282,8 +290,8 @@ Returns
 
 ``Promise<object[]>`` - The unspent transaction output object list.
 
-1.  ``txid``: ``string`` - outpoint TXID
-2.  ``outputIndex``: ``number`` - outpoint index number
+1.  ``txid``: ``string`` - txid of the utxo
+2.  ``outputIndex``: ``number`` - txout index number of the utxo
 3.  ``address``: ``string`` - address
 4.  ``script``: ``string`` - scriptPubKey
 5.  ``satoshis``: ``number`` - satoshis
@@ -323,7 +331,8 @@ Returns the balance of the addresses.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DApp ID.
+1. ``dAppId`` : ``string`` : (optional) The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
@@ -358,8 +367,8 @@ Signs data from a specific account. This account needs to be unlocked.
 Parameters
 ----------
 
-1. ``string`` - Address to sign with.
-2. ``string`` - Data to sign.
+1. ``address`` : ``string`` - Address to sign with.
+2. ``dataToSign`` : ``string`` - Data to sign in hex format.
 
 -------
 Returns
@@ -410,10 +419,10 @@ address.
 Parameters
 ----------
 
-1. ``string`` - The destination address.
-2. ``number`` - The value transferred to the destination address in
+1. ``address`` : ``string`` - The destination address.
+2. ``amount`` : ``number`` - The value transferred to the destination address in
    satoshi.
-3. ``string|string[]|undefined`` - An data or a list of data to put to
+3. ``data`` : ``string|string[]`` - (optional) An data or a list of data to put to
    the transaction’s OP_RETURN output.
 
 -------
@@ -453,7 +462,7 @@ Parameters
    -  ``address``: ``string`` - The destination address.
    -  ``amount``: ``number`` - The value transferred to the destination address in satoshi.
 
-2. ``string | string[] | undefined`` - An data or a list of data to put
+2. ``string | string[]`` - (optional) An data or a list of data to put
    to the transaction’s OP_RETURN output.
 
 -------
@@ -498,12 +507,13 @@ as is.
 Parameters
 ----------
 
-1. ``Array`` - The Array of TransactionOutput objects.
+1. ``outputs`` : ``Array`` - The Array of TransactionOutput objects.
 
    - ``lockScript``: ``string`` - The hex format of lock script.
    - ``amount``:  ``number`` - The value transferred to the lock script in satoshi.
 
-2. ``string`` - The DApp ID.
+2. ``dAppId`` : ``string`` - (optinal)The DApp ID. If no dAppId is set the default DApp ID will be set.
+
 
 -------
 Returns
@@ -605,7 +615,7 @@ Broadcast an already signed transaction.
 Parameters
 ----------
 
-1. ``string`` - Signed transaction data in hex format.
+1. ``rawtx`` : ``string`` - Signed transaction data in hex format.
 
 -------
 Returns
@@ -695,7 +705,7 @@ Changes the default DApp ID for the provider.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DApp ID.
+1. ``dAppId | undefined`` : ``string`` - The DApp ID.
 
 -------
 Returns
