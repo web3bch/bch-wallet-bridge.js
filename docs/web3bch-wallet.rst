@@ -574,7 +574,7 @@ Returns
 
 1. ``Promise<object>`` - The network object.
 
-   - ``magicBytes``: ``string`` - Network magic bytes
+   - ``magic``: ``string`` - Network magic bytes
    - ``name``: ``"Mainnet" | "Testnet3" | "Regnet"`` - Network name
 
 -------
