@@ -7,7 +7,7 @@ getAddress
 
 .. code:: ts
 
-   web3bch.wallet.getAddress(changeType, index, dAppTxId)
+   web3bch.wallet.getAddress(changeType, index, dAppId)
 
 Returns the current wallet address.
 
@@ -17,7 +17,7 @@ Parameters
 
 1. ``"receive" | "change"`` - The BIP44 change path type.
 2. ``number | undefined`` - The BIP44 address_index path.
-3. ``string | undefined`` - The DAppTxId.
+3. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -46,7 +46,7 @@ getAddressIndex
 
 .. code:: ts
 
-   web3bch.wallet.getAddressIndex(changeType, dAppTxId)
+   web3bch.wallet.getAddressIndex(changeType, dAppId)
 
 Returns the current wallet address index.
 
@@ -55,7 +55,7 @@ Parameters
 ----------
 
 1. ``"receive" | "change"`` - The BIP44 change path type.
-2. ``string | undefined`` - The DAppTxId.
+2. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -83,7 +83,7 @@ getAddresses
 
 .. code:: ts
 
-   web3bch.wallet.getAddresses(changeType, startIndex, size, dAppTxId)
+   web3bch.wallet.getAddresses(changeType, startIndex, size, dAppId)
 
 Returns the wallet address list.
 
@@ -94,7 +94,7 @@ Parameters
 1. ``"receive" | "change"`` - The BIP44 change path type.
 2. ``number | undefined`` - The BIP44 address_index path.
 3. ``number | undefined`` - The address amount you want.
-4. ``string | undefined`` - The DAppTxId.
+4. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -124,7 +124,7 @@ getRedeemScript
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScript(p2shAddress, dAppTxId)
+   web3bch.wallet.getRedeemScript(p2shAddress, dAppId)
 
 Returns the stored redeem script.
 
@@ -133,7 +133,7 @@ Parameters
 ----------
 
 1. ``string`` - The P2SH Address
-2. ``string | undefined`` - The DAppTxId.
+2. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -161,7 +161,7 @@ getRedeemScript
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScript(p2shAddress, dAppTxId)
+   web3bch.wallet.getRedeemScript(p2shAddress, dAppId)
 
 Returns the stored redeem script.
 
@@ -170,7 +170,7 @@ Parameters
 ----------
 
 1. ``string`` - The P2SH Address
-2. ``string | undefined`` - The DAppTxId.
+2. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -198,15 +198,15 @@ getRedeemScripts
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScripts(dAppTxId)
+   web3bch.wallet.getRedeemScripts(dAppId)
 
-Returns the stored redeem scripts belong to the DAppTxId.
+Returns the stored redeem scripts belong to the DAppId.
 
 ----------
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppTxId.
+1. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -233,7 +233,7 @@ addRedeemScript
 
 .. code:: ts
 
-   web3bch.wallet.getRedeemScripts(redeemScript, dAppTxId)
+   web3bch.wallet.getRedeemScripts(redeemScript, dAppId)
 
 Add the redeem script into the wallet.
 
@@ -266,7 +266,7 @@ getUtxos
 
 .. code:: ts
 
-   web3bch.wallet.getUtxos(dAppTxId)
+   web3bch.wallet.getUtxos(dAppId)
 
 Returns the unspent transaction outputs.
 
@@ -274,7 +274,7 @@ Returns the unspent transaction outputs.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppTxId.
+1. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -315,7 +315,7 @@ getBalance
 
 .. code:: ts
 
-   web3bch.wallet.getBalance(dAppTxId)
+   web3bch.wallet.getBalance(dAppId)
 
 Returns the balance of the addresses.
 
@@ -323,7 +323,7 @@ Returns the balance of the addresses.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppTxId.
+1. ``string | undefined`` - The DAppId.
 
 -------
 Returns
@@ -488,7 +488,7 @@ advancedSend
 
 .. code:: ts
 
-   web3bch.wallet.advancedSend(outputs, dAppTxId)
+   web3bch.wallet.advancedSend(outputs, dAppId)
 
 Create a transaction with specified outputs and send it to the network.
 The provider will not add any outputs. The ordering of outputs remains
@@ -503,7 +503,7 @@ Parameters
    - ``lockScript``: ``string`` - The hex format of lock script.
    - ``amount``:  ``number`` - The value transferred to the lock script in satoshi.
 
-2. ``string`` - The DAppTxId.
+2. ``string`` - The DAppId.
 
 -------
 Returns
@@ -654,21 +654,21 @@ Example
 
 --------------
 
-currentDAppTxId
+currentDAppId
 =====================
 
 .. code:: ts
 
-   web3bch.wallet.currentDAppTxId()
+   web3bch.wallet.currentDAppId()
 
-Returns the current DAppTxId the provider uses. The default value is
+Returns the current DAppId the provider uses. The default value is
 ``undefined``.
 
 -------
 Returns
 -------
 
-``Promise<string>`` - the DAppTxId
+``Promise<string>`` - the DAppId
 
 -------
 Example
@@ -676,18 +676,18 @@ Example
 
 .. code:: ts
 
-   const dAppTxId = await web3bch.wallet.currentDAppTxId()
-   console.log(dAppTxId)
+   const dAppId = await web3bch.wallet.currentDAppId()
+   console.log(dAppId)
    > "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
 
 --------------
 
-setDAppTxId
+setDAppId
 =====================
 
 .. code:: ts
 
-   web3bch.wallet.setDAppTxId(dAppTxId)
+   web3bch.wallet.setDAppId(dAppId)
 
 Changes the setvice ID for the provider.
 
@@ -695,13 +695,13 @@ Changes the setvice ID for the provider.
 Parameters
 ----------
 
-1. ``string | undefined`` - The DAppTxId.
+1. ``string | undefined`` - The DAppId.
 
 -------
 Returns
 -------
 
-``Promise<boolean>`` - whether the DAppTxId was changed
+``Promise<boolean>`` - whether the DAppId was changed
 
 -------
 Example
@@ -709,6 +709,6 @@ Example
 
 .. code:: ts
 
-   const result = await web3bch.wallet.setDAppTxId("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+   const result = await web3bch.wallet.setDAppId("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
    console.log(result)
    > true
