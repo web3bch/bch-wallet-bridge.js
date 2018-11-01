@@ -1,0 +1,919 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>web3bch.wallet &mdash; web3bch.js 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Web3bch" href="web3bch.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> web3bch.js
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="web3bch.html">Web3bch</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">web3bch.wallet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getaddress">getAddress</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#returns">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getaddressindex">getAddressIndex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getaddresses">getAddresses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getredeemscript">getRedeemScript</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">getRedeemScript</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getredeemscripts">getRedeemScripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#addredeemscript">addRedeemScript</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getutxos">getUtxos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getbalance">getBalance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id23">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id24">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sign">sign</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id26">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id27">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id28">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#send">send</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id29">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id30">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id31">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id32">send</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id33">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id34">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id35">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advancedsend">advancedSend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id36">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id37">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id38">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getprotocolversion">getProtocolVersion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id39">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id40">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getnetwork">getNetwork</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id41">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id42">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#broadcastrawtx">broadcastRawtx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id43">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id44">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id45">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getfeeperbyte">getFeePerByte</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id46">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id47">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#currentserviceid">currentServiceId</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id48">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id49">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setserviceid">setServiceId</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id50">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id51">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id52">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">web3bch.js</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>web3bch.wallet</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/web3bch-wallet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="web3bch-wallet">
+<h1>web3bch.wallet<a class="headerlink" href="#web3bch-wallet" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="getaddress">
+<h2>getAddress<a class="headerlink" href="#getaddress" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getAddress</span><span class="p">(</span><span class="n">changeType</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the current wallet address.</p>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;receive&quot;</span> <span class="pre">|</span> <span class="pre">&quot;change&quot;</span></code> - The BIP44 change path type.</li>
+<li><code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The BIP44 address_index path.</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;String&gt;</span></code> - The current wallet address.</p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">address</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getAddress</span><span class="p">(</span>
+  <span class="s2">&quot;receive&quot;</span><span class="p">,</span>
+  <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getaddressindex">
+<h2>getAddressIndex<a class="headerlink" href="#getaddressindex" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getAddressIndex</span><span class="p">(</span><span class="n">changeType</span><span class="p">,</span> <span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the current wallet address index.</p>
+<div class="section" id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;receive&quot;</span> <span class="pre">|</span> <span class="pre">&quot;change&quot;</span></code> - The BIP44 change path type.</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;number&gt;</span></code> - The current wallet address index.</p>
+</div>
+<div class="section" id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">addrIdx</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getAddressIndex</span><span class="p">(</span>
+  <span class="s2">&quot;change&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">addrIdx</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getaddresses">
+<h2>getAddresses<a class="headerlink" href="#getaddresses" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getAddresses</span><span class="p">(</span><span class="n">changeType</span><span class="p">,</span> <span class="n">startIndex</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the wallet address list.</p>
+<div class="section" id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;receive&quot;</span> <span class="pre">|</span> <span class="pre">&quot;change&quot;</span></code> - The BIP44 change path type.</li>
+<li><code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The BIP44 address_index path.</li>
+<li><code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The address amount you want.</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id5">
+<h3>Returns<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - The wallet address list.</p>
+</div>
+<div class="section" id="id6">
+<h3>Example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">addresses</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getAddresses</span><span class="p">(</span>
+  <span class="s2">&quot;receive&quot;</span><span class="p">,</span>
+  <span class="mi">3</span><span class="p">,</span>
+  <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">addresses</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="p">[</span><span class="s2">&quot;bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p&quot;</span><span class="p">,</span> <span class="s2">&quot;bitcoincash:qrsfpepw3egqq4k7sg237ngyvslc2ug2eg7x7qdu3g&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getredeemscript">
+<h2>getRedeemScript<a class="headerlink" href="#getredeemscript" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getRedeemScript</span><span class="p">(</span><span class="n">p2shAddress</span><span class="p">,</span> <span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the stored redeem script.</p>
+<div class="section" id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - The P2SH Address</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;String&gt;</span></code> - The stored redeem script.</p>
+</div>
+<div class="section" id="id9">
+<h3>Example<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">redeemScript</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getRedeemScript</span><span class="p">(</span>
+  <span class="s2">&quot;bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">redeemScript</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;03424f587e06424954424f5887&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id10">
+<h2>getRedeemScript<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getRedeemScript</span><span class="p">(</span><span class="n">p2shAddress</span><span class="p">,</span> <span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the stored redeem script.</p>
+<div class="section" id="id11">
+<h3>Parameters<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - The P2SH Address</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id12">
+<h3>Returns<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;String&gt;</span></code> - The stored redeem script.</p>
+</div>
+<div class="section" id="id13">
+<h3>Example<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">redeemScript</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getRedeemScript</span><span class="p">(</span>
+  <span class="s2">&quot;bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">redeemScript</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;03424f587e06424954424f5887&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getredeemscripts">
+<h2>getRedeemScripts<a class="headerlink" href="#getredeemscripts" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getRedeemScripts</span><span class="p">(</span><span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the stored redeem scripts belong to the DAppTxId.</p>
+<div class="section" id="id14">
+<h3>Parameters<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id15">
+<h3>Returns<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string[]&gt;</span></code> - The stored redeem script list.</p>
+</div>
+<div class="section" id="id16">
+<h3>Example<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">redeemScripts</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getRedeemScript</span><span class="p">(</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">redeemScript</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="p">[</span><span class="s2">&quot;03424f587e06424954424f5887&quot;</span><span class="p">,</span> <span class="s2">&quot;789787a72c21452a1c98ff&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="addredeemscript">
+<h2>addRedeemScript<a class="headerlink" href="#addredeemscript" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getRedeemScripts</span><span class="p">(</span><span class="n">redeemScript</span><span class="p">,</span> <span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Add the redeem script into the wallet.</p>
+<div class="section" id="id17">
+<h3>Parameters<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - The redeem script you want to add.</li>
+</ol>
+</div>
+<div class="section" id="id18">
+<h3>Returns<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;void&gt;</span></code></p>
+</div>
+<div class="section" id="id19">
+<h3>Example<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">redeemScripts</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">addRedeemScript</span><span class="p">(</span>
+  <span class="s2">&quot;03424f587e06424954424f5887&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getutxos">
+<h2>getUtxos<a class="headerlink" href="#getutxos" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getUtxos</span><span class="p">(</span><span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the unspent transaction outputs.</p>
+<div class="section" id="id20">
+<h3>Parameters<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id21">
+<h3>Returns<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;object[]&gt;</span></code> - The unspent transaction output object list.</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">txid</span></code>: <code class="docutils literal notranslate"><span class="pre">string</span></code> - outpoint TXID</li>
+<li><code class="docutils literal notranslate"><span class="pre">outputIndex</span></code>: <code class="docutils literal notranslate"><span class="pre">number</span></code> - outpoint index number</li>
+<li><code class="docutils literal notranslate"><span class="pre">address</span></code>: <code class="docutils literal notranslate"><span class="pre">string</span></code> - address</li>
+<li><code class="docutils literal notranslate"><span class="pre">script</span></code>: <code class="docutils literal notranslate"><span class="pre">string</span></code> - scriptPubKey</li>
+<li><code class="docutils literal notranslate"><span class="pre">satoshis</span></code>: <code class="docutils literal notranslate"><span class="pre">number</span></code> - satoshis</li>
+</ol>
+</div>
+<div class="section" id="id22">
+<h3>Example<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">utxos</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getUtxos</span><span class="p">(</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">utxos</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s1">&#39;txId&#39;</span> <span class="p">:</span> <span class="s1">&#39;115e8f72f39fad874cfab0deed11a80f24f967a84079fb56ddf53ea02e308986&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;outputIndex&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s1">&#39;address&#39;</span> <span class="p">:</span> <span class="s1">&#39;bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;script&#39;</span> <span class="p">:</span> <span class="s1">&#39;76a91447862fe165e6121af80d5dde1ecb478ed170565b88ac&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;satoshis&#39;</span> <span class="p">:</span> <span class="mi">50000</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getbalance">
+<h2>getBalance<a class="headerlink" href="#getbalance" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span><span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the balance of the addresses.</p>
+<div class="section" id="id23">
+<h3>Parameters<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id24">
+<h3>Returns<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;number&gt;</span></code> - The current balance for the addresses in satoshi.</p>
+</div>
+<div class="section" id="id25">
+<h3>Example<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">balance</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span>
+  <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="mi">500000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="sign">
+<h2>sign<a class="headerlink" href="#sign" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">dataToSign</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Signs data from a specific account. This account needs to be unlocked.</p>
+<div class="section" id="id26">
+<h3>Parameters<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - Address to sign with.</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - Data to sign.</li>
+</ol>
+</div>
+<div class="section" id="id27">
+<h3>Returns<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - The signed data.
+After the hex prefix, characters correspond to ECDSA values like this:</p>
+<p>Bitcoin signatures are serialised in the DER format over the wire. The
+serialisation follows the form below.</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">30</span></code> - DER prefix</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">45</span></code> - Length of rest of Signature</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">02</span></code> - Marker for r value</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">21</span></code> - Length of r value</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">00ed...8f</span></code> - r value, Big Endian</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">02</span></code> - Marker for s value</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">21</span></code> - Length of s value</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">7a98...ed</span></code> - s value, Big Endian</div>
+</div>
+</div>
+<div class="section" id="id28">
+<h3>Example<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
+  <span class="s2">&quot;bchtest:qq28xgrzkdyeg5vf7tp2s3mvx8u95zes5cf7wpwgux&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;</span> <span class="o">//</span> <span class="n">second</span> <span class="n">argument</span> <span class="ow">is</span> <span class="n">SHA1</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;30440220227e0973dfe536385b62f139c40b4304eb113cc51b3a4f227b2e529f278b6f7d0220721c03dc676d90a03e79a121fb52207be2b741f0b8e7e7cf40e2e23210ce3e58&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="send">
+<h2>send<a class="headerlink" href="#send" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create a transaction with specified address and amount and send it to
+the network. The provider will add a change output to the change
+address.</p>
+<div class="section" id="id29">
+<h3>Parameters<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - The destination address.</li>
+<li><code class="docutils literal notranslate"><span class="pre">number</span></code> - The value transferred to the destination address in
+satoshi.</li>
+<li><code class="docutils literal notranslate"><span class="pre">string|string[]|undefined</span></code> - An data or a list of data to put to
+the transaction’s OP_RETURN output.</li>
+</ol>
+</div>
+<div class="section" id="id30">
+<h3>Returns<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - hex formt of txid.</p>
+</div>
+<div class="section" id="id31">
+<h3>Example<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">txid</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;bitcoincash:qzg0esm3xr4gcq7u6vvgdwyjr4jwvl7seqrnjfzyc3&quot;</span><span class="p">,</span> <span class="mi">2849119</span><span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">txid</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id32">
+<h2>send<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">destinations</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create a transaction with specified destinations and send it to the
+network. The provider will add a change output to the change address.</p>
+<div class="section" id="id33">
+<h3>Parameters<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">Array</span></code> - The Array of destination objects.<ul>
+<li><code class="docutils literal notranslate"><span class="pre">address</span></code>: <code class="docutils literal notranslate"><span class="pre">string</span></code> - The destination address.</li>
+<li><code class="docutils literal notranslate"><span class="pre">amount</span></code>: <code class="docutils literal notranslate"><span class="pre">number</span></code> - The value transferred to the destination address in satoshi.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">string[]</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - An data or a list of data to put
+to the transaction’s OP_RETURN output.</li>
+</ol>
+</div>
+<div class="section" id="id34">
+<h3>Returns<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - hex formt of txid.</p>
+</div>
+<div class="section" id="id35">
+<h3>Example<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">txid</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">send</span><span class="p">([</span>
+  <span class="p">{</span>
+    <span class="n">address</span><span class="p">:</span> <span class="s2">&quot;bitcoincash:qzg0esm3xr4gcq7u6vvgdwyjr4jwvl7seqrnjfzyc3&quot;</span><span class="p">,</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="mi">2849119</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="n">address</span><span class="p">:</span> <span class="s2">&quot;bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg&quot;</span><span class="p">,</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="mi">143124123</span>
+  <span class="p">}</span>
+<span class="p">])</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">txid</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="advancedsend">
+<h2>advancedSend<a class="headerlink" href="#advancedsend" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">advancedSend</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create a transaction with specified outputs and send it to the network.
+The provider will not add any outputs. The ordering of outputs remains
+as is.</p>
+<div class="section" id="id36">
+<h3>Parameters<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">Array</span></code> - The Array of TransactionOutput objects.<ul>
+<li><code class="docutils literal notranslate"><span class="pre">lockScript</span></code>: <code class="docutils literal notranslate"><span class="pre">string</span></code> - The hex format of lock script.</li>
+<li><code class="docutils literal notranslate"><span class="pre">amount</span></code>:  <code class="docutils literal notranslate"><span class="pre">number</span></code> - The value transferred to the lock script in satoshi.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id37">
+<h3>Returns<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - hex formt of txid.</p>
+</div>
+<div class="section" id="id38">
+<h3>Example<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">txid</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">advancedSend</span><span class="p">([</span>
+  <span class="p">{</span>
+    <span class="n">lockScript</span><span class="p">:</span> <span class="s2">&quot;76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac&quot;</span><span class="p">,</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="mi">10000</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="n">lockScript</span><span class="p">:</span> <span class="s2">&quot;76a914aa154846d5aabd5bc740e1d9324f3c202da7bba988ac&quot;</span><span class="p">,</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="mi">20000</span>
+  <span class="p">}</span>
+<span class="p">])</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">txid</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getprotocolversion">
+<h2>getProtocolVersion<a class="headerlink" href="#getprotocolversion" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getProtocolVersion</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the bitcoin protocol version.</p>
+<div class="section" id="id39">
+<h3>Returns<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - The protocol version.</p>
+</div>
+<div class="section" id="id40">
+<h3>Example<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">version</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getProtocolVersion</span><span class="p">()</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;70015&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getnetwork">
+<h2>getNetwork<a class="headerlink" href="#getnetwork" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getNetwork</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the current network.</p>
+<div class="section" id="id41">
+<h3>Returns<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">Promise&lt;object&gt;</span></code> - The network object.<ul>
+<li><code class="docutils literal notranslate"><span class="pre">magicBytes</span></code>: <code class="docutils literal notranslate"><span class="pre">string</span></code> - Network magic bytes</li>
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;Mainnet&quot;</span> <span class="pre">|</span> <span class="pre">&quot;Testnet3&quot;</span> <span class="pre">|</span> <span class="pre">&quot;Regnet&quot;</span></code> - Network name</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="id42">
+<h3>Example<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">network</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getNetwork</span><span class="p">()</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">network</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">magicBytes</span><span class="p">:</span> <span class="s2">&quot;e3e1f3e8&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;Mainnet&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="broadcastrawtx">
+<h2>broadcastRawtx<a class="headerlink" href="#broadcastrawtx" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">broadcastRawTx</span><span class="p">(</span><span class="n">rawtx</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Broadcast an already signed transaction.</p>
+<div class="section" id="id43">
+<h3>Parameters<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span></code> - Signed transaction data in hex format.</li>
+</ol>
+</div>
+<div class="section" id="id44">
+<h3>Returns<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - hex format of txid.</p>
+</div>
+<div class="section" id="id45">
+<h3>Example<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">txId</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">broadcastRawtx</span><span class="p">(</span>
+  <span class="s2">&quot;01000000013ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a000000006a4730440220540986d1c58d6e76f8f05501c520c38ce55393d0ed7ed3c3a82c69af04221232022058ea43ed6c05fec0eccce749a63332ed4525460105346f11108b9c26df93cd72012103083dfc5a0254613941ddc91af39ff90cd711cdcde03a87b144b883b524660c39ffffffff01807c814a000000001976a914d7e7c4e0b70eaa67ceff9d2823d1bbb9f6df9a5188ac00000000&quot;</span>
+<span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">txId</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;d86c34adaeae19171fd98fe0ffd89bfb92a1e6f0339f5e4f18d837715fd25758&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getfeeperbyte">
+<h2>getFeePerByte<a class="headerlink" href="#getfeeperbyte" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getFeePerByte</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the transaction fee per byte.</p>
+<div class="section" id="id46">
+<h3>Returns<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;number&gt;</span></code> - transaction fee per byte in satoshi</p>
+</div>
+<div class="section" id="id47">
+<h3>Example<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">fee</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">getFeePerByte</span><span class="p">()</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">fee</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="currentserviceid">
+<h2>currentServiceId<a class="headerlink" href="#currentserviceid" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">currentServiceId</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the current DAppTxId the provider uses. The default value is
+<code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<div class="section" id="id48">
+<h3>Returns<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;string&gt;</span></code> - the DAppTxId</p>
+</div>
+<div class="section" id="id49">
+<h3>Example<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">serviceId</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">currentServiceId</span><span class="p">()</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">serviceId</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="setserviceid">
+<h2>setServiceId<a class="headerlink" href="#setserviceid" title="Permalink to this headline">¶</a></h2>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">setServiceId</span><span class="p">(</span><span class="n">serviceId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Changes the setvice ID for the provider.</p>
+<div class="section" id="id50">
+<h3>Parameters<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> - The DAppTxId.</li>
+</ol>
+</div>
+<div class="section" id="id51">
+<h3>Returns<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Promise&lt;boolean&gt;</span></code> - whether the DAppTxId was changed</p>
+</div>
+<div class="section" id="id52">
+<h3>Example<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h3>
+<div class="code ts highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web3bch</span><span class="o">.</span><span class="n">wallet</span><span class="o">.</span><span class="n">setServiceId</span><span class="p">(</span><span class="s2">&quot;53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68&quot;</span><span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">true</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="web3bch.html" class="btn btn-neutral" title="Web3bch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Web3BCH.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

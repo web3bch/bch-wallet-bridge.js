@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'web3bch'
-copyright = u'2018, Taiki Uchida, Shun Usami, Akifuji Fujita'
+project = u'web3bch.js'
+copyright = u'2018, Web3BCH'
 author = u'Taiki Uchida, Shun Usami, Akifuji Fujita'
 
 # The short X.Y version
-version = u''
+version = u'0.1.0'
 # The full version, including alpha/beta/rc tags
-release = u''
+release = u'0.1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -74,7 +74,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -138,7 +138,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'web3bch', u'web3bch Documentation',
+    (master_doc, 'web3bchjs', u'web3bch.js Documentation',
      [author], 1)
 ]
 
