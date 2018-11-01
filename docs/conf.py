@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'web3bch.js'
-copyright = u'2018, web3BCH'
+copyright = u'2018, web3bch'
 author = u'Taiki Uchida, Shun Usami, Akifuji Fujita'
 
 # The short X.Y version
