@@ -3,9 +3,9 @@
 
 ## Documentation
 
-Documentation can be found at [read the docs][docs].
+Documentation can be found at [GitHub Pages][docs].
 
-[docs]: https://web3bchjs.readthedocs.io/en/latest/index.html
+[docs]: https://web3bch.github.io/web3bch.js/
 
 ## Building
 ### Requirements
