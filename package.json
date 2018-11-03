@@ -6,7 +6,7 @@
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "rollup -c",
-    "docs": "typedoc --out docs src --plugin typedoc-plugin-example-tag"
+    "doc": "typedoc --out docs src --plugin typedoc-plugin-example-tag"
   },
   "main": "dist/rollup-plugin-babel.cjs.js",
   "repository": {
