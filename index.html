@@ -66,8 +66,22 @@
 			<div class="tsd-panel tsd-typography">
 				<h1 id="web3bch-js-bitcoin-cash-javascript-api">web3bch.js - Bitcoin Cash JavaScript API</h1>
 				<p><a href="https://travis-ci.org/web3bch/web3bch.js"><img src="https://travis-ci.org/web3bch/web3bch.js.svg?branch=master" alt="Build Status"></a></p>
+				<h2 id="installation">Installation</h2>
+				<p><code>yarn add web3bch</code></p>
+				<h2 id="usage">Usage</h2>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> Web3bch <span class="hljs-keyword">from</span> <span class="hljs-string">"web3bch"</span>
+<span class="hljs-keyword">const</span> injected = <span class="hljs-built_in">window</span>.web3bch
+<span class="hljs-keyword">if</span> (!injected || !injected.currentProvider) {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Web3bch provider doesn't injected!"</span>)
+  <span class="hljs-keyword">return</span>
+}
+<span class="hljs-keyword">const</span> web3bch = <span class="hljs-keyword">new</span> Web3bch(provider)</code></pre>
+				<h2 id="what-is-dapp-id-">What is DApp ID?</h2>
+				<p>DApp ID is a unique identifiers for a single DApp, and it&#39;s a txid of Bitcoin transaction.
+				Each DApp writes its protocol specification in the tranasction&#39;s OP_RETURN output.</p>
+				<p>It is defined in <a href="https://github.com/web3bch/BDIPs/blob/master/BDIPs/bdip-2.md">BDID-2</a>.</p>
 				<h2 id="documentation">Documentation</h2>
-				<p>Documentation can be found at <a href="https://web3bchjs.readthedocs.io/en/latest/index.html">read the docs</a>.</p>
+				<p>Documentation can be found at <a href="https://web3bch.github.io/web3bch.js/">GitHub Pages</a>.</p>
 				<h2 id="building">Building</h2>
 				<h3 id="requirements">Requirements</h3>
 				<ul>
@@ -92,10 +106,25 @@
 						<a href="modules/_web3bch_provider_index_.html">"web3bch-<wbr>provider/index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_web3bch_wallet_index_.html">"web3bch-<wbr>wallet/index"</a>
+						<a href="modules/_web3bch_wallet_changetype_.html">"web3bch-<wbr>wallet/<wbr>Change<wbr>Type"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_web3bch_index_.html">"web3bch/index"</a>
+						<a href="modules/_web3bch_wallet_idestination_.html">"web3bch-<wbr>wallet/IDestination"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_web3bch_wallet_inetwork_.html">"web3bch-<wbr>wallet/INetwork"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_web3bch_wallet_ioutput_.html">"web3bch-<wbr>wallet/IOutput"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_web3bch_wallet_iutxo_.html">"web3bch-<wbr>wallet/IUtxo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_web3bch_wallet_iwallet_.html">"web3bch-<wbr>wallet/IWallet"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_web3bch_iweb3bch_.html">"web3bch/IWeb3bch"</a>
 					</li>
 				</ul>
 			</nav>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Wallet | web3bch.js</title>
+	<title>IOutput | web3bch.js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_web3bch_wallet_index_.html">&quot;web3bch-wallet/index&quot;</a>
+					<a href="../modules/_web3bch_wallet_ioutput_.html">&quot;web3bch-wallet/IOutput&quot;</a>
 				</li>
 				<li>
-					<a href="_web3bch_wallet_index_.wallet.html">Wallet</a>
+					<a href="_web3bch_wallet_ioutput_.ioutput.html">IOutput</a>
 				</li>
 			</ul>
-			<h1>Class Wallet</h1>
+			<h1>Interface IOutput</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Wallet</span>
+						<span class="target">IOutput</span>
 					</li>
 				</ul>
 			</section>
@@ -82,108 +82,46 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_web3bch_wallet_index_.wallet.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_wallet_index_.wallet.html#provider" class="tsd-kind-icon">provider</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_web3bch_wallet_index_.wallet.html#getaddress" class="tsd-kind-icon">get<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_web3bch_wallet_ioutput_.ioutput.html#amount" class="tsd-kind-icon">amount</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_web3bch_wallet_ioutput_.ioutput.html#lockscript" class="tsd-kind-icon">lock<wbr>Script</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Wallet<span class="tsd-signature-symbol">(</span>provider<span class="tsd-signature-symbol">: </span><a href="../interfaces/_web3bch_provider_index_.iweb3bchprovider.html" class="tsd-signature-type">IWeb3bchProvider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_web3bch_wallet_index_.wallet.html" class="tsd-signature-type">Wallet</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/6ebc8a8/src/web3bch-wallet/index.ts#L5">web3bch-wallet/index.ts:5</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>provider: <a href="../interfaces/_web3bch_provider_index_.iweb3bchprovider.html" class="tsd-signature-type">IWeb3bchProvider</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_web3bch_wallet_index_.wallet.html" class="tsd-signature-type">Wallet</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="provider" class="tsd-anchor"></a>
-					<h3>provider</h3>
-					<div class="tsd-signature tsd-kind-icon">provider<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_web3bch_provider_index_.iweb3bchprovider.html" class="tsd-signature-type">IWeb3bchProvider</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="amount" class="tsd-anchor"></a>
+					<h3>amount</h3>
+					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/6ebc8a8/src/web3bch-wallet/index.ts#L7">web3bch-wallet/index.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/6d411b6/src/web3bch-wallet/IOutput.ts#L10">web3bch-wallet/IOutput.ts:10</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The value transferred to the lock script in satoshi.</p>
+						</div>
+					</div>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getaddress" class="tsd-anchor"></a>
-					<h3>get<wbr>Address</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Address<span class="tsd-signature-symbol">(</span>changeType<span class="tsd-signature-symbol">: </span><a href="../modules/_web3bch_wallet_index_.html#changetype" class="tsd-signature-type">ChangeType</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span>, dAppId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/6ebc8a8/src/web3bch-wallet/index.ts#L25">web3bch-wallet/index.ts:25</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns the current wallet address.</p>
-								</div>
-								<h4 id="example">Example</h4>
-								<pre><code class="language-typescript"><span class="hljs-keyword">const</span> address = <span class="hljs-keyword">await</span> web3bch.wallet.getAddress(
-  <span class="hljs-string">"receive"</span>,
-  <span class="hljs-number">3</span>,
-  <span class="hljs-string">"53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"</span>
-)
-<span class="hljs-built_in">console</span>.log(address)
-&gt; <span class="hljs-string">"bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p"</span></code></pre>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>changeType: <a href="../modules/_web3bch_wallet_index_.html#changetype" class="tsd-signature-type">ChangeType</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> dAppId: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="lockscript" class="tsd-anchor"></a>
+					<h3>lock<wbr>Script</h3>
+					<div class="tsd-signature tsd-kind-icon">lock<wbr>Script<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/6d411b6/src/web3bch-wallet/IOutput.ts#L5">web3bch-wallet/IOutput.ts:5</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The hex format of lock script.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -196,11 +134,26 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_web3bch_provider_index_.html">"web3bch-<wbr>provider/index"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_web3bch_wallet_index_.html">"web3bch-<wbr>wallet/index"</a>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_wallet_changetype_.html">"web3bch-<wbr>wallet/<wbr>Change<wbr>Type"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_web3bch_index_.html">"web3bch/index"</a>
+						<a href="../modules/_web3bch_wallet_idestination_.html">"web3bch-<wbr>wallet/IDestination"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_wallet_inetwork_.html">"web3bch-<wbr>wallet/INetwork"</a>
+					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/_web3bch_wallet_ioutput_.html">"web3bch-<wbr>wallet/IOutput"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_wallet_iutxo_.html">"web3bch-<wbr>wallet/IUtxo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_wallet_iwallet_.html">"web3bch-<wbr>wallet/IWallet"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_iweb3bch_.html">"web3bch/IWeb3bch"</a>
 					</li>
 				</ul>
 			</nav>
@@ -208,25 +161,19 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_web3bch_wallet_index_.wallet.html" class="tsd-kind-icon">Wallet</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_web3bch_wallet_ioutput_.ioutput.html" class="tsd-kind-icon">IOutput</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_web3bch_wallet_index_.wallet.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_web3bch_wallet_ioutput_.ioutput.html#amount" class="tsd-kind-icon">amount</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_web3bch_wallet_index_.wallet.html#provider" class="tsd-kind-icon">provider</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_web3bch_wallet_index_.wallet.html#getaddress" class="tsd-kind-icon">get<wbr>Address</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_web3bch_wallet_ioutput_.ioutput.html#lockscript" class="tsd-kind-icon">lock<wbr>Script</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_web3bch_wallet_index_.html#changetype" class="tsd-kind-icon">Change<wbr>Type</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
