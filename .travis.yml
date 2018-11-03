@@ -10,4 +10,4 @@ deploy:
   local_dir: docs
   github_token: $GITHUB_TOKEN
   on:
-    all_branches: true
+    branch: master
