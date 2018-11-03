@@ -102,7 +102,7 @@ Parameters
 Returns
 -------
 
-``Promise<string>`` - The wallet address list.
+``Promise<string[]>`` - The wallet address list.
 
 -------
 Example
