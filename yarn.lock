@@ -2528,10 +2528,9 @@ typedoc-default-themes@^0.5.0:
   resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.5.0.tgz#6dc2433e78ed8bea8e887a3acde2f31785bd6227"
   integrity sha1-bcJDPnjti+qOiHo6zeLzF4W9Yic=
 
-typedoc-plugin-example-tag@^1.0.2:
+typedoc-plugin-example-tag@Yuiki/typedoc-plugin-example-tag#master:
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-example-tag/-/typedoc-plugin-example-tag-1.0.2.tgz#164e1ddff1af3b0805c0b72449a5e319c5ddbe07"
-  integrity sha512-LbI6gnba+23toF0yAUWN2i/hblR1KHU+B/ujqNRu4LSvaYy78f7oTLxmfJqlBbooUHTQZtJOGhKchMOSL5rhOg==
+  resolved "https://codeload.github.com/Yuiki/typedoc-plugin-example-tag/tar.gz/f33e9508e51c4d8cf8734466c8f2e6356c44f206"
   dependencies:
     prototyped.js "^0.10.1"
 
