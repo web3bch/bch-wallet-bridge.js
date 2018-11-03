@@ -6,7 +6,9 @@
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "rollup -c",
-    "doc": "typedoc --out docs src --plugin typedoc-plugin-example-tag"
+    "docs": "npm run docs:build && npm run docs:touch-nojekyll",
+    "docs:build": "typedoc --out docs src --plugin typedoc-plugin-example-tag",
+    "docs:touch-nojekyll": "touch docs/.nojekyll"
   },
   "main": "dist/rollup-plugin-babel.cjs.js",
   "repository": {
