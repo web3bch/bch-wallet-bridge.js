@@ -1,5 +1,5 @@
 # web3bch.js - Bitcoin Cash JavaScript API
-[![Documentation Status](https://readthedocs.org/projects/web3bchjs/badge/?version=latest)](https://web3bchjs.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/web3bch/web3bch.js.svg?branch=master)](https://travis-ci.org/web3bch/web3bch.js)
 
 ## Documentation
 
