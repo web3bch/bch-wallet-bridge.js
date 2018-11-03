@@ -1,0 +1,33 @@
+{
+  "name": "web3bch.js",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "rollup -c"
+  },
+  "main": "dist/rollup-plugin-babel.cjs.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web3bch/web3bch.js.git"
+  },
+  "keywords": [],
+  "author": "web3bch",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/web3bch/web3bch.js/issues"
+  },
+  "homepage": "https://github.com/web3bch/web3bch.js#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "rollup": "^0.66.6",
+    "rollup-plugin-babel": "^4.0.3",
+    "typescript": "^3.1.6"
+  }
+}
