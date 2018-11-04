@@ -20,6 +20,7 @@
         }
       ],
       "variable-name": [false],
-      "no-console": false 
+      "no-console": false,
+      "no-string-literal": false
   }
 }

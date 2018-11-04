@@ -66,7 +66,7 @@ export default interface IWallet {
     startIndex?: number,
     size?: number,
     dAppId?: string
-  ): Promise<string>
+  ): Promise<string[]>
 
   /**
    * Returns the stored redeem script.
