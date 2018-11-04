@@ -10,6 +10,8 @@ import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
 
 export default class Wallet implements IWallet {
+  private defaultDAppId?: string
+
   constructor(readonly providers: Providers) {}
 
   public getAddress(
@@ -26,7 +28,7 @@ export default class Wallet implements IWallet {
     }
 
     const walletProvider = this.checkWalletProvider()
-    return walletProvider.getAddresses(changeType, 1, index, dAppId)
+    return walletProvider.getAddresses(changeType, 1, index, dAppId || this.defaultDAppId)
       .then((it) => it[0])
       .then((it) => {
         if (!it) {
@@ -127,17 +129,28 @@ export default class Wallet implements IWallet {
   }
 
   public getDefaultDAppId(): Promise<string | undefined> {
-    throw new Error("Method not implemented.")
+    return Promise.resolve(this.defaultDAppId)
   }
 
   public setDefaultDAppId(
     dAppId?: string
   ): Promise<void> {
-    throw new Error("Method not implemented.")
+    return new Promise((resolve) => {
+      if (dAppId && !this.isTxHash(dAppId)) {
+        throw new IllegalArgumentException("The dAppId is invalid.")
+      }
+      this.defaultDAppId = dAppId
+      resolve()
+    })
+  }
+
+  private isTxHash(target: string): boolean {
+    const re = /[0-9A-Ffa-f]{64}/g
+    return re.test(target)
   }
 
   // TODO: TEMP
-  public checkWalletProvider = (): IWalletProvider => {
+  private checkWalletProvider = (): IWalletProvider => {
     if (!this.providers.walletProvider) {
       throw new ProviderException("")
     }
