@@ -4,7 +4,12 @@
     "module": "commonjs",
     "declaration": true,
     "outDir": "lib",
+    "rootDir": "src",
     "strict": true,
-    "noImplicitAny": true
-  }
+    "noImplicitAny": true,
+  },
+  "exclude": [
+    "test",
+    "lib"
+  ]
 }

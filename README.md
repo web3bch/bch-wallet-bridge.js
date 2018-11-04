@@ -33,6 +33,6 @@ Documentation can be found at [GitHub Pages][docs].
 - npm
 - yarn
 
-### Build (Babel + Rollup)
+### Build (tsc)
 1. `$ yarn`
 2. `$ yarn build`
