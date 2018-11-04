@@ -174,6 +174,59 @@ describe("Wallet", () => {
   //
   // getUtxos
   //
+  describe("getUtxos()", () => {
+    beforeEach(() => {
+      const networkProvider = new (jest.fn<INetworkProvider>())()
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getSpendableUtxos: jest.fn(() => Promise.resolve([])),
+        getUnspendableUtxos: jest.fn(() => Promise.resolve([]))
+      })))()
+      const providers = new Providers(networkProvider, walletProvider)
+      wallet = new Wallet(providers)
+    })
+
+    it("should be success if there is no problem.", async () => {
+      await wallet.getUtxos()
+    })
+    it("should calls IWalletProvider#getSpendableUtxos", async () => {
+      await wallet.getUtxos()
+      expect(walletProvider.getSpendableUtxos).toBeCalled()
+    })
+    it("should calls IWalletProvider#getUnspendableUtxos", async () => {
+      await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+      expect(walletProvider.getUnspendableUtxos).toBeCalled()
+    })
+    it("should throws ProviderException if IWalletProvider#getSpendableUtxos throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getSpendableUtxos: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getUtxos()).rejects.toThrow(ProviderException)
+    })
+    it("should throws ProviderException if IWalletProvider#getUnspendableUtxos throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getUnspendableUtxos: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
+      .rejects.toThrow(ProviderException)
+    })
+    it("should throws ProviderException if IWalletProvider#getSpendableUtxos returns invalid value.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getSpendableUtxos: jest.fn(() => Promise.resolve(1))
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getUtxos()).rejects.toThrow(ProviderException)
+    })
+    it("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getUnspendableUtxos: jest.fn(() => Promise.resolve(1))
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
+      .rejects.toThrow(ProviderException)
+    })
+  })
 
   //
   // getBalance
