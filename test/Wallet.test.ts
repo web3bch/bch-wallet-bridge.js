@@ -107,11 +107,11 @@ describe("Wallet", () => {
   //
   describe("get/setDefaultDAppId()", () => {
     beforeEach(() => {
-      const providers = new Providers(undefined, undefined)
+      const providers = new Providers()
       wallet = new Wallet(providers)
     })
 
-    it("The initial value of  defaultDAppId should be undefined.", async () => {
+    it("The initial value of defaultDAppId should be undefined.", async () => {
       const actual = await wallet.getDefaultDAppId()
       expect(actual).toBeUndefined()
     })
@@ -124,13 +124,13 @@ describe("Wallet", () => {
 
     it("should set defaultDAppId properly.", async () => {
       const dappId = "fa3c13e9283cff80edeea53958e5ad1b9d8942385408c1b3d2f3c67a06a92835"
-      await expect(wallet.setDefaultDAppId(dappId)).rejects.toThrow(IllegalArgumentException)
+      await wallet.setDefaultDAppId(dappId)
       const actual = await wallet.getDefaultDAppId()
       expect(actual).toBe(dappId)
     })
 
     it("should set defaultDAppId as undefined properly.", async () => {
-      await expect(wallet.setDefaultDAppId(undefined)).rejects.toThrow(IllegalArgumentException)
+      await wallet.setDefaultDAppId(undefined)
       const actual = await wallet.getDefaultDAppId()
       expect(actual).toBeUndefined()
     })
