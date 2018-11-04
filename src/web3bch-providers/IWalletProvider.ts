@@ -11,7 +11,7 @@ export default interface IWalletProvider {
    * > "0.0.1"
    * @returns The current web3bch version
    */
-  getVersion(): Promise<number>
+  getVersion(): Promise<string>
 
   /**
    * Returns the wallet address list. Address format is CashAddr.
@@ -23,10 +23,10 @@ export default interface IWalletProvider {
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(addresses)
-   * > ["bitcoincash:qrsy0xwugcajsqa..., "bitcoincash:qrsfpepw3egqq4k..."]
+   * > ["bitcoincash:qrsy0xwugcajsqa...", "bitcoincash:qrsfpepw3egqq4k..."]
    * @param changeType The BIP44 change path type.
-   * @param index The BIP44 address_index path.
-   * @param sizde The number of addresses you want. If this valye is not set, return a single address.
+   * @param startIndex The BIP44 address_index path.
+   * @param size The number of addresses you want. If this valye is not set, return a single address.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
    * @returns The wallet address list.
    */
@@ -71,7 +71,7 @@ export default interface IWalletProvider {
   ): Promise<string[]>
 
   /**
-   * Add the redeem script into the wallet.
+   * Adds the redeem script into the wallet.
    * @example
    * await provider.addRedeemScript(
    *   "03424f587e064249..."
@@ -120,7 +120,7 @@ export default interface IWalletProvider {
    *   ]
    * @param dAppId The DApp ID.
    * @returns The unspent transaction output object list.
-   * If the addresses of the DApp are spendable, it returns an empty array.
+   * If the addresses of the DApp are spendable, returns an empty array.
    */
   getUnspendableUtxos(
     dAppId: string
@@ -137,7 +137,7 @@ export default interface IWalletProvider {
    * > "30440220227e0973..."
    * @param address A P2PKH address whose private key belongs to the provider.
    * @param dataToSign Data to sign in hex format.
-   * @returns The signed data. Bitcoin signatures are serialised in the DER format over the wire.
+   * @returns The signed data. Bitcoin signatures are serialized in the DER format over the wire.
    * If you cancel or the corresponding private key is missing, throw an error.
    */
   sign(
@@ -148,7 +148,7 @@ export default interface IWalletProvider {
   /**
    * Create a signed transaction with specified outputs. The provider will not add any outputs.
    * @example
-   * const txid = await web3bch.wallet.advancedSend([
+   * const txid = await provider.advancedSend([
    *   {
    *     lockScript: "76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac",
    *     amount: 10000
@@ -158,7 +158,7 @@ export default interface IWalletProvider {
    * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
    * @param outputs The Array of TransactionOutput objects.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
-   * @returns The signed raw transaction in serialized transaction format encoded as hex
+   * @returns The signed raw transaction in serialized transaction format encoded as hex.
    * If you cancel or the transaction couldn’t be generated, throw an error.
    */
   createSignedTx(

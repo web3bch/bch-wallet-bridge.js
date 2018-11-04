@@ -7,7 +7,7 @@ export default interface INetworkProvider {
    * > "0.0.1"
    * @returns The current web3bch version
    */
-  getVersion(): Promise<number>
+  getVersion(): Promise<string>
 
   /**
    * Returns the bitcoin protocol version.
@@ -37,7 +37,7 @@ export default interface INetworkProvider {
    * )
    * console.log(txId)
    * > "d86c34adaeae19171fd98fe0ffd89bfb92a1e6f0339f5e4f18d837715fd25758"
-   * @param rawtx Signed transaction data in hex format.
+   * @param rawTx Signed transaction data in hex format.
    * @returns Hex format of txid.
    */
   broadcastRawTx(
