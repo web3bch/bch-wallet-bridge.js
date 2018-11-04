@@ -37,7 +37,7 @@ export default interface INetworkProvider {
    * )
    * console.log(txId)
    * > "d86c34adaeae19171fd98fe0ffd89bfb92a1e6f0339f5e4f18d837715fd25758"
-   * @param Signed transaction data in hex format.
+   * @param rawtx Signed transaction data in hex format.
    * @returns Hex format of txid.
    */
   broadcastRawTx(
