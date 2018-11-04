@@ -6,12 +6,16 @@ import INetworkProvider from "../src/web3bch-providers/INetworkProvider"
 import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
+import { Exception } from "handlebars"
 
 describe("Wallet", () => {
   let wallet: IWallet
   let walletProvider: IWalletProvider
   let networkProvider: INetworkProvider
 
+  //
+  // getAddress
+  //
   describe("getAddress()", () => {
     beforeEach(() => {
       networkProvider = new (jest.fn<INetworkProvider>())()
@@ -61,18 +65,24 @@ describe("Wallet", () => {
     beforeEach(() => {
       const networkProvider = new (jest.fn<INetworkProvider>())()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getRedeemScripts: jest.fn(() => Promise.resolve(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"]))
+        getRedeemScripts: jest.fn(() =>
+        Promise.resolve(["03424f587e06424954424f5887", "9c1657fb5142ca85ab2d27ea847f648ec172a012"]))
+        // "pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya" is a hash value of "9c1657fb5142ca85ab2d27ea847f648ec172a012"
       })))()
       const providers = new Providers(networkProvider, walletProvider)
       wallet = new Wallet(providers)
     })
 
     it("should be success if there is no problem.", async () => {
-      await wallet.getRedeemScript("bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg")
+      await wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya")
     })
     it("should calls IWalletProvider#getRedeemScripts", async () => {
-      await wallet.getRedeemScript("bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg")
+      await wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya")
       expect(walletProvider.getRedeemScripts).toBeCalled()
+    })
+    it("should returns a script corresponding to the address", async () => {
+      const script = await wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya")
+      expect(script).toBe("9c1657fb5142ca85ab2d27ea847f648ec172a012")
     })
     it("should throws IllegalArgumentException if the address is invalid", () => {
       expect(() => wallet.getRedeemScript("I am not Address")).toThrow(IllegalArgumentException)
@@ -86,7 +96,7 @@ describe("Wallet", () => {
         getRedeemScripts: jest.fn(() => Promise.reject())
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScript("bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg"))
+      await expect(wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya"))
       .rejects.toThrow(ProviderException)
     })
     it("should throws ProviderException if the wallet provider invalid value.", async () => {
@@ -94,7 +104,7 @@ describe("Wallet", () => {
         getRedeemScripts: jest.fn(() => Promise.resolve([]))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScript("bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg"))
+      await expect(wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya"))
       .rejects.toThrow(ProviderException)
     })
   })
