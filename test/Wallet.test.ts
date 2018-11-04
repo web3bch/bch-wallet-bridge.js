@@ -10,10 +10,11 @@ import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
 describe("Wallet", () => {
   let wallet: IWallet
   let walletProvider: IWalletProvider
+  let networkProvider: INetworkProvider
 
   describe("getAddress()", () => {
     beforeEach(() => {
-      const networkProvider = new (jest.fn<INetworkProvider>())()
+      networkProvider = new (jest.fn<INetworkProvider>())()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
       })))()
@@ -96,6 +97,24 @@ describe("Wallet", () => {
   //
   // broadcastRawTx
   //
+
+  describe("broadcastRawTx()", () => {
+    beforeEach(() => {
+      networkProvider = new (jest.fn<INetworkProvider>(() => ({
+        broadcastRawTx: jest.fn((rawtx) => Promise.resolve("txid"))
+      })))()
+      const providers = new Providers(networkProvider, undefined)
+      wallet = new Wallet(providers)
+    })
+
+    it("should throw an error with invalid hex.", async () => {
+      await expect(wallet.broadcastRawTx("hex")).rejects.toThrow(IllegalArgumentException)
+    })
+    it("should calls INetworkProvider#broadcastRawtx", async () => {
+      await wallet.broadcastRawTx("1234567890")
+      expect(networkProvider.broadcastRawTx).toBeCalled()
+    })
+  })
 
   //
   // getFeePerByte
