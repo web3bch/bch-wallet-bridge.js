@@ -6,7 +6,6 @@ import INetworkProvider from "../src/web3bch-providers/INetworkProvider"
 import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from "constants";
 
 describe("Wallet", () => {
   let wallet: IWallet
