@@ -138,6 +138,38 @@ describe("Wallet", () => {
   //
   // addRedeemScript
   //
+  describe("addRedeemScript()", () => {
+    beforeEach(() => {
+      const networkProvider = new (jest.fn<INetworkProvider>())()
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        addRedeemScript: jest.fn(() => Promise.resolve())
+      })))()
+      const providers = new Providers(networkProvider, walletProvider)
+      wallet = new Wallet(providers)
+    })
+
+    it("should be success if there is no problem.", async () => {
+      await wallet.addRedeemScript("03424f587e06424954424f5887")
+    })
+    it("should calls IWalletProvider#addRedeemScript", async () => {
+      await wallet.addRedeemScript("03424f587e06424954424f5887")
+      expect(walletProvider.getRedeemScripts).toBeCalled()
+    })
+    it("should throws ProviderException if the wallet provider throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        addRedeemScript: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
+    })
+    it("should throws ProviderException if the wallet provider invalid value.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        addRedeemScript: jest.fn(() => Promise.resolve(1))
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
+    })
+  })
 
   //
   // getUtxos
