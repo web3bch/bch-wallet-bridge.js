@@ -101,6 +101,35 @@ describe("Wallet", () => {
   // getFeePerByte
   //
 
+  describe("getFeePerByte()", () => {
+    beforeEach(() => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getFeePerByte: jest.fn(() => Promise.resolve(1))
+      })))()
+      const providers = new Providers(undefined, walletProvider)
+      wallet = new Wallet(providers)
+    })
+
+    it("should be success if there is no problem.", async () => {
+      await wallet.getFeePerByte()
+    })
+    it("should calls IWalletProvider#getFeePerByte", async () => {
+      await wallet.getFeePerByte()
+      expect(walletProvider.getFeePerByte).toBeCalled()
+    })
+    it("should return 1.", async () => {
+      const actual = await wallet.getFeePerByte()
+      expect(actual).toBe(1)
+    })
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getFeePerByte: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getFeePerByte()).rejects.toThrow(ProviderException)
+    })
+  })
+
   //
   // getDefaultDAppId
   //
