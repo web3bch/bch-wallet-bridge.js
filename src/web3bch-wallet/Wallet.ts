@@ -114,7 +114,7 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public bloadcastRawtx(
+  public broadcastRawTx(
     rawtx: string
   ): Promise<string> {
     throw new Error("Method not implemented.")
