@@ -16,23 +16,23 @@ export default interface IWalletProvider {
    * Returns the wallet address list. Address format is CashAddr.
    * @example
    * const addresses = await provider.getAddresses(
-   *   "receive",
-   *   3,
+   *   0,
    *   2,
+   *   3,
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(addresses)
    * > ["bitcoincash:qrsy0xwugcajsqa...", "bitcoincash:qrsfpepw3egqq4k..."]
-   * @param changeType The BIP44 change path type.
+   * @param change The BIP44 change path.
+   * @param size The number of addresses you want.
    * @param startIndex The BIP44 address_index path.
-   * @param size The number of addresses you want. If this valye is not set, return a single address.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
    * @returns The wallet address list.
    */
   getAddresses(
     changeType: number,
+    size: number,
     startIndex?: number,
-    size?: number,
     dAppId?: string
   ): Promise<string[]>
 
@@ -40,17 +40,17 @@ export default interface IWalletProvider {
    * Returns the current wallet address index.
    * @example
    * const addrIdx = await provider.getAddressIndex(
-   *   "change",
+   *   1,
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(addrIdx)
    * > 3
-   * @param changeType The BIP44 change path type.
+   * @param change The BIP44 change path.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
    * @returns The current wallet address index.
    */
   getAddressIndex(
-    changeType: number,
+    change: number,
     dAppId?: string
   ): Promise<number>
 
@@ -84,7 +84,7 @@ export default interface IWalletProvider {
   ): Promise<void>
 
   /**
-   * Returns the transaction outputs belonging to the DApps which addresses are spendable.
+   * Returns the transaction outputs which addresses are spendable.
    * @example
    * const utxos = await provider.getSpendableUtxos()
    * console.log(utxos)
@@ -137,7 +137,10 @@ export default interface IWalletProvider {
    * @param address A P2PKH address whose private key belongs to the provider.
    * @param dataToSign Data to sign in hex format.
    * @returns The signed data. Bitcoin signatures are serialized in the DER format over the wire.
-   * If you cancel or the corresponding private key is missing, throw an error.
+   * The provider should throw an error when
+   * - private key for the address is missing
+   * - the user does not allow to sign
+   * - etc...
    */
   sign(
     address: string,
@@ -158,7 +161,7 @@ export default interface IWalletProvider {
    * @param outputs The Array of TransactionOutput objects.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
    * @returns The signed raw transaction in serialized transaction format encoded as hex.
-   * If you cancel or the transaction couldn’t be generated, throw an error.
+   * The provider should throw an error when the transaction is not generated.
    */
   createSignedTx(
     outputs: Output[],
@@ -180,7 +183,7 @@ export default interface IWalletProvider {
    * @example
    * const network = await provider.getNetwork()
    * console.log(network)
-   * > e3e1f3e8
+   * > 3823236072
    * @returns Network magic bytes
    */
   getNetworkMagic(): Promise<number>

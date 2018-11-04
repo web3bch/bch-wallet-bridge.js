@@ -24,7 +24,7 @@ export default interface INetworkProvider {
    * @example
    * const network = await provider.getNetwork()
    * console.log(network)
-   * > e3e1f3e8
+   * > 3823236072
    * @returns Network magic bytes
    */
   getNetworkMagic(): Promise<number>
