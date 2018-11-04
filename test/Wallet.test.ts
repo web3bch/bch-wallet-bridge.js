@@ -52,4 +52,60 @@ describe("Wallet", () => {
       await expect(wallet.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
+
+  //
+  // getRedeenScript
+  //
+
+  //
+  // getRedeemScripts
+  //
+
+  //
+  // addRedeemScript
+  //
+
+  //
+  // getUtxos
+  //
+
+  //
+  // getBalance
+  //
+
+  //
+  // sign
+  //
+
+  //
+  // send
+  //
+
+  //
+  // advancedSend
+  //
+
+  //
+  // getProtocolVersion
+  //
+
+  //
+  // getNetwork
+  //
+
+  //
+  // broadcastRawTx
+  //
+
+  //
+  // getFeePerByte
+  //
+
+  //
+  // getDefaultDAppId
+  //
+
+  //
+  // setDefaultDAppId
+  //
 })
