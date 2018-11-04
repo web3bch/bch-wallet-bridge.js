@@ -11,16 +11,16 @@ describe("Wallet", () => {
   let wallet: IWallet
   let walletProvider: IWalletProvider
 
-  beforeEach(() => {
-    const networkProvider = new (jest.fn<INetworkProvider>())()
-    walletProvider = new (jest.fn<IWalletProvider>(() => ({
-      getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
-    })))()
-    const providers = new Providers(networkProvider, walletProvider)
-    wallet = new Wallet(providers)
-  })
-
   describe("getAddress()", () => {
+    beforeEach(() => {
+      const networkProvider = new (jest.fn<INetworkProvider>())()
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
+      })))()
+      const providers = new Providers(networkProvider, walletProvider)
+      wallet = new Wallet(providers)
+    })
+
     it("should be success if there is no problem.", async () => {
       await wallet.getAddress(ChangeType.RECEIVE)
     })
