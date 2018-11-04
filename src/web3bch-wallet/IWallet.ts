@@ -247,7 +247,7 @@ export default interface IWallet {
    * @param Signed transaction data in hex format.
    * @returns Hex format of txid.
    */
-  bloadcastRawtx(
+  broadcastRawTx(
     rawtx: string
   ): Promise<string>
 

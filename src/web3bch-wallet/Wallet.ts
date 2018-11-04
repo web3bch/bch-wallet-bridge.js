@@ -114,14 +114,16 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public bloadcastRawtx(
+  public broadcastRawTx(
     rawtx: string
   ): Promise<string> {
     throw new Error("Method not implemented.")
   }
 
   public getFeePerByte(): Promise<number> {
-    throw new Error("Method not implemented.")
+    const walletProvider = this.checkWalletProvider()
+    return walletProvider.getFeePerByte()
+      .catch((e) => { throw new ProviderException(e) })
   }
 
   public getDefaultDAppId(): Promise<string | undefined> {
