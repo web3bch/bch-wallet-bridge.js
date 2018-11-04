@@ -83,6 +83,9 @@ describe("Wallet", () => {
       const script = await wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya")
       expect(script).toBe("9c1657fb5142ca85ab2d27ea847f648ec172a012")
     })
+    it("should throws IllegalArgumentException if the script is empty string.", () => {
+      expect(() => wallet.getRedeemScript("")).toThrow(IllegalArgumentException)
+    })
     it("should throws IllegalArgumentException if the address is invalid", () => {
       expect(() => wallet.getRedeemScript("I am not Address")).toThrow(IllegalArgumentException)
     })
