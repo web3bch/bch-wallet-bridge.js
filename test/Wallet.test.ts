@@ -6,7 +6,6 @@ import INetworkProvider from "../src/web3bch-providers/INetworkProvider"
 import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
-import { Exception } from "handlebars"
 import Utxo from "../src/web3bch-providers/entities/Utxo"
 
 describe("Wallet", () => {
