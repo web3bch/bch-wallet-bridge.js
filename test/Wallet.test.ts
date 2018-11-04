@@ -94,10 +94,6 @@ describe("Wallet", () => {
   // getNetwork
   //
 
-  //
-  // broadcastRawTx
-  //
-
   describe("broadcastRawTx()", () => {
     beforeEach(() => {
       networkProvider = new (jest.fn<INetworkProvider>(() => ({
@@ -115,10 +111,6 @@ describe("Wallet", () => {
       expect(networkProvider.broadcastRawTx).toBeCalled()
     })
   })
-
-  //
-  // getFeePerByte
-  //
 
   describe("getFeePerByte()", () => {
     beforeEach(() => {
@@ -149,10 +141,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // getDefaultDAppId
-  // setDefaultDAppId
-  //
   describe("get/setDefaultDAppId()", () => {
     beforeEach(() => {
       const providers = new Providers()
@@ -182,7 +170,5 @@ describe("Wallet", () => {
       const actual = await wallet.getDefaultDAppId()
       expect(actual).toBeUndefined()
     })
-
   })
-
 })
