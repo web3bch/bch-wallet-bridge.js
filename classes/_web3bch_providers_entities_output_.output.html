@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;web3bch-wallet/IDestination&quot; | web3bch.js</title>
+	<title>Output | web3bch.js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,26 +56,106 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_web3bch_wallet_idestination_.html">&quot;web3bch-wallet/IDestination&quot;</a>
+					<a href="../modules/_web3bch_providers_entities_output_.html">&quot;web3bch-providers/entities/Output&quot;</a>
+				</li>
+				<li>
+					<a href="_web3bch_providers_entities_output_.output.html">Output</a>
 				</li>
 			</ul>
-			<h1>External module &quot;web3bch-wallet/IDestination&quot;</h1>
+			<h1>Class Output</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Output</span>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_web3bch_wallet_idestination_.idestination.html" class="tsd-kind-icon">IDestination</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_web3bch_providers_entities_output_.output.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_providers_entities_output_.output.html#amount" class="tsd-kind-icon">amount</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_providers_entities_output_.output.html#lockscript" class="tsd-kind-icon">lock<wbr>Script</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Output<span class="tsd-signature-symbol">(</span>lockScript<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_web3bch_providers_entities_output_.output.html" class="tsd-signature-type">Output</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Output.ts#L10">web3bch-providers/entities/Output.ts:10</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>lockScript: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_web3bch_providers_entities_output_.output.html" class="tsd-signature-type">Output</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="amount" class="tsd-anchor"></a>
+					<h3>amount</h3>
+					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Output.ts#L10">web3bch-providers/entities/Output.ts:10</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The value transferred to the lock script in satoshi.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="lockscript" class="tsd-anchor"></a>
+					<h3>lock<wbr>Script</h3>
+					<div class="tsd-signature tsd-kind-icon">lock<wbr>Script<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Output.ts#L5">web3bch-providers/entities/Output.ts:5</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The hex format of lock script.</p>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -87,36 +167,57 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_web3bch_provider_index_.html">"web3bch-<wbr>provider/index"</a>
+						<a href="../modules/_web3bch_providers_inetworkprovider_.html">"web3bch-<wbr>providers/INetwork<wbr>Provider"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_web3bch_wallet_changetype_.html">"web3bch-<wbr>wallet/<wbr>Change<wbr>Type"</a>
+						<a href="../modules/_web3bch_providers_iwalletprovider_.html">"web3bch-<wbr>providers/IWallet<wbr>Provider"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_providers_entities_changetype_.html">"web3bch-<wbr>providers/entities/<wbr>Change<wbr>Type"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="_web3bch_wallet_idestination_.html">"web3bch-<wbr>wallet/IDestination"</a>
+						<a href="../modules/_web3bch_providers_entities_output_.html">"web3bch-<wbr>providers/entities/<wbr>Output"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_web3bch_wallet_inetwork_.html">"web3bch-<wbr>wallet/INetwork"</a>
+						<a href="../modules/_web3bch_providers_entities_utxo_.html">"web3bch-<wbr>providers/entities/<wbr>Utxo"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_web3bch_wallet_ioutput_.html">"web3bch-<wbr>wallet/IOutput"</a>
+						<a href="../modules/_web3bch_wallet_iwallet_.html">"web3bch-<wbr>wallet/IWallet"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_web3bch_wallet_iutxo_.html">"web3bch-<wbr>wallet/IUtxo"</a>
+						<a href="../modules/_web3bch_wallet_entities_destination_.html">"web3bch-<wbr>wallet/entities/<wbr>Destination"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_web3bch_wallet_iwallet_.html">"web3bch-<wbr>wallet/IWallet"</a>
+						<a href="../modules/_web3bch_wallet_entities_network_.html">"web3bch-<wbr>wallet/entities/<wbr>Network"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_web3bch_iweb3bch_.html">"web3bch/IWeb3bch"</a>
+						<a href="../modules/_web3bch_providers_.html">"web3bch/<wbr>Providers"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_web3bch_.html">"web3bch/<wbr>Web3bch"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="../interfaces/_web3bch_wallet_idestination_.idestination.html" class="tsd-kind-icon">IDestination</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_web3bch_providers_entities_output_.output.html" class="tsd-kind-icon">Output</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_output_.output.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_output_.output.html#amount" class="tsd-kind-icon">amount</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_output_.output.html#lockscript" class="tsd-kind-icon">lock<wbr>Script</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>

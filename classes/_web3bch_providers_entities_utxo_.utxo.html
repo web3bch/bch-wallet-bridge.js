@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IDestination | web3bch.js</title>
+	<title>Utxo | web3bch.js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_web3bch_wallet_idestination_.html">&quot;web3bch-wallet/IDestination&quot;</a>
+					<a href="../modules/_web3bch_providers_entities_utxo_.html">&quot;web3bch-providers/entities/Utxo&quot;</a>
 				</li>
 				<li>
-					<a href="_web3bch_wallet_idestination_.idestination.html">IDestination</a>
+					<a href="_web3bch_providers_entities_utxo_.utxo.html">Utxo</a>
 				</li>
 			</ul>
-			<h1>Interface IDestination</h1>
+			<h1>Class Utxo</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IDestination</span>
+						<span class="target">Utxo</span>
 					</li>
 				</ul>
 			</section>
@@ -82,44 +82,136 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_web3bch_providers_entities_utxo_.utxo.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_web3bch_wallet_idestination_.idestination.html#address" class="tsd-kind-icon">address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_web3bch_wallet_idestination_.idestination.html#amount" class="tsd-kind-icon">amount</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_providers_entities_utxo_.utxo.html#address" class="tsd-kind-icon">address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_providers_entities_utxo_.utxo.html#outputindex" class="tsd-kind-icon">output<wbr>Index</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_providers_entities_utxo_.utxo.html#satoshis" class="tsd-kind-icon">satoshis</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_providers_entities_utxo_.utxo.html#script" class="tsd-kind-icon">script</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_web3bch_providers_entities_utxo_.utxo.html#txid" class="tsd-kind-icon">txid</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Utxo<span class="tsd-signature-symbol">(</span>txid<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, outputIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, script<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, satoshis<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_web3bch_providers_entities_utxo_.utxo.html" class="tsd-signature-type">Utxo</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Utxo.ts#L25">web3bch-providers/entities/Utxo.ts:25</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>txid: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>outputIndex: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>script: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>satoshis: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_web3bch_providers_entities_utxo_.utxo.html" class="tsd-signature-type">Utxo</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="address" class="tsd-anchor"></a>
 					<h3>address</h3>
 					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/303909b/src/web3bch-wallet/IDestination.ts#L5">web3bch-wallet/IDestination.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Utxo.ts#L15">web3bch-providers/entities/Utxo.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The destination address.</p>
+							<p>Address</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="amount" class="tsd-anchor"></a>
-					<h3>amount</h3>
-					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="outputindex" class="tsd-anchor"></a>
+					<h3>output<wbr>Index</h3>
+					<div class="tsd-signature tsd-kind-icon">output<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/303909b/src/web3bch-wallet/IDestination.ts#L10">web3bch-wallet/IDestination.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Utxo.ts#L10">web3bch-providers/entities/Utxo.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The value transferred to the destination address in satoshi.</p>
+							<p>Txout index number of the utxo</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="satoshis" class="tsd-anchor"></a>
+					<h3>satoshis</h3>
+					<div class="tsd-signature tsd-kind-icon">satoshis<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Utxo.ts#L25">web3bch-providers/entities/Utxo.ts:25</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Satoshis</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="script" class="tsd-anchor"></a>
+					<h3>script</h3>
+					<div class="tsd-signature tsd-kind-icon">script<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Utxo.ts#L20">web3bch-providers/entities/Utxo.ts:20</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>ScriptPubKey</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="txid" class="tsd-anchor"></a>
+					<h3>txid</h3>
+					<div class="tsd-signature tsd-kind-icon">txid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/a3891cd/src/web3bch-providers/entities/Utxo.ts#L5">web3bch-providers/entities/Utxo.ts:5</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Txid of the utxo</p>
 						</div>
 					</div>
 				</section>
@@ -132,28 +224,34 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_web3bch_provider_index_.html">"web3bch-<wbr>provider/index"</a>
+						<a href="../modules/_web3bch_providers_inetworkprovider_.html">"web3bch-<wbr>providers/INetwork<wbr>Provider"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_web3bch_wallet_changetype_.html">"web3bch-<wbr>wallet/<wbr>Change<wbr>Type"</a>
+						<a href="../modules/_web3bch_providers_iwalletprovider_.html">"web3bch-<wbr>providers/IWallet<wbr>Provider"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_providers_entities_changetype_.html">"web3bch-<wbr>providers/entities/<wbr>Change<wbr>Type"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_providers_entities_output_.html">"web3bch-<wbr>providers/entities/<wbr>Output"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_web3bch_wallet_idestination_.html">"web3bch-<wbr>wallet/IDestination"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_web3bch_wallet_inetwork_.html">"web3bch-<wbr>wallet/INetwork"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_web3bch_wallet_ioutput_.html">"web3bch-<wbr>wallet/IOutput"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_web3bch_wallet_iutxo_.html">"web3bch-<wbr>wallet/IUtxo"</a>
+						<a href="../modules/_web3bch_providers_entities_utxo_.html">"web3bch-<wbr>providers/entities/<wbr>Utxo"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_web3bch_wallet_iwallet_.html">"web3bch-<wbr>wallet/IWallet"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_web3bch_iweb3bch_.html">"web3bch/IWeb3bch"</a>
+						<a href="../modules/_web3bch_wallet_entities_destination_.html">"web3bch-<wbr>wallet/entities/<wbr>Destination"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_wallet_entities_network_.html">"web3bch-<wbr>wallet/entities/<wbr>Network"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_providers_.html">"web3bch/<wbr>Providers"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_web3bch_web3bch_.html">"web3bch/<wbr>Web3bch"</a>
 					</li>
 				</ul>
 			</nav>
@@ -161,14 +259,26 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_web3bch_wallet_idestination_.idestination.html" class="tsd-kind-icon">IDestination</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_web3bch_providers_entities_utxo_.utxo.html" class="tsd-kind-icon">Utxo</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_web3bch_wallet_idestination_.idestination.html#address" class="tsd-kind-icon">address</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_utxo_.utxo.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_web3bch_wallet_idestination_.idestination.html#amount" class="tsd-kind-icon">amount</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_utxo_.utxo.html#address" class="tsd-kind-icon">address</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_utxo_.utxo.html#outputindex" class="tsd-kind-icon">output<wbr>Index</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_utxo_.utxo.html#satoshis" class="tsd-kind-icon">satoshis</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_utxo_.utxo.html#script" class="tsd-kind-icon">script</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_web3bch_providers_entities_utxo_.utxo.html#txid" class="tsd-kind-icon">txid</a>
 							</li>
 						</ul>
 					</li>
