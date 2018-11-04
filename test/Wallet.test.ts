@@ -6,6 +6,7 @@ import INetworkProvider from "../src/web3bch-providers/INetworkProvider"
 import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from "constants";
 
 describe("Wallet", () => {
   let wallet: IWallet
@@ -44,7 +45,7 @@ describe("Wallet", () => {
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
-    it("should throws ProviderException if the wallet provider invalid value.", async () => {
+    it("should throws ProviderException if the wallet provider provides invalid empty value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve([]))
       })))()
@@ -103,9 +104,38 @@ describe("Wallet", () => {
 
   //
   // getDefaultDAppId
-  //
-
-  //
   // setDefaultDAppId
   //
+  describe("get/setDefaultDAppId()", () => {
+    beforeEach(() => {
+      const providers = new Providers(undefined, undefined)
+      wallet = new Wallet(providers)
+    })
+
+    it("The initial value of  defaultDAppId should be undefined.", async () => {
+      const actual = await wallet.getDefaultDAppId()
+      expect(actual).toBeUndefined()
+    })
+
+    it("should throw an error with invalid DAppId.", async () => {
+      await expect(wallet.setDefaultDAppId("dappid")).rejects.toThrow(IllegalArgumentException)
+      const actual = await wallet.getDefaultDAppId()
+      expect(actual).toBeUndefined()
+    })
+
+    it("should set defaultDAppId properly.", async () => {
+      const dappId = "fa3c13e9283cff80edeea53958e5ad1b9d8942385408c1b3d2f3c67a06a92835"
+      await expect(wallet.setDefaultDAppId(dappId)).rejects.toThrow(IllegalArgumentException)
+      const actual = await wallet.getDefaultDAppId()
+      expect(actual).toBe(dappId)
+    })
+
+    it("should set defaultDAppId as undefined properly.", async () => {
+      await expect(wallet.setDefaultDAppId(undefined)).rejects.toThrow(IllegalArgumentException)
+      const actual = await wallet.getDefaultDAppId()
+      expect(actual).toBeUndefined()
+    })
+
+  })
+
 })
