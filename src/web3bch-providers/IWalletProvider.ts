@@ -1,4 +1,3 @@
-import ChangeType from "./entities/ChangeType"
 import Utxo from "./entities/Utxo"
 import Output from "./entities/Output"
 
@@ -31,7 +30,7 @@ export default interface IWalletProvider {
    * @returns The wallet address list.
    */
   getAddresses(
-    changeType: ChangeType,
+    changeType: number,
     startIndex?: number,
     size?: number,
     dAppId?: string
@@ -51,7 +50,7 @@ export default interface IWalletProvider {
    * @returns The current wallet address index.
    */
   getAddressIndex(
-    changeType: ChangeType,
+    changeType: number,
     dAppId?: string
   ): Promise<number>
 
