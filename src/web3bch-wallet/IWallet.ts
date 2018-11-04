@@ -112,7 +112,7 @@ export default interface IWallet {
    */
   addRedeemScript(
     redeemScript: string,
-    dAppId: string
+    dAppId?: string
   ): Promise<void>
 
   /**
