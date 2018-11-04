@@ -63,7 +63,7 @@ describe("Wallet", () => {
   //
   describe("getRedeemScript()", () => {
     beforeEach(() => {
-      const networkProvider = new (jest.fn<INetworkProvider>())()
+      networkProvider = new (jest.fn<INetworkProvider>())()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() =>
         Promise.resolve(["03424f587e06424954424f5887", "9c1657fb5142ca85ab2d27ea847f648ec172a012"]))
@@ -114,7 +114,7 @@ describe("Wallet", () => {
   //
   describe("getRedeemScripts()", () => {
     beforeEach(() => {
-      const networkProvider = new (jest.fn<INetworkProvider>())()
+      networkProvider = new (jest.fn<INetworkProvider>())()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"]))
       })))()
@@ -154,7 +154,7 @@ describe("Wallet", () => {
   //
   describe("addRedeemScript()", () => {
     beforeEach(() => {
-      const networkProvider = new (jest.fn<INetworkProvider>())()
+      networkProvider = new (jest.fn<INetworkProvider>())()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve())
       })))()
@@ -204,7 +204,7 @@ describe("Wallet", () => {
     20000)
 
     beforeEach(() => {
-      const networkProvider = new (jest.fn<INetworkProvider>())()
+      networkProvider = new (jest.fn<INetworkProvider>())()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo, utxo2])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo]))
