@@ -128,6 +128,10 @@ describe("Wallet", () => {
       await wallet.getRedeemScripts()
       expect(walletProvider.getRedeemScripts).toBeCalled()
     })
+    it("should return the same value as IWalletProvider#getRedeemScripts", async () => {
+      const sciprts = await wallet.getRedeemScripts()
+      expect(sciprts).toBe(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"])
+    })
     it("should throws ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.reject())
