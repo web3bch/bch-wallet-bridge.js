@@ -12,9 +12,9 @@
         true,
         { "multiline": {
             "objects": "ignore",
-            "arrays": "always",
+            "arrays": "never",
             "functions": "never",
-            "typeLiterals": "always"
+            "typeLiterals": "never"
           },
           "singleline": "never"
         }

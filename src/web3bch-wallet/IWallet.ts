@@ -1,14 +1,10 @@
-
-import IWeb3bchProvider from "../web3bch-provider"
-import ChangeType from "./ChangeType"
-import IDestination from "./IDestination"
-import INetwork from "./INetwork"
-import IOutput from "./IOutput"
-import IUtxo from "./IUtxo"
+import ChangeType from "../web3bch-providers/entities/ChangeType"
+import Destination from "./entities/Destination"
+import Network from "./entities/Network"
+import Output from "../web3bch-providers/entities/Output"
+import Utxo from "../web3bch-providers/entities/Utxo"
 
 export default interface IWallet {
-  provider: IWeb3bchProvider
-
   /**
    * Returns the current wallet address.
    * @example
@@ -140,7 +136,7 @@ export default interface IWallet {
    */
   getUtxos(
     dAppId?: string
-  ): Promise<IUtxo[]>
+  ): Promise<Utxo[]>
 
   /**
    * Returns the balance of the addresses.
@@ -192,7 +188,7 @@ export default interface IWallet {
    * @returns Hex format of txid.
    */
   send(
-    destination: IDestination | IDestination[],
+    destination: Destination | Destination[],
     data: string | string[]
   ): Promise<string>
 
@@ -213,7 +209,7 @@ export default interface IWallet {
    * @returns Hex format of txid.
    */
   advancedSend(
-    outputs: IOutput[],
+    outputs: Output[],
     dAppId?: string
   ): Promise<string>
 
@@ -238,7 +234,7 @@ export default interface IWallet {
    *   }
    * @returns The network object.
    */
-  getNetwork(): Promise<INetwork>
+  getNetwork(): Promise<Network>
 
   /**
    * Broadcast an already signed transaction.
