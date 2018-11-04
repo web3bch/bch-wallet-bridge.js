@@ -58,13 +58,13 @@ export default interface IWalletProvider {
   /**
    * Returns the stored redeem scripts related to the DApp ID.
    * @example
-   * const redeemScripts = await provider.getRedeemScript(
+   * const redeemScripts = await provider.getRedeemScripts(
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
-   * console.log(redeemScript)
+   * console.log(redeemScripts)
    * > ["03424f587e06424954424f5887", "789787a72c21452a1c98ff"]
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
-   * @returns The stored redeem script list.
+   * @returns The list of redeem scripts stored.
    */
   getRedeemScripts(
     dAppId?: string
