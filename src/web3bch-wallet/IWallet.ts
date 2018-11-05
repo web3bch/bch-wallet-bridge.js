@@ -3,6 +3,7 @@ import Destination from "./entities/Destination"
 import Network from "./entities/Network"
 import Output from "../web3bch-providers/entities/Output"
 import Utxo from "../web3bch-providers/entities/Utxo"
+import ProviderType from "./entities/ProviderType"
 
 export default interface IWallet {
   /**
@@ -226,15 +227,16 @@ export default interface IWallet {
   /**
    * Returns the current network.
    * @example
-   * const network = await web3bch.wallet.getNetwork()
+   * const network = await web3bch.wallet.getNetwork(NetworkType.Network)
    * console.log(network)
    * > {
    *     magicBytes: "e3e1f3e8",
    *     name: "Mainnet"
    *   }
+   * @param providerType The provider name which you want to check the network type from
    * @returns The network object.
    */
-  getNetwork(): Promise<Network>
+  getNetwork(providerType: ProviderType): Promise<Network>
 
   /**
    * Broadcast an already signed transaction.

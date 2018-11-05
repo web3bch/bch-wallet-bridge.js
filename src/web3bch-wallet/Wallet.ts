@@ -9,6 +9,8 @@ import IWalletProvider from "../web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
 import INetworkProvider from "../web3bch-providers/INetworkProvider"
+import ProviderType from "./entities/ProviderType"
+import { findNetwork } from "./networks"
 
 export default class Wallet implements IWallet {
   private defaultDAppId?: string
@@ -113,8 +115,20 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public getNetwork(): Promise<Network> {
-    throw new Error("Method not implemented.")
+  public async getNetwork(providerType: ProviderType): Promise<Network> {
+    const networkProvider = this.checkNetworkProvider()
+    const walletProvider = this.checkWalletProvider()
+
+    const magic = await (() => {
+      switch (providerType) {
+        case ProviderType.NETWORK:
+          return networkProvider.getNetworkMagic()
+        case ProviderType.WALLET:
+          return walletProvider.getNetworkMagic()
+      }
+    })()
+
+    return findNetwork(magic)
   }
 
   public broadcastRawTx(
