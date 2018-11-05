@@ -54,7 +54,7 @@ export default interface IWallet {
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(addresses)
-   * > ["bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p"]
+   * > ["bitcoincash:qrsy0xwugcajsqa...", "bitcoincash:qrsfpepw3egqq4k..."]
    * @param changeType The BIP44 change path type.
    * @param startIndex The BIP44 address_index path.
    * @param size The address amount you want.
