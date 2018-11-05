@@ -6,8 +6,9 @@ import INetworkProvider from "../src/web3bch-providers/INetworkProvider"
 import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
-import Network from "../src/web3bch-wallet/entities/Network"
+import Network, { NetworkType } from "../src/web3bch-wallet/entities/Network"
 import Utxo from "../src/web3bch-providers/entities/Utxo"
+import ProviderType from "../src/web3bch-wallet/entities/ProviderType"
 
 describe("Wallet", () => {
   let wallet: IWallet
@@ -306,7 +307,7 @@ describe("Wallet", () => {
     })
     it.skip("should return expected value.", async () => {
       const expected = 70015
-      const actual = await wallet.getNetwork()
+      const actual = await wallet.getProtocolVersion()
       expect(actual).toBe(expected)
     })
     it.skip("should throw ProviderException if the wallet provider returns a string.", async () => {
@@ -325,39 +326,41 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // getNetwork
-  //
-
   describe("getNetwork()", () => {
     beforeEach(() => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getNetwork: jest.fn(() => Promise.resolve(
-          new Network("e3e1f3e8", "Mainnet")
-        ))
+      networkProvider = new (jest.fn<INetworkProvider>(() => ({
+        getNetworkMagic: jest.fn(() => Promise.resolve(0xE3E1f3E8))
       })))()
-      const providers = new Providers(undefined, walletProvider)
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getNetworkMagic: jest.fn(() => Promise.resolve(0xE3E1f3E8))
+      })))()
+      const providers = new Providers(networkProvider, walletProvider)
       wallet = new Wallet(providers)
     })
 
-    it("should be success if there is no problem.", async () => {
-      await wallet.getNetwork()
+    it("should be success if there is no problem", async () => {
+      await wallet.getNetwork(ProviderType.NETWORK)
+      await wallet.getNetwork(ProviderType.WALLET)
     })
-    it("should calls IWalletProvider#getNetworkMagic", async () => {
-      await wallet.getNetwork()
+    it("should calls INetworkProvider#getNetworkMagic if ProviderType is NETWORK.", async () => {
+      await wallet.getNetwork(ProviderType.NETWORK)
+      expect(networkProvider.getNetworkMagic).toBeCalled()
+    })
+    it("should calls IWalletProvider#getNetworkMagic if ProviderType is WALLET.", async () => {
+      await wallet.getNetwork(ProviderType.WALLET)
       expect(walletProvider.getNetworkMagic).toBeCalled()
     })
     it("should return expected value.", async () => {
-      const expected = new Network("e3e1f3e8", "Mainnet")
-      const actual = await wallet.getNetwork()
-      expect(actual).toBe(expected)
+      const expected = new Network(0xE3E1f3E8, NetworkType.MAINNET)
+      const actual = await wallet.getNetwork(ProviderType.NETWORK)
+      expect(actual).toEqual(expected)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getNetwork: jest.fn(() => Promise.reject())
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getNetwork()).rejects.toThrow(ProviderException)
+      await expect(wallet.getNetwork(ProviderType.NETWORK)).rejects.toThrow(ProviderException)
     })
   })
 
