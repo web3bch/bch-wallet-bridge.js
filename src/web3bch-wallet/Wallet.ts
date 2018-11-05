@@ -111,8 +111,22 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public getProtocolVersion(): Promise<number> {
-    throw new Error("Method not implemented.")
+  public async getProtocolVersion(providerType: ProviderType): Promise<number> {
+    const version = await (() => {
+      switch (providerType) {
+        case ProviderType.NETWORK:
+          const networkProvider = this.checkNetworkProvider()
+          return networkProvider.getProtocolVersion()
+        case ProviderType.WALLET:
+          const walletProvider = this.checkWalletProvider()
+          return walletProvider.getProtocolVersion()
+      }
+    })().catch((e) => { throw new ProviderException(e) })
+
+    if (typeof version !== "number") {
+      throw new ProviderException(`${providerType} provides invalid type.`)
+    }
+    return version
   }
 
   public async getNetwork(providerType: ProviderType): Promise<Network> {
