@@ -8,7 +8,7 @@
     "docs:build": "typedoc --out docs src --plugin typedoc-plugin-example-tag",
     "docs:touch-nojekyll": "touch docs/.nojekyll",
     "test": "jest",
-    "codecov": "npm run test && codecov"
+    "codecov": "npm run test --coverage && codecov"
   },
   "repository": {
     "type": "git",
