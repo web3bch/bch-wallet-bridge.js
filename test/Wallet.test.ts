@@ -288,6 +288,43 @@ describe("Wallet", () => {
   // getProtocolVersion
   //
 
+  describe("getProtocolVersion()", () => {
+    beforeEach(() => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getProtocolVersion: jest.fn(() => Promise.resolve(70015))
+      })))()
+      const providers = new Providers(undefined, walletProvider)
+      wallet = new Wallet(providers)
+    })
+
+    it("should be success if there is no problem.", async () => {
+      await wallet.getProtocolVersion()
+    })
+    it("should calls IWalletProvider#getProtocolVersion", async () => {
+      await wallet.getProtocolVersion()
+      expect(walletProvider.getProtocolVersion).toBeCalled()
+    })
+    it("should return expected value.", async () => {
+      const expected = 70015
+      const actual = await wallet.getNetwork()
+      expect(actual).toBe(expected)
+    })
+    it("should throw ProviderException if the wallet provider returns a string.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getProtocolVersion: jest.fn(() => Promise.resolve("70015"))
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getProtocolVersion()).rejects.toThrow(ProviderException)
+    })
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getProtocolVersion: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getProtocolVersion()).rejects.toThrow(ProviderException)
+    })
+  })
+
   //
   // getNetwork
   //

@@ -218,10 +218,10 @@ export default interface IWallet {
    * @example
    * const version = await web3bch.wallet.getProtocolVersion()
    * console.log(version)
-   * > "70015"
-   * @returns The protocol version.
+   * > 70015
+   * @returns The protocol version. The value is Int32.
    */
-  getProtocolVersion(): Promise<string>
+  getProtocolVersion(): Promise<number>
 
   /**
    * Returns the current network.

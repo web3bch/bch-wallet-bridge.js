@@ -109,7 +109,7 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public getProtocolVersion(): Promise<string> {
+  public getProtocolVersion(): Promise<number> {
     throw new Error("Method not implemented.")
   }
 
