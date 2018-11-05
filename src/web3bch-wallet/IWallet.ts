@@ -183,13 +183,13 @@ export default interface IWallet {
    * )
    * console.log(txid)
    * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
-   * @param destination The destination object.
+   * @param destination The destination object. Throws an error when the destination is an empty array.
    * @param data A data or a list of data to put to the transaction’s OP_RETURN output.
    * @returns Hex format of txid.
    */
   send(
     destination: Destination | Destination[],
-    data: string | string[]
+    data?: string | string[]
   ): Promise<string>
 
   /**
