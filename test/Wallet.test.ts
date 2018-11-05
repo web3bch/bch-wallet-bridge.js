@@ -9,6 +9,8 @@ import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
 import Network, { NetworkType } from "../src/web3bch-wallet/entities/Network"
 import Utxo from "../src/web3bch-providers/entities/Utxo"
 import ProviderType from "../src/web3bch-wallet/entities/ProviderType"
+import Destination from "../src/web3bch-wallet/entities/Destination"
+import Output from "../src/web3bch-providers/entities/Output"
 
 describe("Wallet", () => {
   let wallet: IWallet
@@ -256,7 +258,8 @@ describe("Wallet", () => {
       await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
       expect(walletProvider.getUnspendableUtxos).toBeCalled()
     })
-    it.skip("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set.", async () => {
+    it.skip("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set.",
+     async () => {
       const utxos = await wallet.getUtxos()
       expect(utxos).toBe([utxo, utxo2])
     })
@@ -286,7 +289,8 @@ describe("Wallet", () => {
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getUtxos()).rejects.toThrow(ProviderException)
     })
-    it.skip("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.", async () => {
+    it.skip("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.",
+     async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getUnspendableUtxos: jest.fn(() => Promise.resolve(1))
       })))()
@@ -433,10 +437,83 @@ describe("Wallet", () => {
   //
   // send
   //
+  describe("send()", () => {
+    beforeEach(() => {
+      networkProvider = new (jest.fn<INetworkProvider>(() => ({
+        broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
+      })))()
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        createSignedTx: jest.fn(() => Promise.resolve())
+      })))()
+      const providers = new Providers(networkProvider, walletProvider)
+      wallet = new Wallet(providers)
+    })
+    const destination = new Destination("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p", 100000)
+    const destination2 = new Destination("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya", 300000)
+    it("should be success if there is no problem.", async () => {
+      await wallet.send(destination)
+    })
+    it("should be success if there is no problem.", async () => {
+      await wallet.send(destination, "Hello Bitcoin Cash")
+    })
+    it("should be success if there is no problem.", async () => {
+      await wallet.send(destination, ["Hello", "Bitcoin", "Cash"])
+    })
+    it("should be success if there is no problem.", async () => {
+      await wallet.send([destination, destination2])
+    })
+    it("should calls IWalletProvider#createSignedTx", async () => {
+      await wallet.send(destination)
+      expect(walletProvider.createSignedTx).toBeCalled()
+    })
+    it("should calls networkProvider#broadcastRawTx", async () => {
+      await wallet.send(destination)
+      expect(networkProvider.broadcastRawTx).toBeCalled()
+    })
+    it("should return the same value as networkProvider#broadcastRawTx", async () => {
+      const txid = wallet.send(destination)
+      expect(txid).toBe("txid")
+    })
+    it("should throw an error if the destination is an empty array.", async () => {
+      await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
+    })
+  })
 
   //
   // advancedSend
   //
+  describe("advancedSend()", () => {
+    beforeEach(() => {
+      networkProvider = new (jest.fn<INetworkProvider>(() => ({
+        broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
+      })))()
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        createSignedTx: jest.fn(() => Promise.resolve())
+      })))()
+      const providers = new Providers(networkProvider, walletProvider)
+      wallet = new Wallet(providers)
+    })
+    const output = new Output("76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac", 10000)
+    const output2 = new Output("76a914d7e7c4e0b70eaa67ceff9d2823d1bbb9f6df9a5188ac", 30000)
+    it("should be success if there is no problem.", async () => {
+      await wallet.advancedSend([output, output2])
+    })
+    it("should calls IWalletProvider#createSignedTx", async () => {
+      await wallet.advancedSend([output, output2])
+      expect(walletProvider.createSignedTx).toBeCalled()
+    })
+    it("should calls networkProvider#broadcastRawTx", async () => {
+      await wallet.advancedSend([output, output2])
+      expect(networkProvider.broadcastRawTx).toBeCalled()
+    })
+    it("should return the same value as networkProvider#broadcastRawTx", async () => {
+      const txid = wallet.advancedSend([output, output2])
+      expect(txid).toBe("txid")
+    })
+    it("should throw an error if the outputs is an empty array.", async () => {
+      await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
+    })
+  })
 
   //
   // getProtocolVersion
