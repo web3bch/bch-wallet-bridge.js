@@ -1,5 +1,6 @@
 # web3bch.js - Bitcoin Cash JavaScript API
 [![Build Status](https://travis-ci.org/web3bch/web3bch.js.svg?branch=master)](https://travis-ci.org/web3bch/web3bch.js)
+[![codecov](https://codecov.io/gh/web3bch/web3bch.js/branch/master/graph/badge.svg)](https://codecov.io/gh/web3bch/web3bch.js)
 
 ## Installation
 `yarn add web3bch`
