@@ -8,7 +8,7 @@ import Providers from "../web3bch/Providers"
 import IWalletProvider from "../web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
-import INetworkProvider from "../web3bch-providers/INetworkProvider";
+import INetworkProvider from "../web3bch-providers/INetworkProvider"
 
 export default class Wallet implements IWallet {
   private defaultDAppId?: string
