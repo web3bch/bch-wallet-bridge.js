@@ -480,7 +480,7 @@ describe("Wallet", () => {
   //
   // advancedSend
   //
-  describe("send()", () => {
+  describe("advancedSend()", () => {
     beforeEach(() => {
       networkProvider = new (jest.fn<INetworkProvider>(() => ({
         broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
