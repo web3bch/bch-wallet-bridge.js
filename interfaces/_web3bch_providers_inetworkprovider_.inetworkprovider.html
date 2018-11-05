@@ -105,16 +105,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/20be36d/src/web3bch-providers/INetworkProvider.ts#L8">web3bch-providers/INetworkProvider.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/d568b4d/src/web3bch-providers/INetworkProvider.ts#L43">web3bch-providers/INetworkProvider.ts:43</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Broadcast a signed transaction.</p>
+								</div>
+								<h4 id="example">Example</h4>
+								<pre><code class="language-typescript"><span class="hljs-keyword">const</span> txId = <span class="hljs-keyword">await</span> provider.broadcastRawtx(
+  <span class="hljs-string">"01000000013ba3ed..."</span>
+)
+<span class="hljs-built_in">console</span>.log(txId)
+&gt; <span class="hljs-string">"d86c34adaeae19171fd98fe0ffd89bfb92a1e6f0339f5e4f18d837715fd25758"</span></code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>rawTx: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Signed transaction data in hex format.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Hex format of txid.</p>
 						</li>
 					</ul>
 				</section>
@@ -128,10 +143,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/20be36d/src/web3bch-providers/INetworkProvider.ts#L6">web3bch-providers/INetworkProvider.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/d568b4d/src/web3bch-providers/INetworkProvider.ts#L30">web3bch-providers/INetworkProvider.ts:30</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the current network.</p>
+								</div>
+								<h4 id="example">Example</h4>
+								<pre><code class="language-typescript"><span class="hljs-keyword">const</span> network = <span class="hljs-keyword">await</span> provider.getNetwork()
+<span class="hljs-built_in">console</span>.log(network)
+&gt; <span class="hljs-number">3823236072</span></code></pre>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Network magic bytes</p>
 						</li>
 					</ul>
 				</section>
@@ -145,10 +170,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/20be36d/src/web3bch-providers/INetworkProvider.ts#L4">web3bch-providers/INetworkProvider.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/d568b4d/src/web3bch-providers/INetworkProvider.ts#L20">web3bch-providers/INetworkProvider.ts:20</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the bitcoin protocol version.</p>
+								</div>
+								<h4 id="example">Example</h4>
+								<pre><code class="language-typescript"><span class="hljs-keyword">const</span> version = <span class="hljs-keyword">await</span> provider.getProtocolVersion()
+<span class="hljs-built_in">console</span>.log(version)
+&gt; <span class="hljs-number">70015</span></code></pre>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The protocol version.</p>
 						</li>
 					</ul>
 				</section>
@@ -156,16 +191,26 @@
 					<a name="getversion" class="tsd-anchor"></a>
 					<h3>get<wbr>Version</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Version<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Version<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/20be36d/src/web3bch-providers/INetworkProvider.ts#L2">web3bch-providers/INetworkProvider.ts:2</a></li>
+									<li>Defined in <a href="https://github.com/web3bch/web3bch.js/blob/d568b4d/src/web3bch-providers/INetworkProvider.ts#L10">web3bch-providers/INetworkProvider.ts:10</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the current web3bch version.</p>
+								</div>
+								<h4 id="example">Example</h4>
+								<pre><code class="language-typescript"><span class="hljs-keyword">const</span> version = <span class="hljs-keyword">await</span> provider.getVersion()
+<span class="hljs-built_in">console</span>.log(version)
+&gt; <span class="hljs-string">"0.0.1"</span></code></pre>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The current web3bch version</p>
 						</li>
 					</ul>
 				</section>
