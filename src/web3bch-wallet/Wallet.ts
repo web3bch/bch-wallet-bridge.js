@@ -71,11 +71,21 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public addRedeemScript(
+  public async addRedeemScript(
     redeemScript: string,
     dAppId: string
   ): Promise<void> {
-    throw new Error("Method not implemented.")
+    if (redeemScript.length < 1) {
+      throw new IllegalArgumentException("The redeemScript cannot be empty.")
+    }
+
+    const walletProvider = this.checkWalletProvider()
+    const result = await walletProvider.addRedeemScript(redeemScript, dAppId || this.defaultDAppId)
+      .catch((e) => { throw new ProviderException(e) })
+
+    if (typeof result !== "undefined") {
+      throw new ProviderException("The provider returns illegal value.")
+    }
   }
 
   public getUtxos(
