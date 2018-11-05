@@ -7,6 +7,7 @@ import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
 import Utxo from "../src/web3bch-providers/entities/Utxo"
+import Destination from "../src/web3bch-wallet/entities/Destination"
 
 describe("Wallet", () => {
   let wallet: IWallet
@@ -278,6 +279,47 @@ describe("Wallet", () => {
   //
   // send
   //
+  describe("send()", () => {
+    beforeEach(() => {
+      networkProvider = new (jest.fn<INetworkProvider>(() => ({
+        broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
+      })))()
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        createSignedTx: jest.fn(() => Promise.resolve())
+      })))()
+      const providers = new Providers(networkProvider, walletProvider)
+      wallet = new Wallet(providers)
+    })
+    const destination = new Destination("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p", 100000)
+    const destination2 = new Destination("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya", 300000)
+    it("should be success if there is no problem.", async () => {
+      await wallet.send(destination)
+    })
+    it("should be success if there is no problem.", async () => {
+      await wallet.send(destination, "Hello Bitcoin Cash")
+    })
+    it("should be success if there is no problem.", async () => {
+      await wallet.send(destination, ["Hello", "Bitcoin", "Cash"])
+    })
+    it("should be success if there is no problem.", async () => {
+      await wallet.send([destination, destination2])
+    })
+    it("should calls IWalletProvider#createSignedTx", async () => {
+      await wallet.send(destination)
+      expect(walletProvider.createSignedTx).toBeCalled()
+    })
+    it("should calls networkProvider#broadcastRawTx", async () => {
+      await wallet.send(destination)
+      expect(networkProvider.broadcastRawTx).toBeCalled()
+    })
+    it("should return the same value as networkProvider#broadcastRawTx", async () => {
+      const txid = wallet.send(destination)
+      expect(txid).toBe("txid")
+    })
+    it("should throw an error if the destination is an empty array.", async () => {
+      await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
+    })
+  })
 
   //
   // advancedSend
