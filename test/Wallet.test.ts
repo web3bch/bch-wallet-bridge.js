@@ -67,18 +67,18 @@ describe("Wallet", () => {
       wallet = new Wallet(providers)
     })
 
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.getAddressIndex(ChangeType.RECEIVE)
     })
-    it.skip("should calls IWalletProvider#getAddressIndex", async () => {
-      await wallet.getAddress(ChangeType.CHANGE)
+    it("should calls IWalletProvider#getAddressIndex", async () => {
+      await wallet.getAddressIndex(ChangeType.CHANGE)
       expect(walletProvider.getAddressIndex).toBeCalled()
     })
-    it.skip("should return the same value as IWalletProvider#getAddressIndex", async () => {
-      const index = await wallet.getAddress(ChangeType.CHANGE)
+    it("should return the same value as IWalletProvider#getAddressIndex", async () => {
+      const index = await wallet.getAddressIndex(ChangeType.CHANGE)
       expect(index).toBe(3)
     })
-    it.skip("should throws ProviderException if the wallet provider throws an error.", async () => {
+    it("should throws ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddressIndex: jest.fn(() => Promise.reject())
       })))()
