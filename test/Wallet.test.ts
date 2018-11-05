@@ -60,6 +60,38 @@ describe("Wallet", () => {
   })
 
   //
+  // getAddressIndex
+  //
+  describe("getAddressIndex()", () => {
+    beforeEach(() => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getAddressIndex: jest.fn(() => Promise.resolve(3))
+      })))()
+      const providers = new Providers(undefined, walletProvider)
+      wallet = new Wallet(providers)
+    })
+
+    it("should be success if there is no problem.", async () => {
+      await wallet.getAddressIndex(ChangeType.RECEIVE)
+    })
+    it("should calls IWalletProvider#getAddressIndex", async () => {
+      await wallet.getAddress(ChangeType.CHANGE)
+      expect(walletProvider.getAddressIndex).toBeCalled()
+    })
+    it("should return the same value as IWalletProvider#getAddressIndex", async () => {
+      const index = await wallet.getAddress(ChangeType.CHANGE)
+      expect(index).toBe(3)
+    })
+    it("should throws ProviderException if the wallet provider throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getAddressIndex: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getAddressIndex(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+    })
+  })
+
+  //
   // getRedeemScript
   //
   describe("getRedeemScript()", () => {
