@@ -1,6 +1,6 @@
 enum ChangeType {
-  RECEIVE = "receive",
-  CHANGE  = "change"
+  RECEIVE = 0,
+  CHANGE  = 1
 }
 
 export default ChangeType
