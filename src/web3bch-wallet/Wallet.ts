@@ -46,7 +46,9 @@ export default class Wallet implements IWallet {
     changeType: ChangeType,
     dAppId?: string
   ): Promise<number> {
-    throw new Error("Method not implemented.")
+    const walletProvider = this.checkWalletProvider()
+    return walletProvider.getAddressIndex(changeType, dAppId || this.defaultDAppId)
+      .catch((e) => { throw new ProviderException(e) })
   }
 
   public getAddresses(
