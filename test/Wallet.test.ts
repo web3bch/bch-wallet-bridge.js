@@ -179,24 +179,24 @@ describe("Wallet", () => {
       wallet = new Wallet(providers)
     })
 
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.addRedeemScript("03424f587e06424954424f5887")
     })
-    it.skip("should calls IWalletProvider#addRedeemScript", async () => {
+    it("should calls IWalletProvider#addRedeemScript", async () => {
       await wallet.addRedeemScript("03424f587e06424954424f5887")
       expect(walletProvider.getRedeemScripts).toBeCalled()
     })
-    it.skip("should throws IllegalArgumentException if the script is empty string.", () => {
+    it("should throws IllegalArgumentException if the script is empty string.", () => {
       expect(() => wallet.addRedeemScript("")).toThrow(IllegalArgumentException)
     })
-    it.skip("should throws ProviderException if the wallet provider throws an error.", async () => {
+    it("should throws ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.reject())
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
     })
-    it.skip("should throws ProviderException if the wallet provider invalid value.", async () => {
+    it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve(1))
       })))()
@@ -430,31 +430,31 @@ describe("Wallet", () => {
     })
     const destination = new Destination("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p", 100000)
     const destination2 = new Destination("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya", 300000)
-    it("should be success if there is no problem.", async () => {
+    it.skip("should be success if there is no problem.", async () => {
       await wallet.send(destination)
     })
-    it("should be success if there is no problem.", async () => {
+    it.skip("should be success if there is no problem.", async () => {
       await wallet.send(destination, "Hello Bitcoin Cash")
     })
-    it("should be success if there is no problem.", async () => {
+    it.skip("should be success if there is no problem.", async () => {
       await wallet.send(destination, ["Hello", "Bitcoin", "Cash"])
     })
-    it("should be success if there is no problem.", async () => {
+    it.skip("should be success if there is no problem.", async () => {
       await wallet.send([destination, destination2])
     })
-    it("should calls IWalletProvider#createSignedTx", async () => {
+    it.skip("should calls IWalletProvider#createSignedTx", async () => {
       await wallet.send(destination)
       expect(walletProvider.createSignedTx).toBeCalled()
     })
-    it("should calls networkProvider#broadcastRawTx", async () => {
+    it.skip("should calls networkProvider#broadcastRawTx", async () => {
       await wallet.send(destination)
       expect(networkProvider.broadcastRawTx).toBeCalled()
     })
-    it("should return the same value as networkProvider#broadcastRawTx", async () => {
+    it.skip("should return the same value as networkProvider#broadcastRawTx", async () => {
       const txid = wallet.send(destination)
       expect(txid).toBe("txid")
     })
-    it("should throw an error if the destination is an empty array.", async () => {
+    it.skip("should throw an error if the destination is an empty array.", async () => {
       await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
     })
   })
@@ -475,22 +475,22 @@ describe("Wallet", () => {
     })
     const output = new Output("76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac", 10000)
     const output2 = new Output("76a914d7e7c4e0b70eaa67ceff9d2823d1bbb9f6df9a5188ac", 30000)
-    it("should be success if there is no problem.", async () => {
+    it.skip("should be success if there is no problem.", async () => {
       await wallet.advancedSend([output, output2])
     })
-    it("should calls IWalletProvider#createSignedTx", async () => {
+    it.skip("should calls IWalletProvider#createSignedTx", async () => {
       await wallet.advancedSend([output, output2])
       expect(walletProvider.createSignedTx).toBeCalled()
     })
-    it("should calls networkProvider#broadcastRawTx", async () => {
+    it.skip("should calls networkProvider#broadcastRawTx", async () => {
       await wallet.advancedSend([output, output2])
       expect(networkProvider.broadcastRawTx).toBeCalled()
     })
-    it("should return the same value as networkProvider#broadcastRawTx", async () => {
+    it.skip("should return the same value as networkProvider#broadcastRawTx", async () => {
       const txid = wallet.advancedSend([output, output2])
       expect(txid).toBe("txid")
     })
-    it("should throw an error if the outputs is an empty array.", async () => {
+    it.skip("should throw an error if the outputs is an empty array.", async () => {
       await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
     })
   })
