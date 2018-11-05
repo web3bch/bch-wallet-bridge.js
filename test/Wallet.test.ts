@@ -258,7 +258,8 @@ describe("Wallet", () => {
       await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
       expect(walletProvider.getUnspendableUtxos).toBeCalled()
     })
-    it.skip("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set.", async () => {
+    it.skip("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set.",
+     async () => {
       const utxos = await wallet.getUtxos()
       expect(utxos).toBe([utxo, utxo2])
     })
@@ -288,7 +289,8 @@ describe("Wallet", () => {
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getUtxos()).rejects.toThrow(ProviderException)
     })
-    it.skip("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.", async () => {
+    it.skip("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.",
+     async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getUnspendableUtxos: jest.fn(() => Promise.resolve(1))
       })))()
