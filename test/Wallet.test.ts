@@ -184,10 +184,10 @@ describe("Wallet", () => {
     })
     it("should calls IWalletProvider#addRedeemScript", async () => {
       await wallet.addRedeemScript("03424f587e06424954424f5887")
-      expect(walletProvider.getRedeemScripts).toBeCalled()
+      expect(walletProvider.addRedeemScript).toBeCalled()
     })
-    it("should throws IllegalArgumentException if the script is empty string.", () => {
-      expect(() => wallet.addRedeemScript("")).toThrow(IllegalArgumentException)
+    it("should throws IllegalArgumentException if the script is empty string.", async () => {
+      await expect(wallet.addRedeemScript("")).rejects.toThrow(IllegalArgumentException)
     })
     it("should throws ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
