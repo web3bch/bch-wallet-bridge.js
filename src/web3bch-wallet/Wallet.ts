@@ -8,8 +8,11 @@ import Providers from "../web3bch/Providers"
 import IWalletProvider from "../web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
+import INetworkProvider from "../web3bch-providers/INetworkProvider";
 
 export default class Wallet implements IWallet {
+  private defaultDAppId?: string
+
   constructor(readonly providers: Providers) {}
 
   public getAddress(
@@ -26,7 +29,7 @@ export default class Wallet implements IWallet {
     }
 
     const walletProvider = this.checkWalletProvider()
-    return walletProvider.getAddresses(changeType, 1, index, dAppId)
+    return walletProvider.getAddresses(changeType, 1, index, dAppId || this.defaultDAppId)
       .then((it) => it[0])
       .then((it) => {
         if (!it) {
@@ -115,9 +118,15 @@ export default class Wallet implements IWallet {
   }
 
   public broadcastRawTx(
-    rawtx: string
+    rawTx: string
   ): Promise<string> {
-    throw new Error("Method not implemented.")
+    return new Promise((resolve) => {
+      const networkProvider = this.checkNetworkProvider()
+      if (!this.isHex(rawTx)) {
+        throw new IllegalArgumentException("The rawTx is not hex.")
+      }
+      resolve(networkProvider.broadcastRawTx(rawTx))
+    })
   }
 
   public getFeePerByte(): Promise<number> {
@@ -127,20 +136,44 @@ export default class Wallet implements IWallet {
   }
 
   public getDefaultDAppId(): Promise<string | undefined> {
-    throw new Error("Method not implemented.")
+    return Promise.resolve(this.defaultDAppId)
   }
 
   public setDefaultDAppId(
     dAppId?: string
   ): Promise<void> {
-    throw new Error("Method not implemented.")
+    return new Promise((resolve) => {
+      if (dAppId && !this.isTxHash(dAppId)) {
+        throw new IllegalArgumentException("The dAppId is invalid.")
+      }
+      this.defaultDAppId = dAppId
+      resolve()
+    })
+  }
+
+  private isHex(target: string): boolean {
+    const re = /^[0-9A-Ffa-f]+$/g
+    return re.test(target)
+  }
+
+  private isTxHash(target: string): boolean {
+    const re = /[0-9A-Ffa-f]{64}/g
+    return re.test(target)
   }
 
   // TODO: TEMP
-  public checkWalletProvider = (): IWalletProvider => {
+  private checkWalletProvider = (): IWalletProvider => {
     if (!this.providers.walletProvider) {
       throw new ProviderException("")
     }
     return this.providers.walletProvider
+  }
+
+  // TODO: TEMP
+  private checkNetworkProvider = (): INetworkProvider => {
+    if (!this.providers.networkProvider) {
+      throw new ProviderException("")
+    }
+    return this.providers.networkProvider
   }
 }
