@@ -6,6 +6,7 @@ import INetworkProvider from "../src/web3bch-providers/INetworkProvider"
 import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
+import Network from "../src/web3bch-wallet/entities/Network"
 import Utxo from "../src/web3bch-providers/entities/Utxo"
 
 describe("Wallet", () => {
@@ -289,6 +290,42 @@ describe("Wallet", () => {
 
   //
   // getNetwork
+  //
+
+  describe("getNetwork()", () => {
+    beforeEach(() => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getNetwork: jest.fn(() => Promise.resolve(
+          new Network("e3e1f3e8", "Mainnet")
+        ))
+      })))()
+      const providers = new Providers(undefined, walletProvider)
+      wallet = new Wallet(providers)
+    })
+
+    it("should be success if there is no problem.", async () => {
+      await wallet.getNetwork()
+    })
+    it("should calls IWalletProvider#getNetworkMagic", async () => {
+      await wallet.getNetwork()
+      expect(walletProvider.getNetworkMagic).toBeCalled()
+    })
+    it("should return expected value.", async () => {
+      const expected = new Network("e3e1f3e8", "Mainnet")
+      const actual = await wallet.getNetwork()
+      expect(actual).toBe(expected)
+    })
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getNetwork: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getNetwork()).rejects.toThrow(ProviderException)
+    })
+  })
+
+  //
+  // broadcastRawTx
   //
 
   describe("broadcastRawTx()", () => {
