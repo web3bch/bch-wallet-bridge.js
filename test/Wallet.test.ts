@@ -15,9 +15,6 @@ describe("Wallet", () => {
   let walletProvider: IWalletProvider
   let networkProvider: INetworkProvider
 
-  //
-  // getAddress
-  //
   describe("getAddress()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
@@ -59,9 +56,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // getAddressIndex
-  //
   describe("getAddressIndex()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
@@ -91,9 +85,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // getRedeemScript
-  //
   describe("getRedeemScript()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
@@ -141,9 +132,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // getRedeemScripts
-  //
   describe("getRedeemScripts()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
@@ -180,9 +168,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // addRedeemScript
-  //
   describe("addRedeemScript()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
@@ -218,9 +203,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // getUtxos
-  //
   describe("getUtxos()", () => {
     const utxo = new Utxo(
       "10a879077602483f7e89cae7202c95119fc9ce53db55f33c7efe401703aa7c38",
@@ -300,9 +282,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // getBalance
-  //
   describe("getBalance()", () => {
     const utxo = new Utxo("10a879077602483f7e89cae7202c95119fc9ce53db55f33c7efe401703aa7c38",
        2,
@@ -378,9 +357,6 @@ describe("Wallet", () => {
     })
   })
 
-  //
-  // sign
-  //
   describe("sign()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
