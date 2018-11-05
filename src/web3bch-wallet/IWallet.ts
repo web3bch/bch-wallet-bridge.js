@@ -217,12 +217,13 @@ export default interface IWallet {
   /**
    * Returns the bitcoin protocol version.
    * @example
-   * const version = await web3bch.wallet.getProtocolVersion()
+   * const version = await web3bch.wallet.getProtocolVersion(NetworkType.Network)
    * console.log(version)
    * > 70015
+   * @param providerType The provider name which you want to check the network type from
    * @returns The protocol version. The value is Int32.
    */
-  getProtocolVersion(): Promise<number>
+  getProtocolVersion(providerType: ProviderType): Promise<number>
 
   /**
    * Returns the current network.

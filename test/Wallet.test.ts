@@ -424,38 +424,42 @@ describe("Wallet", () => {
 
   describe("getProtocolVersion()", () => {
     beforeEach(() => {
+      networkProvider = new (jest.fn<INetworkProvider>(() => ({
+        getProtocolVersion: jest.fn(() => Promise.resolve(70015))
+      })))()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.resolve(70015))
       })))()
-      const providers = new Providers(undefined, walletProvider)
+      const providers = new Providers(networkProvider, walletProvider)
       wallet = new Wallet(providers)
     })
 
-    it("should be success if there is no problem.", async () => {
-      await wallet.getProtocolVersion()
+    it("should calls INetworkProvider#getProtocolVersion if ProviderType is NETWORK.", async () => {
+      await wallet.getProtocolVersion(ProviderType.NETWORK)
+      expect(networkProvider.getProtocolVersion).toBeCalled()
     })
-    it("should calls IWalletProvider#getProtocolVersion", async () => {
-      await wallet.getProtocolVersion()
+    it("should calls IWalletProvider#getProtocolVersion if ProviderType is WALLET.", async () => {
+      await wallet.getProtocolVersion(ProviderType.WALLET)
       expect(walletProvider.getProtocolVersion).toBeCalled()
     })
     it("should return expected value.", async () => {
       const expected = 70015
-      const actual = await wallet.getProtocolVersion()
+      const actual = await wallet.getProtocolVersion(ProviderType.NETWORK)
       expect(actual).toBe(expected)
     })
     it("should throw ProviderException if the wallet provider returns a string.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getProtocolVersion: jest.fn(() => Promise.resolve("70015"))
+        getProtocolVersion: jest.fn(() => Promise.resolve("700155"))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getProtocolVersion()).rejects.toThrow(ProviderException)
+      wallet = new Wallet(new Providers(networkProvider, walletProvider))
+      await expect(wallet.getProtocolVersion(ProviderType.WALLET)).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getProtocolVersion()).rejects.toThrow(ProviderException)
+      wallet = new Wallet(new Providers(networkProvider, walletProvider))
+      await expect(wallet.getProtocolVersion(ProviderType.WALLET)).rejects.toThrow(ProviderException)
     })
   })
 
