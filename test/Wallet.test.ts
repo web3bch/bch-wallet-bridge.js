@@ -333,8 +333,8 @@ describe("Wallet", () => {
       await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
       expect(walletProvider.getUnspendableUtxos).toBeCalled()
     })
-    it.skip("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set.",
-     async () => {
+    it.skip("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set."
+    , async () => {
       const utxos = await wallet.getUtxos()
       expect(utxos).toBe(70000)
     })
@@ -610,10 +610,10 @@ describe("Wallet", () => {
       wallet = new Wallet(providers)
     })
     it.skip("should be success if there is no problem.", async () => {
-      await wallet.getProtocolVersion()
+      await wallet.getProtocolVersion(ProviderType.NETWORK)
     })
     it.skip("should call IWalletProvider#getProtocolVersion", async () => {
-      await wallet.getProtocolVersion()
+      await wallet.getProtocolVersion(ProviderType.NETWORK)
       expect(walletProvider.getProtocolVersion).toBeCalled()
     })
     it("should return expected value.", async () => {
@@ -642,14 +642,14 @@ describe("Wallet", () => {
         getProtocolVersion: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getProtocolVersion()).rejects.toThrow(ProviderException)
+      await expect(wallet.getProtocolVersion(ProviderType.NETWORK)).rejects.toThrow(ProviderException)
     })
     it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.reject())
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getProtocolVersion()).rejects.toThrow(ProviderException)
+      await expect(wallet.getProtocolVersion(ProviderType.NETWORK)).rejects.toThrow(ProviderException)
     })
   })
 
@@ -706,9 +706,6 @@ describe("Wallet", () => {
   // broadcastRawTx
   //
   describe("broadcastRawTx()", () => {
-    const rawtx = "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0\
-    704ffff001d0104ffffffff0100f2052a0100000043410496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8\
-    be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858eeac00000000"
     beforeEach(() => {
       networkProvider = new (jest.fn<INetworkProvider>(() => ({
         broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
