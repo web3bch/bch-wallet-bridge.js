@@ -205,7 +205,7 @@ export default interface IWallet {
    * ])
    * console.log(txid)
    * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
-   * @param outputs The Array of TransactionOutput objects.
+   * @param outputs The Array of TransactionOutput objects. Throws an error, when the array is empty.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
    * @returns Hex format of txid.
    */
