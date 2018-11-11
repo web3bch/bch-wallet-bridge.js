@@ -86,7 +86,9 @@ export default interface IWalletProvider {
   /**
    * Returns the transaction outputs which addresses are spendable.
    * @example
-   * const utxos = await provider.getSpendableUtxos()
+   * const utxos = await provider.getSpendableUtxos(
+   *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
+   * )
    * console.log(utxos)
    * > [
    *     {
@@ -97,9 +99,10 @@ export default interface IWalletProvider {
    *       'satoshis' : 50000
    *     }
    *   ]
+   * @param dAppId The DApp ID.
    * @returns The unspent transaction output object list.
    */
-  getSpendableUtxos(): Promise<Utxo[]>
+  getSpendableUtxos(dAppId?: string): Promise<Utxo[]>
 
   /**
    * Returns the unspent transaction outputs belonging to the DApp which addresses are unspendable.
