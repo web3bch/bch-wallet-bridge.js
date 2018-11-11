@@ -266,17 +266,18 @@ describe("Wallet", () => {
       expect(new Set(utxos)).toEqual(new Set([utxo, utxo2]))
     })
     // ProviderException
-    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
+    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getUtxos()).rejects.toThrow(ProviderException)
     })
-    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
+    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
@@ -350,24 +351,25 @@ describe("Wallet", () => {
       expect(utxos).toBe(70000)
     })
     // ProviderException
-    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
+    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getBalance()).rejects.toThrow(ProviderException)
     })
-    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
+    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.reject())
       })))()
@@ -375,7 +377,7 @@ describe("Wallet", () => {
       await expect(wallet.getBalance())
       .rejects.toThrow(ProviderException)
     })
-    it.skip("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.",
+    it("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.",
      async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getUnspendableUtxos: jest.fn(() => Promise.reject())

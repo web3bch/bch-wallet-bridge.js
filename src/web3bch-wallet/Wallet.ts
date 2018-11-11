@@ -137,6 +137,13 @@ export default class Wallet implements IWallet {
         .catch((e) => {
           throw new ProviderException(e)
         })
+      if (!Array.isArray(unspendableUtxos) || !Array.isArray(spendableUtxos)) {
+        throw new ProviderException("The provider returns illegal value.")
+      }
+      if ((unspendableUtxos.length !== 0 && !(unspendableUtxos[0] instanceof Utxo)) ||
+        (spendableUtxos.length !== 0 && !(spendableUtxos[0] instanceof Utxo))) {
+        throw new ProviderException("The provider returns illegal value.")
+      }
       utxos.push(...unspendableUtxos)
       utxos.push(...spendableUtxos)
     } else {
@@ -144,6 +151,12 @@ export default class Wallet implements IWallet {
         .catch((e) => {
           throw new ProviderException(e)
         })
+      if (!Array.isArray(spendableUtxos)) {
+        throw new ProviderException("The provider returns illegal value.")
+      }
+      if (spendableUtxos.length !== 0 && !(spendableUtxos[0] instanceof Utxo)) {
+        throw new ProviderException("The provider returns illegal value.")
+      }
       utxos.push(...spendableUtxos)
     }
     return utxos
