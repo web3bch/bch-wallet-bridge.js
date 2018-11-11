@@ -183,6 +183,12 @@ export default class Wallet implements IWallet {
   public getFeePerByte(): Promise<number> {
     const walletProvider = this.checkWalletProvider()
     return walletProvider.getFeePerByte()
+      .then((fee) => {
+        if (!Number.isInteger(fee) || fee < 1) {
+          throw new ProviderException("The return value is invalid.")
+        }
+        return fee
+      })
       .catch((e) => { throw new ProviderException(e) })
   }
 
