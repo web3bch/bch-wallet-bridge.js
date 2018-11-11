@@ -153,20 +153,20 @@ describe("Wallet", () => {
       const providers = new Providers(undefined, walletProvider)
       wallet = new Wallet(providers)
     })
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.getRedeemScripts()
     })
-    it.skip("should call IWalletProvider#getRedeemScripts", async () => {
+    it("should calls IWalletProvider#getRedeemScripts", async () => {
       await wallet.getRedeemScripts()
       expect(walletProvider.getRedeemScripts).toBeCalled()
     })
-    it.skip("should return the same value as IWalletProvider#getRedeemScripts", async () => {
+    it("should return the same value as IWalletProvider#getRedeemScripts", async () => {
       const sciprts = await wallet.getRedeemScripts()
-      expect(sciprts).toBe(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"])
+      expect(sciprts).toEqual(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"])
     })
     // ProviderException
     each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]]])
-    .it.skip("should throw ProviderException when provider does not return a string array or an empty array",
+    .it("should throw ProviderException when provider does not return a string array or an empty array",
      async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
@@ -174,7 +174,7 @@ describe("Wallet", () => {
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getRedeemScripts()).rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.reject())
       })))()

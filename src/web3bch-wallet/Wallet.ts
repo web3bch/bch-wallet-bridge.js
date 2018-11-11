@@ -90,19 +90,20 @@ export default class Wallet implements IWallet {
     if (!this.isP2SHCashAddress(p2shAddress)) {
       throw new IllegalArgumentException("The address is not P2SH Address or Cash Address.")
     }
+    const redeemScripts = await this.getRedeemScripts(dAppId)
+    return redeemScripts.find((script) => this.toAddressFromScript(script) === p2shAddress)
+  }
+
+  public async getRedeemScripts(
+    dAppId?: string
+  ): Promise<string[]> {
     const walletProvider = this.checkWalletProvider()
     const redeemScripts = await walletProvider.getRedeemScripts(dAppId || this.defaultDAppId)
       .catch((e) => { throw new ProviderException(e) })
     if (typeof redeemScripts !== "object" || redeemScripts.length > 0 && typeof redeemScripts[0] !== "string") {
       throw new ProviderException("The WalletProvider provides invalid type.")
     }
-    return redeemScripts.find((script) => this.toAddressFromScript(script) === p2shAddress)
-  }
-
-  public getRedeemScripts(
-    dAppId?: string
-  ): Promise<string[]> {
-    throw new Error("Method not implemented.")
+    return redeemScripts
   }
 
   public async addRedeemScript(
@@ -260,7 +261,7 @@ export default class Wallet implements IWallet {
       if (!isCashAddress(address) || !isP2SHAddress(address)) {
         return false
       }
-    } catch {
+    } catch (e) {
       return false
     }
     return true
