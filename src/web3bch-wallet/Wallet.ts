@@ -123,10 +123,30 @@ export default class Wallet implements IWallet {
     }
   }
 
-  public getUtxos(
+  public async getUtxos(
     dAppId?: string
   ): Promise<Utxo[]> {
-    throw new Error("Method not implemented.")
+    const walletProvider = this.checkWalletProvider()
+    const utxos: Utxo[] = []
+    if (dAppId) {
+      const unspendableUtxos = await walletProvider.getUnspendableUtxos(dAppId)
+        .catch((e) => {
+          throw new ProviderException(e)
+        })
+      const spendableUtxos = await walletProvider.getSpendableUtxos(dAppId)
+        .catch((e) => {
+          throw new ProviderException(e)
+        })
+      utxos.push(...unspendableUtxos)
+      utxos.push(...spendableUtxos)
+    } else {
+      const spendableUtxos = await walletProvider.getSpendableUtxos()
+        .catch((e) => {
+          throw new ProviderException(e)
+        })
+      utxos.push(...spendableUtxos)
+    }
+    return utxos
   }
 
   public getBalance(
