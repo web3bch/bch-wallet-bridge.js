@@ -126,7 +126,7 @@ describe("Wallet", () => {
         .rejects.toThrow(IllegalArgumentException)
     })
     each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]]])
-    .it.skip("should throw ProviderException when provider does not return a string array or an empty array"
+    .it("should throw ProviderException when provider does not return a string array or an empty array"
     , async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
