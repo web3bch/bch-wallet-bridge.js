@@ -11,7 +11,7 @@ import ProviderException from "./entities/ProviderException"
 import INetworkProvider from "../web3bch-providers/INetworkProvider"
 import ProviderType from "./entities/ProviderType"
 import { findNetwork } from "./networks"
-import { isCashAddress, isP2SHAddress, toCashAddress } from "bchaddrjs"
+import { isCashAddress, isP2SHAddress, toCashAddress, toLegacyAddress } from "bchaddrjs"
 import * as bitcoincashjs from "bitcoincashjs"
 
 export default class Wallet implements IWallet {
@@ -131,11 +131,36 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public send(
+  public async send(
     destination: Destination | Destination[],
-    data: string | string[]
+    data?: string | string[]
   ): Promise<string> {
-    throw new Error("Method not implemented.")
+    // convert to array
+    const destinations = [destination].flatMap((it) => it)
+    if (destinations.length === 0) {
+      throw new IllegalArgumentException("The destinations cannot be empty.")
+    }
+
+    const outputs = destinations.map((dest) => {
+      const legacy = toLegacyAddress(dest.address)
+      const script = bitcoincashjs.Script.fromAddress(legacy).toBuffer().toString("hex")
+      return new Output(script, dest.amount)
+    })
+
+    // convert to array
+    const dataArr = data ? [data].flatMap((it) => it) : []
+    if (dataArr.length !== 0) {
+      const opReturnData = Buffer.concat(dataArr.map((it) => Buffer.from(it)))
+      const opReturnScript = bitcoincashjs.Script.buildDataOut(opReturnData).toBuffer().toString("hex")
+      // append data
+      outputs.push(new Output(opReturnScript, 0))
+    }
+
+    const walletProvider = this.checkWalletProvider()
+    const tx = await walletProvider.createSignedTx(outputs)
+
+    const networkProvider = this.checkNetworkProvider()
+    return networkProvider.broadcastRawTx(tx)
   }
 
   public advancedSend(
