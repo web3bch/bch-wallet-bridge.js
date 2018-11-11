@@ -100,7 +100,7 @@ export default class Wallet implements IWallet {
     const walletProvider = this.checkWalletProvider()
     const redeemScripts = await walletProvider.getRedeemScripts(dAppId || this.defaultDAppId)
       .catch((e) => { throw new ProviderException(e) })
-    if (typeof redeemScripts !== "object" || redeemScripts.length > 0 && typeof redeemScripts[0] !== "string") {
+    if (!Array.isArray(redeemScripts) || (redeemScripts.length > 0 && typeof redeemScripts[0] !== "string")) {
       throw new ProviderException("The WalletProvider provides invalid type.")
     }
     return redeemScripts
