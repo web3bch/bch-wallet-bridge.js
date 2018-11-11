@@ -260,7 +260,7 @@ export default class Wallet implements IWallet {
       if (!isCashAddress(address) || !isP2SHAddress(address)) {
         return false
       }
-    } catch {
+    } catch (e) {
       return false
     }
     return true
