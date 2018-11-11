@@ -37,6 +37,12 @@ export default class Wallet implements IWallet {
   ): Promise<number> {
     const walletProvider = this.checkWalletProvider()
     return walletProvider.getAddressIndex(changeType, dAppId || this.defaultDAppId)
+      .then((index) => {
+        if (!Number.isInteger(index) || index < 0 || index > 2147483647) {
+          throw new ProviderException("The return value is invalid.")
+        }
+        return index
+      })
       .catch((e) => { throw new ProviderException(e) })
   }
 
