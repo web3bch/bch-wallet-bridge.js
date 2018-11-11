@@ -167,18 +167,14 @@ export default class Wallet implements IWallet {
       outputs.push(new Output(opReturnScript, 0))
     }
 
-    const walletProvider = this.checkWalletProvider()
-    const tx = await walletProvider.createSignedTx(outputs)
-
-    const networkProvider = this.checkNetworkProvider()
-    return networkProvider.broadcastRawTx(tx)
+    return this.sendToOutputs(outputs)
   }
 
-  public advancedSend(
+  public async advancedSend(
     outputs: Output[],
     dAppId?: string
   ): Promise<string> {
-    throw new Error("Method not implemented.")
+    return this.sendToOutputs(outputs, dAppId || this.defaultDAppId)
   }
 
   public async getProtocolVersion(providerType: ProviderType): Promise<number> {
@@ -297,5 +293,16 @@ export default class Wallet implements IWallet {
     const hashed = bitcoincashjs.crypto.Hash.sha256ripemd160(buf)
     const legacy = bitcoincashjs.Address.fromScriptHash(hashed).toString()
     return toCashAddress(legacy)
+  }
+
+  private async sendToOutputs(
+    outputs: Output[],
+    dAppId?: string
+  ): Promise<string> {
+    const walletProvider = this.checkWalletProvider()
+    const tx = await walletProvider.createSignedTx(outputs, dAppId || this.defaultDAppId)
+
+    const networkProvider = this.checkNetworkProvider()
+    return networkProvider.broadcastRawTx(tx)
   }
 }
