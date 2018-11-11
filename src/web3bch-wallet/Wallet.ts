@@ -22,22 +22,9 @@ export default class Wallet implements IWallet {
     index?: number,
     dAppId?: string
   ): Promise<string> {
-    if (index) {
-      if (index < 0 || index > 2147483647) {
-        throw new IllegalArgumentException("index must be >= 0 and <= 2147483647")
-      } else if (!Number.isInteger(index)) {
-        throw new IllegalArgumentException("index must be integer.")
-      }
-    }
-
-    const walletProvider = this.checkWalletProvider()
-    return walletProvider.getAddresses(changeType, 1, index, dAppId || this.defaultDAppId)
-      .then((it) => it[0])
-      .then((it) => {
-        if (!it) {
-          throw new ProviderException("The return value is invalid.")
-        }
-        return it
+    return this.getAddresses(changeType, index, 1, dAppId)
+      .then((addresses) => {
+        return addresses[0]
       })
       .catch((e) => { throw new ProviderException(e) })
   }
@@ -57,7 +44,31 @@ export default class Wallet implements IWallet {
     size?: number,
     dAppId?: string
   ): Promise<string[]> {
-    throw new Error("Method not implemented.")
+    if (startIndex) {
+      if (startIndex < 0 || startIndex > 2147483647) {
+        throw new IllegalArgumentException("startIndex must be >= 0 and <= 2147483647")
+      } else if (!Number.isInteger(startIndex)) {
+        throw new IllegalArgumentException("startIndex must be integer.")
+      }
+    }
+
+    if (size) {
+      if (size < 1 || size > 2147483648) {
+        throw new IllegalArgumentException("size must be >= 1 and <= 2147483648")
+      } else if (!Number.isInteger(size)) {
+        throw new IllegalArgumentException("size must be integer.")
+      }
+    }
+
+    const walletProvider = this.checkWalletProvider()
+    return walletProvider.getAddresses(changeType, size || 1, startIndex, dAppId || this.defaultDAppId)
+      .then((it) => {
+        if (!it || it.length === 0) {
+          throw new ProviderException("The return value is invalid.")
+        }
+        return it
+      })
+      .catch((e) => { throw new ProviderException(e) })
   }
 
   public getRedeemScript(
