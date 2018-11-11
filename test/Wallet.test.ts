@@ -43,7 +43,7 @@ describe("Wallet", () => {
       expect(() => wallet.getAddress(ChangeType.RECEIVE, 0.1)).toThrow(IllegalArgumentException)
     })
     // ProviderException
-    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
+    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]]])
     .it("should throw ProviderException when provider does not return a string array", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(providerReturn))
