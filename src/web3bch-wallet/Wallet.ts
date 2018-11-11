@@ -11,6 +11,8 @@ import ProviderException from "./entities/ProviderException"
 import INetworkProvider from "../web3bch-providers/INetworkProvider"
 import ProviderType from "./entities/ProviderType"
 import { findNetwork } from "./networks"
+import { isCashAddress, isP2SHAddress, toCashAddress } from "bchaddrjs"
+import * as bitcoincashjs from "bitcoincashjs"
 
 export default class Wallet implements IWallet {
   private defaultDAppId?: string
@@ -60,11 +62,20 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public getRedeemScript(
+  public async getRedeemScript(
     p2shAddress: string,
     dAppId?: string
-  ): Promise<string> {
-    throw new Error("Method not implemented.")
+  ): Promise<string | undefined> {
+    if (!this.isP2SHCashAddress(p2shAddress)) {
+      throw new IllegalArgumentException("The address is not P2SH Address or Cash Address.")
+    }
+    const walletProvider = this.checkWalletProvider()
+    const redeemScripts = await walletProvider.getRedeemScripts(dAppId || this.defaultDAppId)
+      .catch((e) => { throw new ProviderException(e) })
+    if (typeof redeemScripts !== "object" || redeemScripts.length > 0 && typeof redeemScripts[0] !== "string") {
+      throw new ProviderException("The WalletProvider provides invalid type.")
+    }
+    return redeemScripts.find((script) => this.toAddressFromScript(script) === p2shAddress)
   }
 
   public getRedeemScripts(
@@ -215,5 +226,23 @@ export default class Wallet implements IWallet {
       throw new ProviderException("")
     }
     return this.providers.networkProvider
+  }
+
+  private isP2SHCashAddress = (address: string): boolean => {
+    try {
+      if (!isCashAddress(address) || !isP2SHAddress(address)) {
+        return false
+      }
+    } catch {
+      return false
+    }
+    return true
+  }
+
+  private toAddressFromScript = (script: string) => {
+    const buf = Buffer.from(script, "hex")
+    const hashed = bitcoincashjs.crypto.Hash.sha256ripemd160(buf)
+    const legacy = bitcoincashjs.Address.fromScriptHash(hashed).toString()
+    return toCashAddress(legacy)
   }
 }
