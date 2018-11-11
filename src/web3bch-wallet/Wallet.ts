@@ -26,7 +26,11 @@ export default class Wallet implements IWallet {
   ): Promise<string> {
     return this.getAddresses(changeType, index, 1, dAppId)
       .then((addresses) => {
-        return addresses[0]
+        const address = addresses[0]
+        if (typeof address !== "string") {
+          throw new ProviderException("The return value is invalid.")
+        }
+        return address
       })
       .catch((e) => { throw new ProviderException(e) })
   }
@@ -37,6 +41,12 @@ export default class Wallet implements IWallet {
   ): Promise<number> {
     const walletProvider = this.checkWalletProvider()
     return walletProvider.getAddressIndex(changeType, dAppId || this.defaultDAppId)
+      .then((index) => {
+        if (!Number.isInteger(index) || index < 0 || index > 2147483647) {
+          throw new ProviderException("The return value is invalid.")
+        }
+        return index
+      })
       .catch((e) => { throw new ProviderException(e) })
   }
 
@@ -64,11 +74,11 @@ export default class Wallet implements IWallet {
 
     const walletProvider = this.checkWalletProvider()
     return walletProvider.getAddresses(changeType, size || 1, startIndex, dAppId || this.defaultDAppId)
-      .then((it) => {
-        if (!it || it.length === 0) {
+      .then((addresses) => {
+        if (!(addresses instanceof Array) || addresses.length === 0) {
           throw new ProviderException("The return value is invalid.")
         }
-        return it
+        return addresses
       })
       .catch((e) => { throw new ProviderException(e) })
   }
@@ -194,6 +204,12 @@ export default class Wallet implements IWallet {
   public getFeePerByte(): Promise<number> {
     const walletProvider = this.checkWalletProvider()
     return walletProvider.getFeePerByte()
+      .then((fee) => {
+        if (!Number.isInteger(fee) || fee < 1) {
+          throw new ProviderException("The return value is invalid.")
+        }
+        return fee
+      })
       .catch((e) => { throw new ProviderException(e) })
   }
 
