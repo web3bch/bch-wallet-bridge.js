@@ -462,32 +462,32 @@ describe("Wallet", () => {
       wallet = new Wallet(providers)
     })
     const destination = new Destination("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p", 100000)
-    const destination2 = new Destination("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya", 300000)
-    it.skip("should be success if there is no problem.", async () => {
+    const destination2 = new Destination("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", 300000)
+    it("should be success if there is no problem.", async () => {
       await wallet.send(destination)
     })
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.send(destination, "Hello Bitcoin Cash")
     })
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.send(destination, ["Hello", "Bitcoin", "Cash"])
     })
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.send([destination, destination2])
     })
-    it.skip("should calls IWalletProvider#createSignedTx", async () => {
+    it("should calls IWalletProvider#createSignedTx", async () => {
       await wallet.send(destination)
       expect(walletProvider.createSignedTx).toBeCalled()
     })
-    it.skip("should calls networkProvider#broadcastRawTx", async () => {
+    it("should calls networkProvider#broadcastRawTx", async () => {
       await wallet.send(destination)
       expect(networkProvider.broadcastRawTx).toBeCalled()
     })
-    it.skip("should return the same value as networkProvider#broadcastRawTx", async () => {
-      const txid = wallet.send(destination)
+    it("should return the same value as networkProvider#broadcastRawTx", async () => {
+      const txid = await wallet.send(destination)
       expect(txid).toBe("txid")
     })
-    it.skip("should throw an error if the destination is an empty array.", async () => {
+    it("should throw an error if the destination is an empty array.", async () => {
       await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
     })
     // ProviderException
