@@ -49,6 +49,11 @@
   resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.3.tgz#b672cfaac25cbbc634a0fd92c515f66faa18dbca"
   integrity sha512-pGF/zvYOACZ/gLGWdQH8zSwteQS1epp68yRcVLJMgUck/MjEn/FBYmPub9pXT8C1e4a8YZfHo1CKyV8q1vKUnQ==
 
+"@types/jest-each@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@types/jest-each/-/jest-each-0.3.2.tgz#8a741b6f40b5fc7ef075aa9d1987316a7a9ce2fd"
+  integrity sha512-lEQooO1ZOnyjhxb8DFtU1HRvrIpqdlCjVyixhle6Y9yHu6HfhBmgxcnA639ENC/c7upcUvOFquMzw1IeP/bPxg==
+
 "@types/jest@^23.3.9":
   version "23.3.9"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.9.tgz#c16b55186ee73ae65e001fbee69d392c51337ad1"
