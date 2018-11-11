@@ -31,5 +31,9 @@
     "typedoc": "^0.13.0",
     "typedoc-plugin-example-tag": "Yuiki/typedoc-plugin-example-tag#master",
     "typescript": "^3.1.6"
+  },
+  "dependencies": {
+    "bchaddrjs": "^0.2.2",
+    "bitcoincashjs": "^0.1.10"
   }
 }

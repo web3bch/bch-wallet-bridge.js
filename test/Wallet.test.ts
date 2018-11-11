@@ -91,45 +91,45 @@ describe("Wallet", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() =>
-        Promise.resolve(["03424f587e06424954424f5887", "9c1657fb5142ca85ab2d27ea847f648ec172a012"]))
-        // "pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya" is a hash value of "9c1657fb5142ca85ab2d27ea847f648ec172a012"
+        Promise.resolve(["9c1657fb5142ca85ab2d27ea847f648ec172a012", "51519587"]))
       })))()
       const providers = new Providers(undefined, walletProvider)
       wallet = new Wallet(providers)
     })
 
-    it.skip("should be success if there is no problem.", async () => {
-      await wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya")
+    it("should be success if there is no problem.", async () => {
+      await wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
     })
-    it.skip("should calls IWalletProvider#getRedeemScripts", async () => {
-      await wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya")
+    it("should calls IWalletProvider#getRedeemScripts", async () => {
+      await wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
       expect(walletProvider.getRedeemScripts).toBeCalled()
     })
-    it.skip("should returns a script corresponding to the address", async () => {
-      const script = await wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya")
-      expect(script).toBe("9c1657fb5142ca85ab2d27ea847f648ec172a012")
+    it("should returns a script corresponding to the address", async () => {
+      const script = await wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
+      expect(script).toBe("51519587")
     })
-    it.skip("should throws IllegalArgumentException if the address is invalid", () => {
-      expect(() => wallet.getRedeemScript("I am not Address")).toThrow(IllegalArgumentException)
+    it("should throws IllegalArgumentException if the address is invalid", async () => {
+      await expect(wallet.getRedeemScript("I am not Address"))
+        .rejects.toThrow(IllegalArgumentException)
     })
-    it.skip("should throws IllegalArgumentException if the address is P2PKHAdress.", () => {
-      expect(() => wallet.getRedeemScript("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p"))
-      .toThrow(IllegalArgumentException)
+    it("should throws IllegalArgumentException if the address is P2PKHAdress.", async () => {
+      await expect(wallet.getRedeemScript("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p"))
+        .rejects.toThrow(IllegalArgumentException)
     })
-    it.skip("should throws ProviderException if the wallet provider throws an error.", async () => {
+    it("should throws ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.reject())
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya"))
+      await expect(wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
       .rejects.toThrow(ProviderException)
     })
-    it.skip("should throws ProviderException if the wallet provider invalid value.", async () => {
+    it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getRedeemScripts: jest.fn(() => Promise.resolve([]))
+        getRedeemScripts: jest.fn(() => Promise.resolve(""))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScript("bitcoincash:pzwpv4lm29pv4pdt95n74prlvj8vzu4qzg7pgrspya"))
+      await expect(wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
       .rejects.toThrow(ProviderException)
     })
   })

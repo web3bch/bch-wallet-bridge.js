@@ -85,7 +85,7 @@ export default interface IWallet {
   getRedeemScript(
     p2shAddress: string,
     dAppId?: string
-  ): Promise<string>
+  ): Promise<string | undefined>
 
   /**
    * Returns the stored redeem scripts belong to the DApp ID.
