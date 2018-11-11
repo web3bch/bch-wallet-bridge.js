@@ -612,11 +612,11 @@ describe("Wallet", () => {
       const providers = new Providers(networkProvider, walletProvider)
       wallet = new Wallet(providers)
     })
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.getProtocolVersion(ProviderType.NETWORK)
     })
-    it.skip("should call IWalletProvider#getProtocolVersion", async () => {
-      await wallet.getProtocolVersion(ProviderType.NETWORK)
+    it("should call IWalletProvider#getProtocolVersion", async () => {
+      await wallet.getProtocolVersion(ProviderType.WALLET)
       expect(walletProvider.getProtocolVersion).toBeCalled()
     })
     it("should return expected value.", async () => {
