@@ -13,7 +13,6 @@ import ProviderType from "./entities/ProviderType"
 import { findNetwork } from "./networks"
 import { isCashAddress, isP2SHAddress, toCashAddress, toLegacyAddress } from "bchaddrjs"
 import * as bitcoincashjs from "bitcoincashjs"
-import { type } from "os";
 
 export default class Wallet implements IWallet {
   private defaultDAppId?: string
