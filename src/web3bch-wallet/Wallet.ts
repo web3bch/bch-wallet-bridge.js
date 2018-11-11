@@ -155,11 +155,29 @@ export default class Wallet implements IWallet {
     throw new Error("Method not implemented.")
   }
 
-  public sign(
+  public async sign(
     address: string,
     dataToSign: string
   ): Promise<string> {
-    throw new Error("Method not implemented.")
+    if (!this.isCashAddress(address)) {
+      throw new IllegalArgumentException("The address is not Cash Address format.")
+    }
+
+    if (dataToSign.length === 0) {
+      throw new IllegalArgumentException("The dataToSign cannot be empty.")
+    }
+
+    const walletProvider = this.checkWalletProvider()
+    const signature = await walletProvider.sign(address, dataToSign)
+      .catch((e) => {
+        throw new ProviderException(e)
+      })
+
+    if (typeof signature !== "string" || !this.isValidSignature(signature)) {
+      throw new ProviderException("The wallet provider provides invalid value.")
+    }
+
+    return signature
   }
 
   public async send(
@@ -299,7 +317,18 @@ export default class Wallet implements IWallet {
 
   private isP2SHCashAddress = (address: string): boolean => {
     try {
-      if (!isCashAddress(address) || !isP2SHAddress(address)) {
+      if (!this.isCashAddress(address) || !isP2SHAddress(address)) {
+        return false
+      }
+    } catch (e) {
+      return false
+    }
+    return true
+  }
+
+  private isCashAddress = (address: string): boolean => {
+    try {
+      if (!isCashAddress(address)) {
         return false
       }
     } catch (e) {
@@ -334,5 +363,18 @@ export default class Wallet implements IWallet {
         return txid
       })
       .catch((e) => { throw new ProviderException(e) })
+  }
+
+  private isValidSignature(signature: string) {
+    const buf = Buffer.from(signature, "base64")
+    if (buf.length !== 65) {
+      return false
+    }
+
+    const flagByte = buf.readUInt8(0) - 27
+    if (flagByte > 7) {
+      return false
+    }
+    return true
   }
 }

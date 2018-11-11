@@ -385,32 +385,33 @@ describe("Wallet", () => {
   describe("sign()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        sign: jest.fn(() => Promise.resolve("II0XaiKCRsRROS6gIcRpwao74wc55ij\
-        ZjfcGpay2vgQ/D1OJclEuFwp7aLYZwZNWjtHw7i5vbKsbcAPLWCmF11E="))
+        sign: jest.fn(() => Promise.resolve(
+          "II0XaiKCRsRROS6gIcRpwao74wc55ijZjfcGpay2vgQ/D1OJclEuFwp7aLYZwZNWjtHw7i5vbKsbcAPLWCmF11E="
+        ))
       })))()
       const providers = new Providers(undefined, walletProvider)
       wallet = new Wallet(providers)
     })
 
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
     })
-    it.skip("should calls IWalletProvider#addRedeemScript", async () => {
+    it("should calls IWalletProvider#sign", async () => {
       await wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
       expect(walletProvider.sign).toBeCalled()
     })
-    it.skip("should return the same value as IWalletProvider#sign.", async () => {
+    it("should return the same value as IWalletProvider#sign.", async () => {
       const signed = await wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
       expect(signed).toBe("II0XaiKCRsRROS6gIcRpwao74wc55ijZjfcGpay2vgQ/D1OJclEuFwp7aLYZwZNWjtHw7i5vbKsbcAPLWCmF11E=")
     })
-    it.skip("should throws IllegalArgumentException if the address is invalid", () => {
-      expect(() => wallet.sign("I'm an invalid address", "Hello web3bch")).toThrow(IllegalArgumentException)
+    it("should throws IllegalArgumentException if the address is invalid", async () => {
+      await expect(wallet.sign("I'm an invalid address", "Hello web3bch")).rejects.toThrow(IllegalArgumentException)
     })
-    it.skip("should throws IllegalArgumentException if the message is empty string.", () => {
-      expect(() => wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", ""))
-      .toThrow(IllegalArgumentException)
+    it("should throws IllegalArgumentException if the message is empty string.", async () => {
+      await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", ""))
+        .rejects.toThrow(IllegalArgumentException)
     })
-    it.skip("should throws ProviderException if the wallet provider throws an error.", async () => {
+    it("should throws ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.reject())
       })))()
@@ -418,7 +419,7 @@ describe("Wallet", () => {
       await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
       .rejects.toThrow(ProviderException)
     })
-    it.skip("should throws ProviderException if the wallet provider return invalid signed data.", async () => {
+    it("should throws ProviderException if the wallet provider return invalid signed data.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.resolve("invalid signed data"))
       })))()
@@ -426,12 +427,13 @@ describe("Wallet", () => {
       await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
       .rejects.toThrow(ProviderException)
     })
-    it.skip("should throws ProviderException if the wallet provider invalid value.", async () => {
+    it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.resolve(1))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
+      await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
+        .rejects.toThrow(ProviderException)
     })
     // ProviderException
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
