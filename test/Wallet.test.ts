@@ -129,7 +129,7 @@ describe("Wallet", () => {
     .it("should throw ProviderException when provider does not return a string array or an empty array"
     , async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getRedeemScript: jest.fn(() => Promise.resolve(providerReturn))
+        getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
