@@ -149,10 +149,11 @@ export default class Wallet implements IWallet {
     return utxos
   }
 
-  public getBalance(
+  public async getBalance(
     dAppId?: string
   ): Promise<number> {
-    throw new Error("Method not implemented.")
+    const utxos = await this.getUtxos(dAppId)
+    return utxos.reduce((balance, utxo) => balance + utxo.satoshis, 0)
   }
 
   public sign(
