@@ -320,9 +320,19 @@ export default class Wallet implements IWallet {
     dAppId?: string
   ): Promise<string> {
     const walletProvider = this.checkWalletProvider()
-    const tx = await walletProvider.createSignedTx(outputs, dAppId || this.defaultDAppId)
-
+    const rawtx = await walletProvider.createSignedTx(outputs, dAppId || this.defaultDAppId)
+      .catch((e) => { throw new ProviderException(e) })
+    if (typeof rawtx !== "string") {
+      throw new ProviderException("The return value is invalid.")
+    }
     const networkProvider = this.checkNetworkProvider()
-    return networkProvider.broadcastRawTx(tx)
+    return networkProvider.broadcastRawTx(rawtx)
+      .then((txid) => {
+        if (typeof txid !== "string") {
+          throw new ProviderException("The return value is invalid.")
+        }
+        return txid
+      })
+      .catch((e) => { throw new ProviderException(e) })
   }
 }

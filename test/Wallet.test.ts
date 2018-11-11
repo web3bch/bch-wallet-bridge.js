@@ -191,26 +191,26 @@ describe("Wallet", () => {
       const providers = new Providers(undefined, walletProvider)
       wallet = new Wallet(providers)
     })
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.addRedeemScript("03424f587e06424954424f5887")
     })
-    it.skip("should call IWalletProvider#addRedeemScript", async () => {
+    it("should call IWalletProvider#addRedeemScript", async () => {
       await wallet.addRedeemScript("03424f587e06424954424f5887")
       expect(walletProvider.addRedeemScript).toBeCalled()
     })
-    it.skip("should throw IllegalArgumentException if the script is empty string.", () => {
-      expect(() => wallet.addRedeemScript("")).toThrow(IllegalArgumentException)
+    it("should throw IllegalArgumentException if the script is empty string.", async () => {
+      await expect(wallet.addRedeemScript("")).rejects.toThrow(IllegalArgumentException)
     })
     // ProviderException
-    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider return anything", async (providerReturn) => {
+    each([[null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
+    .it("should throw ProviderException when provider does not return undefined", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       wallet = new Wallet(new Providers(undefined, walletProvider))
       await expect(wallet.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.reject())
       })))()
@@ -496,7 +496,7 @@ describe("Wallet", () => {
     })
     // ProviderException
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider#createSignedTx does not return a string value",
+    .it("should throw ProviderException when provider#createSignedTx does not return a string value",
      async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.resolve(providerReturn))
@@ -505,7 +505,7 @@ describe("Wallet", () => {
       await expect(wallet.send(destination)).rejects.toThrow(ProviderException)
     })
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider#broadcastRawTx does not return a string value",
+    .it("should throw ProviderException when provider#broadcastRawTx does not return a string value",
      async (providerReturn) => {
       networkProvider = new (jest.fn<INetworkProvider>(() => ({
         broadcastRawTx: jest.fn(() => Promise.resolve(providerReturn))
@@ -513,14 +513,14 @@ describe("Wallet", () => {
       wallet = new Wallet(new Providers(networkProvider, walletProvider))
       await expect(wallet.send(destination)).rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.reject())
       })))()
       wallet = new Wallet(new Providers(networkProvider, walletProvider))
       await expect(wallet.send(destination)).rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       networkProvider = new (jest.fn<INetworkProvider>(() => ({
         broadcastRawTx: jest.fn(() => Promise.reject())
       })))()
@@ -565,7 +565,7 @@ describe("Wallet", () => {
     })
     // ProviderException
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider#createSignedTx does not return a string value",
+    .it("should throw ProviderException when provider#createSignedTx does not return a string value",
      async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.resolve(providerReturn))
@@ -574,7 +574,7 @@ describe("Wallet", () => {
       await expect(wallet.advancedSend([output, output2])).rejects.toThrow(ProviderException)
     })
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider#broadcastRawTx does not return a string value",
+    .it("should throw ProviderException when provider#broadcastRawTx does not return a string value",
      async (providerReturn) => {
       networkProvider = new (jest.fn<INetworkProvider>(() => ({
         broadcastRawTx: jest.fn(() => Promise.resolve(providerReturn))
@@ -582,14 +582,14 @@ describe("Wallet", () => {
       wallet = new Wallet(new Providers(networkProvider, walletProvider))
       await expect(wallet.advancedSend([output, output2])).rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.reject())
       })))()
       wallet = new Wallet(new Providers(networkProvider, walletProvider))
       await expect(wallet.advancedSend([output, output2])).rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       networkProvider = new (jest.fn<INetworkProvider>(() => ({
         broadcastRawTx: jest.fn(() => Promise.reject())
       })))()
