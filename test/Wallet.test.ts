@@ -302,48 +302,52 @@ describe("Wallet", () => {
   })
 
   describe("getBalance()", () => {
-    const utxo = new Utxo("10a879077602483f7e89cae7202c95119fc9ce53db55f33c7efe401703aa7c38",
+    const utxo = new Utxo(
+      "10a879077602483f7e89cae7202c95119fc9ce53db55f33c7efe401703aa7c38",
        2,
        "bitcoincash:qzg0esm3xr4gcq7u6vvgdwyjr4jwvl7seqrnjfzyc3",
        "76a91447862fe165e6121af80d5dde1ecb478ed170565b88ac",
-       50000)
-    const utxo2 = new Utxo("115e8f72f39fad874cfab0deed11a80f24f967a84079fb56ddf53ea02e308986",
-    0,
-    "bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p",
-    "047c039059b17576a914f9a93ce9b7ebed298597655065a96c2e0846db1788ac",
-    20000)
+       50000
+    )
+    const utxo2 = new Utxo(
+      "115e8f72f39fad874cfab0deed11a80f24f967a84079fb56ddf53ea02e308986",
+      0,
+      "bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p",
+      "047c039059b17576a914f9a93ce9b7ebed298597655065a96c2e0846db1788ac",
+      20000
+    )
 
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getSpendableUtxos: jest.fn(() => Promise.resolve([utxo, utxo2])),
-        getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo]))
+        getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
+        getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo2]))
       })))()
       const providers = new Providers(undefined, walletProvider)
       wallet = new Wallet(providers)
     })
 
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.getBalance()
     })
-    it.skip("should be success if there is no problem.", async () => {
-      await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+    it("should be success if there is no problem.", async () => {
+      await wallet.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
     })
-    it.skip("should calls IWalletProvider#getSpendableUtxos", async () => {
-      await wallet.getUtxos()
+    it("should calls IWalletProvider#getSpendableUtxos", async () => {
+      await wallet.getBalance()
       expect(walletProvider.getSpendableUtxos).toBeCalled()
     })
-    it.skip("should calls IWalletProvider#getUnspendableUtxos", async () => {
-      await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+    it("should calls IWalletProvider#getUnspendableUtxos", async () => {
+      await wallet.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
       expect(walletProvider.getUnspendableUtxos).toBeCalled()
     })
-    it.skip("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set."
+    it("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set."
     , async () => {
-      const utxos = await wallet.getUtxos()
-      expect(utxos).toBe(70000)
+      const utxos = await wallet.getBalance()
+      expect(utxos).toBe(50000)
     })
-    it.skip("should return the same value as IWalletProvider#getUnspendableUtxos if the DAppsID is set.", async () => {
-      const utxos = await wallet.getUtxos()
-      expect(utxos).toBe(20000)
+    it("should return the same value as IWalletProvider#getUnspendableUtxos if the DAppsID is set.", async () => {
+      const utxos = await wallet.getBalance("foo")
+      expect(utxos).toBe(70000)
     })
     // ProviderException
     each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
