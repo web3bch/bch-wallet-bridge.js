@@ -13,6 +13,7 @@ import ProviderType from "./entities/ProviderType"
 import { findNetwork } from "./networks"
 import { isCashAddress, isP2SHAddress, toCashAddress, toLegacyAddress } from "bchaddrjs"
 import * as bitcoincashjs from "bitcoincashjs"
+import { setupMaster } from "cluster";
 
 export default class Wallet implements IWallet {
   private defaultDAppId?: string
@@ -57,25 +58,24 @@ export default class Wallet implements IWallet {
     dAppId?: string
   ): Promise<string[]> {
     if (startIndex) {
-      if (startIndex < 0 || startIndex > 2147483647) {
-        throw new IllegalArgumentException("startIndex must be >= 0 and <= 2147483647")
-      } else if (!Number.isInteger(startIndex)) {
-        throw new IllegalArgumentException("startIndex must be integer.")
+      if (!Number.isInteger(startIndex) || startIndex < 0 || startIndex > 2147483647) {
+        throw new IllegalArgumentException("startIndex is an invalid value.")
       }
     }
-
-    if (size) {
-      if (size < 1 || size > 2147483648) {
-        throw new IllegalArgumentException("size must be >= 1 and <= 2147483648")
-      } else if (!Number.isInteger(size)) {
-        throw new IllegalArgumentException("size must be integer.")
+    if (size !== undefined) {
+      if (!Number.isInteger(size) || size < 1) {
+        throw new IllegalArgumentException("size is an invalid value")
       }
     }
-
+    if (startIndex && size) {
+      if (startIndex + size > 2147483647) {
+        throw new IllegalArgumentException("the max index must be <= 2147483647")
+      }
+    }
     const walletProvider = this.checkWalletProvider()
     return walletProvider.getAddresses(changeType, size || 1, startIndex, dAppId || this.defaultDAppId)
       .then((addresses) => {
-        if (!(addresses instanceof Array) || addresses.length === 0) {
+        if (!(addresses instanceof Array) || addresses.length === 0 || typeof addresses[0] !== "string") {
           throw new ProviderException("The return value is invalid.")
         }
         return addresses

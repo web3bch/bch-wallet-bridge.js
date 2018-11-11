@@ -97,6 +97,54 @@ describe("Wallet", () => {
     })
   })
 
+  describe("getAddresses()", () => {
+    beforeEach(() => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
+      })))()
+      const providers = new Providers(undefined, walletProvider)
+      wallet = new Wallet(providers)
+    })
+    it("should be success if there is no problem.", async () => {
+      await wallet.getAddresses(ChangeType.RECEIVE)
+    })
+    it("should call IWalletProvider#getAddresses", async () => {
+      await wallet.getAddress(ChangeType.RECEIVE)
+      expect(walletProvider.getAddresses).toBeCalled()
+    })
+    it("should throw IllegalArgumentException if startIndex is < 0.", () => {
+      expect(() => wallet.getAddresses(ChangeType.RECEIVE, -1)).toThrow(IllegalArgumentException)
+    })
+    it("should throw IllegalArgumentException if startIndex is > 2147483647", () => {
+      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 2147483648)).toThrow(IllegalArgumentException)
+    })
+    it("should throw IllegalArgumentException if startIndex is not decimal.", () => {
+      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 0.1)).toThrow(IllegalArgumentException)
+    })
+    it("should throw IllegalArgumentException if size is < 1.", () => {
+      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 0, 0)).toThrow(IllegalArgumentException)
+    })
+    it("should throw IllegalArgumentException if the sum of startIndex and size is > 2147483647.", () => {
+      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 2147483647, 1)).toThrow(IllegalArgumentException)
+    })
+    // ProviderException
+    each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]]])
+    .it("should throw ProviderException when provider does not return a string array", async (providerReturn) => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getAddresses: jest.fn(() => Promise.resolve(providerReturn))
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+    })
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
+      walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getAddresses: jest.fn(() => Promise.reject())
+      })))()
+      wallet = new Wallet(new Providers(undefined, walletProvider))
+      await expect(wallet.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+    })
+  })
+
   describe("getRedeemScript()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
