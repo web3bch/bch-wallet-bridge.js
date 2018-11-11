@@ -541,22 +541,22 @@ describe("Wallet", () => {
     })
     const output = new Output("76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac", 10000)
     const output2 = new Output("76a914d7e7c4e0b70eaa67ceff9d2823d1bbb9f6df9a5188ac", 30000)
-    it.skip("should be success if there is no problem.", async () => {
+    it("should be success if there is no problem.", async () => {
       await wallet.advancedSend([output, output2])
     })
-    it.skip("should calls IWalletProvider#createSignedTx", async () => {
+    it("should calls IWalletProvider#createSignedTx", async () => {
       await wallet.advancedSend([output, output2])
       expect(walletProvider.createSignedTx).toBeCalled()
     })
-    it.skip("should calls networkProvider#broadcastRawTx", async () => {
+    it("should calls networkProvider#broadcastRawTx", async () => {
       await wallet.advancedSend([output, output2])
       expect(networkProvider.broadcastRawTx).toBeCalled()
     })
-    it.skip("should return the same value as networkProvider#broadcastRawTx", async () => {
-      const txid = wallet.advancedSend([output, output2])
+    it("should return the same value as networkProvider#broadcastRawTx", async () => {
+      const txid = await wallet.advancedSend([output, output2])
       expect(txid).toBe("txid")
     })
-    it.skip("should throw an error if the outputs is an empty array.", async () => {
+    it("should throw an error if the outputs is an empty array.", async () => {
       await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
     })
     // ProviderException
