@@ -1,22 +1,14 @@
-import Destination from "./entities/Destination"
 import Network from "./entities/Network"
-<<<<<<< HEAD:src/web3bch/IWeb3bch.ts
-import Output from "../web3bch-providers/entities/Output"
-import Utxo from "../web3bch-providers/entities/Utxo"
 import IWalletProvider from "../web3bch-providers/IWalletProvider"
+import ChangeType from "providers/src/entities/ChangeType"
+import Output from "providers/src/entities/Output"
+import Utxo from "providers/src/entities/Utxo"
 
 export default interface IWeb3bch {
   /**
    * The current provider set.
    */
   walletProvider?: IWalletProvider
-=======
-import ProviderType from "./entities/ProviderType"
-import ChangeType from "providers/src/entities/ChangeType"
-import Output from "providers/src/entities/Output"
-import Utxo from "providers/src/entities/Utxo"
->>>>>>> import providers:src/web3bch-wallet/IWallet.ts
-
   /**
    * Returns the current wallet address.
    * @example
