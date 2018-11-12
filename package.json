@@ -2,7 +2,7 @@
   "name": "web3bch.js",
   "version": "0.1.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib/web3bch/Web3bch.js",
   "scripts": {
     "build": "rm -rf lib && tsc",
     "docs": "npm run docs:build && npm run docs:touch-nojekyll",

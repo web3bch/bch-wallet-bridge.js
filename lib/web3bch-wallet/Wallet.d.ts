@@ -4,7 +4,7 @@ import Utxo from "../web3bch-providers/entities/Utxo";
 import Network from "./entities/Network";
 import Destination from "./entities/Destination";
 import Output from "../web3bch-providers/entities/Output";
-import Providers from "../Providers";
+import Providers from "../web3bch/Providers";
 import ProviderType from "./entities/ProviderType";
 export default class Wallet implements IWallet {
     readonly providers: Providers;
