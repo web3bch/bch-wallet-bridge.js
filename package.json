@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "bchaddrjs": "^0.2.2",
-    "bitcoincashjs": "^0.1.10"
+    "bitcoincashjs": "^0.1.10",
+    "providers": "web3bch/providers#master"
   }
 }
