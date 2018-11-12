@@ -109,7 +109,7 @@ describe("Wallet", () => {
       await wallet.getAddresses(ChangeType.RECEIVE)
     })
     it("should call IWalletProvider#getAddresses", async () => {
-      await wallet.getAddress(ChangeType.RECEIVE)
+      await wallet.getAddresses(ChangeType.RECEIVE)
       expect(walletProvider.getAddresses).toBeCalled()
     })
     it("should throw IllegalArgumentException if startIndex is < 0.", () => {
