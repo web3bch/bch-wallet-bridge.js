@@ -1,5 +1,5 @@
-import Utxo from "providers/src/entities/Utxo"
-import Output from "providers/src/entities/Output"
+import Utxo from "providers/src/entities/Utxo";
+import Output from "providers/src/entities/Output";
 export default interface IWalletProvider {
     /**
      * Returns the current web3bch version.
