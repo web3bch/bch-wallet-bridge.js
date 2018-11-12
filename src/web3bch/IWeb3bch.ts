@@ -3,14 +3,13 @@ import Destination from "./entities/Destination"
 import Network from "./entities/Network"
 import Output from "../web3bch-providers/entities/Output"
 import Utxo from "../web3bch-providers/entities/Utxo"
-import ProviderType from "./entities/ProviderType"
-import Providers from "./Providers"
+import IWalletProvider from "../web3bch-providers/IWalletProvider"
 
 export default interface IWeb3bch {
   /**
-   * The current providers set.
+   * The current provider set.
    */
-  providers: Providers
+  walletProvider?: IWalletProvider
 
   /**
    * Returns the current wallet address.
@@ -179,43 +178,22 @@ export default interface IWeb3bch {
   ): Promise<string>
 
   /**
-   * Create a transaction with specified destination or destinations and send it to the network.
-   * The provider will add a change output to the change address.
-   * @example
-   * const txid = await web3bch.send(
-   *   {
-   *     address: "bitcoincash:qzg0esm3xr4gcq7u6vvgdwyjr4jwvl7seqrnjfzyc3"
-   *     amount: 2849119
-   *   }
-   * )
-   * console.log(txid)
-   * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
-   * @param destination The destination object. Throws an error when the destination is an empty array.
-   * @param data A data or a list of data to put to the transactionâ€™s OP_RETURN output.
-   * @returns Hex format of txid.
-   */
-  send(
-    destination: Destination | Destination[],
-    data?: string | string[]
-  ): Promise<string>
-
-  /**
-   * Create a transaction with specified outputs and send it to the network.
+   * Create a transaction with specified outputs and return the signed raw transaction.
    * The provider will not add any outputs. The ordering of outputs remains as is.
    * @example
-   * const txid = await web3bch.advancedSend([
+   * const rawTx = await web3bch.buildTransaction([
    *   {
    *     lockScript: "76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac",
    *     amount: 10000
    *   }
    * ])
-   * console.log(txid)
-   * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
+   * console.log(rawtx)
+   * > "..."
    * @param outputs The Array of TransactionOutput objects. Throws an error, when the array is empty.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
-   * @returns Hex format of txid.
+   * @returns The signed raw transaction.
    */
-  advancedSend(
+  buildTransaction(
     outputs: Output[],
     dAppId?: string
   ): Promise<string>
@@ -223,42 +201,25 @@ export default interface IWeb3bch {
   /**
    * Returns the bitcoin protocol version.
    * @example
-   * const version = await web3bch.getProtocolVersion(NetworkType.Network)
+   * const version = await web3bch.getProtocolVersion()
    * console.log(version)
    * > 70015
-   * @param providerType The provider name which you want to check the network type from
    * @returns The protocol version. The value is Int32.
    */
-  getProtocolVersion(providerType: ProviderType): Promise<number>
+  getProtocolVersion(): Promise<number>
 
   /**
    * Returns the current network.
    * @example
-   * const network = await web3bch.getNetwork(NetworkType.Network)
+   * const network = await web3bch.getNetwork()
    * console.log(network)
    * > {
    *     magicBytes: "e3e1f3e8",
    *     name: "Mainnet"
    *   }
-   * @param providerType The provider name which you want to check the network type from
    * @returns The network object.
    */
-  getNetwork(providerType: ProviderType): Promise<Network>
-
-  /**
-   * Broadcast an already signed transaction.
-   * @example
-   * const txId = await web3bch.broadcastRawtx(
-   *   "01000000013ba3ed..."
-   * )
-   * console.log(txId)
-   * > "d86c34adaeae19171fd98fe0ffd89bfb92a1e6f0339f5e4f18d837715fd25758"
-   * @param Signed transaction data in hex format.
-   * @returns Hex format of txid.
-   */
-  broadcastRawTx(
-    rawtx: string
-  ): Promise<string>
+  getNetwork(): Promise<Network>
 
   /**
    * Returns the transaction fee per byte.

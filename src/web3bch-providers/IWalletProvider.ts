@@ -153,7 +153,7 @@ export default interface IWalletProvider {
   /**
    * Create a signed transaction with specified outputs. The provider will not add any outputs.
    * @example
-   * const txid = await provider.advancedSend([
+   * const txid = await provider.createSignedTx([
    *   {
    *     lockScript: "76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac",
    *     amount: 10000

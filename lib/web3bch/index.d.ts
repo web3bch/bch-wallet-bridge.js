@@ -1,14 +1,14 @@
-import IWallet from "./IWallet";
+import IWeb3bch from "./IWeb3bch";
 import ChangeType from "../web3bch-providers/entities/ChangeType";
 import Utxo from "../web3bch-providers/entities/Utxo";
 import Network from "./entities/Network";
 import Destination from "./entities/Destination";
 import Output from "../web3bch-providers/entities/Output";
-import Providers from "./Providers";
-import ProviderType from "./entities/ProviderType";
-export default class Wallet implements IWallet {
-    providers: Providers;
+import IWalletProvider from "../web3bch-providers/IWalletProvider";
+export default class Web3bch implements IWeb3bch {
+    walletProvider?: IWalletProvider | undefined;
     private defaultDAppId?;
+    constructor(walletProvider?: IWalletProvider | undefined);
     getAddress(changeType: ChangeType, index?: number, dAppId?: string): Promise<string>;
     getAddressIndex(changeType: ChangeType, dAppId?: string): Promise<number>;
     getAddresses(changeType: ChangeType, startIndex?: number, size?: number, dAppId?: string): Promise<string[]>;
@@ -20,16 +20,14 @@ export default class Wallet implements IWallet {
     sign(address: string, dataToSign: string): Promise<string>;
     send(destination: Destination | Destination[], data?: string | string[]): Promise<string>;
     advancedSend(outputs: Output[], dAppId?: string): Promise<string>;
-    getProtocolVersion(providerType: ProviderType): Promise<number>;
-    getNetwork(providerType: ProviderType): Promise<Network>;
-    broadcastRawTx(rawTx: string): Promise<string>;
+    getProtocolVersion(): Promise<number>;
+    getNetwork(): Promise<Network>;
     getFeePerByte(): Promise<number>;
     getDefaultDAppId(): Promise<string | undefined>;
     setDefaultDAppId(dAppId?: string): Promise<void>;
     private isHex;
     private isTxHash;
     private checkWalletProvider;
-    private checkNetworkProvider;
     private isP2SHCashAddress;
     private isCashAddress;
     private toAddressFromScript;

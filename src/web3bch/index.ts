@@ -4,24 +4,17 @@ import Utxo from "../web3bch-providers/entities/Utxo"
 import Network from "./entities/Network"
 import Destination from "./entities/Destination"
 import Output from "../web3bch-providers/entities/Output"
-import Providers from "./Providers"
 import IWalletProvider from "../web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
-import INetworkProvider from "../web3bch-providers/INetworkProvider"
-import ProviderType from "./entities/ProviderType"
 import { findNetwork } from "./networks"
 import { isCashAddress, isP2SHAddress, toCashAddress, toLegacyAddress } from "bchaddrjs"
 import * as bitcoincashjs from "bitcoincashjs"
 
 export default class Web3bch implements IWeb3bch {
-  public providers: Providers
-
   private defaultDAppId?: string
 
-  constructor(providers?: Providers) {
-    this.providers = providers || new Providers()
-  }
+  constructor(public walletProvider?: IWalletProvider) {}
 
   public getAddress(
     changeType: ChangeType,
@@ -197,85 +190,40 @@ export default class Web3bch implements IWeb3bch {
     return signature
   }
 
-  public async send(
-    destination: Destination | Destination[],
-    data?: string | string[]
-  ): Promise<string> {
-    // convert to array
-    const destinations = [destination].flatMap((it) => it)
-    if (destinations.length === 0) {
-      throw new IllegalArgumentException("The destinations cannot be empty.")
-    }
-
-    const outputs = destinations.map((dest) => {
-      const legacy = toLegacyAddress(dest.address)
-      const script = bitcoincashjs.Script.fromAddress(legacy).toBuffer().toString("hex")
-      return new Output(script, dest.amount)
-    })
-
-    // convert to array
-    const dataArr = data ? [data].flatMap((it) => it) : []
-    if (dataArr.length !== 0) {
-      const opReturnData = Buffer.concat(dataArr.map((it) => Buffer.from(it)))
-      const opReturnScript = bitcoincashjs.Script.buildDataOut(opReturnData).toBuffer().toString("hex")
-      // append data
-      outputs.push(new Output(opReturnScript, 0))
-    }
-
-    return this.sendToOutputs(outputs)
-  }
-
-  public async advancedSend(
+  public async buildTransaction(
     outputs: Output[],
     dAppId?: string
   ): Promise<string> {
-    return this.sendToOutputs(outputs, dAppId || this.defaultDAppId)
+    if (outputs.length === 0) {
+      throw new IllegalArgumentException("The outputs cannot be empty.")
+    }
+
+    return this.createSignedTx(outputs, dAppId || this.defaultDAppId)
   }
 
-  public async getProtocolVersion(providerType: ProviderType): Promise<number> {
-    const version = await (() => {
-      switch (providerType) {
-        case ProviderType.NETWORK:
-          const networkProvider = this.checkNetworkProvider()
-          return networkProvider.getProtocolVersion()
-        case ProviderType.WALLET:
-          const walletProvider = this.checkWalletProvider()
-          return walletProvider.getProtocolVersion()
-      }
-    })().catch((e) => { throw new ProviderException(e) })
+  public async getProtocolVersion(): Promise<number> {
+    const walletProvider = this.checkWalletProvider()
+    const version = await walletProvider.getProtocolVersion()
+      .catch((e) => { throw new ProviderException(e) })
 
     if (typeof version !== "number") {
-      throw new ProviderException(`${providerType} provides invalid type.`)
+      throw new ProviderException(`The wallet provider provides invalid type.`)
     }
     return version
   }
 
-  public async getNetwork(providerType: ProviderType): Promise<Network> {
-    const networkProvider = this.checkNetworkProvider()
+  public async getNetwork(): Promise<Network> {
     const walletProvider = this.checkWalletProvider()
 
-    const magic = await (() => {
-      switch (providerType) {
-        case ProviderType.NETWORK:
-          return networkProvider.getNetworkMagic()
-        case ProviderType.WALLET:
-          return walletProvider.getNetworkMagic()
-      }
-    })()
+    const magic = await walletProvider.getNetworkMagic()
+      .catch((e) => {
+        throw new ProviderException(e)
+      })
+    if (typeof magic !== "number") {
+      throw new ProviderException("The wallet provider provides invalid type.")
+    }
 
     return findNetwork(magic)
-  }
-
-  public broadcastRawTx(
-    rawTx: string
-  ): Promise<string> {
-    return new Promise((resolve) => {
-      const networkProvider = this.checkNetworkProvider()
-      if (!this.isHex(rawTx)) {
-        throw new IllegalArgumentException("The rawTx is not hex.")
-      }
-      resolve(networkProvider.broadcastRawTx(rawTx))
-    })
   }
 
   public getFeePerByte(): Promise<number> {
@@ -306,11 +254,6 @@ export default class Web3bch implements IWeb3bch {
     })
   }
 
-  private isHex(target: string): boolean {
-    const re = /^[0-9A-Ffa-f]+$/g
-    return re.test(target)
-  }
-
   private isTxHash(target: string): boolean {
     const re = /[0-9A-Ffa-f]{64}/g
     return re.test(target)
@@ -318,18 +261,10 @@ export default class Web3bch implements IWeb3bch {
 
   // TODO: TEMP
   private checkWalletProvider = (): IWalletProvider => {
-    if (!this.providers.walletProvider) {
+    if (!this.walletProvider) {
       throw new ProviderException("")
     }
-    return this.providers.walletProvider
-  }
-
-  // TODO: TEMP
-  private checkNetworkProvider = (): INetworkProvider => {
-    if (!this.providers.networkProvider) {
-      throw new ProviderException("")
-    }
-    return this.providers.networkProvider
+    return this.walletProvider
   }
 
   private isP2SHCashAddress = (address: string): boolean => {
@@ -361,7 +296,7 @@ export default class Web3bch implements IWeb3bch {
     return toCashAddress(legacy)
   }
 
-  private async sendToOutputs(
+  private async createSignedTx(
     outputs: Output[],
     dAppId?: string
   ): Promise<string> {
@@ -371,14 +306,6 @@ export default class Web3bch implements IWeb3bch {
     if (typeof rawtx !== "string") {
       throw new ProviderException("The return value is invalid.")
     }
-    const networkProvider = this.checkNetworkProvider()
-    return networkProvider.broadcastRawTx(rawtx)
-      .then((txid) => {
-        if (typeof txid !== "string") {
-          throw new ProviderException("The return value is invalid.")
-        }
-        return txid
-      })
-      .catch((e) => { throw new ProviderException(e) })
+    return rawtx
   }
 }
