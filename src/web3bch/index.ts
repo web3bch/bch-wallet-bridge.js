@@ -1,4 +1,4 @@
-import IWallet from "./IWallet"
+import IWeb3bch from "./IWeb3bch"
 import ChangeType from "../web3bch-providers/entities/ChangeType"
 import Utxo from "../web3bch-providers/entities/Utxo"
 import Network from "./entities/Network"
@@ -14,10 +14,14 @@ import { findNetwork } from "./networks"
 import { isCashAddress, isP2SHAddress, toCashAddress, toLegacyAddress } from "bchaddrjs"
 import * as bitcoincashjs from "bitcoincashjs"
 
-export default class Wallet implements IWallet {
-  public providers = new Providers()
+export default class Web3bch implements IWeb3bch {
+  public providers: Providers
 
   private defaultDAppId?: string
+
+  constructor(providers?: Providers) {
+    this.providers = providers || new Providers()
+  }
 
   public getAddress(
     changeType: ChangeType,
