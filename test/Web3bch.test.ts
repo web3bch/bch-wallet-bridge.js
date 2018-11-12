@@ -1,46 +1,41 @@
-import Wallet from "../src/web3bch-wallet/Wallet"
-import IWallet from "../src/web3bch-wallet/IWallet"
+import Web3bch from "../src/web3bch"
+import IWeb3bch from "../src/web3bch/IWeb3bch"
 import ChangeType from "../src/web3bch-providers/entities/ChangeType"
-import Providers from "../src/web3bch/Providers"
-import INetworkProvider from "../src/web3bch-providers/INetworkProvider"
 import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
-import IllegalArgumentException from "../src/web3bch-wallet/entities/IllegalArgumentException"
-import ProviderException from "../src/web3bch-wallet/entities/ProviderException"
-import Network, { NetworkType } from "../src/web3bch-wallet/entities/Network"
+import IllegalArgumentException from "../src/web3bch/entities/IllegalArgumentException"
+import ProviderException from "../src/web3bch/entities/ProviderException"
+import Network, { NetworkType } from "../src/web3bch/entities/Network"
 import Utxo from "../src/web3bch-providers/entities/Utxo"
-import ProviderType from "../src/web3bch-wallet/entities/ProviderType"
-import Destination from "../src/web3bch-wallet/entities/Destination"
+import Destination from "../src/web3bch/entities/Destination"
 import Output from "../src/web3bch-providers/entities/Output"
 import each from "jest-each"
 
-describe("Wallet", () => {
-  let wallet: IWallet
+describe("Web3bch", () => {
+  let web3bch: IWeb3bch
   let walletProvider: IWalletProvider
-  let networkProvider: INetworkProvider
 
   describe("getAddress()", () => {
     beforeEach(() => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getAddress(ChangeType.RECEIVE)
+      await web3bch.getAddress(ChangeType.RECEIVE)
     })
     it("should call IWalletProvider#getAddresses", async () => {
-      await wallet.getAddress(ChangeType.RECEIVE)
+      await web3bch.getAddress(ChangeType.RECEIVE)
       expect(walletProvider.getAddresses).toBeCalled()
     })
     it("should throw IllegalArgumentException if the index is < 0.", () => {
-      expect(() => wallet.getAddress(ChangeType.RECEIVE, -1)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddress(ChangeType.RECEIVE, -1)).toThrow(IllegalArgumentException)
     })
     it("should throw IllegalArgumentException if the index is > 2147483647", () => {
-      expect(() => wallet.getAddress(ChangeType.RECEIVE, 2147483648)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddress(ChangeType.RECEIVE, 2147483648)).toThrow(IllegalArgumentException)
     })
     it("should throw IllegalArgumentException if the index is not decimal.", () => {
-      expect(() => wallet.getAddress(ChangeType.RECEIVE, 0.1)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddress(ChangeType.RECEIVE, 0.1)).toThrow(IllegalArgumentException)
     })
     // ProviderException
     each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]]])
@@ -48,15 +43,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
 
@@ -65,18 +60,17 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddressIndex: jest.fn(() => Promise.resolve(3))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getAddressIndex(ChangeType.RECEIVE)
+      await web3bch.getAddressIndex(ChangeType.RECEIVE)
     })
     it("should calls IWalletProvider#getAddressIndex", async () => {
-      await wallet.getAddressIndex(ChangeType.CHANGE)
+      await web3bch.getAddressIndex(ChangeType.CHANGE)
       expect(walletProvider.getAddressIndex).toBeCalled()
     })
     it("should return the same value as IWalletProvider#getAddressIndex", async () => {
-      const index = await wallet.getAddressIndex(ChangeType.CHANGE)
+      const index = await web3bch.getAddressIndex(ChangeType.CHANGE)
       expect(index).toBe(3)
     })
     // ProviderException
@@ -85,15 +79,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddressIndex: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddressIndex(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddressIndex(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddressIndex: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddressIndex(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddressIndex(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
 
@@ -102,30 +96,29 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getAddresses(ChangeType.RECEIVE)
+      await web3bch.getAddresses(ChangeType.RECEIVE)
     })
     it("should call IWalletProvider#getAddresses", async () => {
-      await wallet.getAddresses(ChangeType.RECEIVE)
+      await web3bch.getAddresses(ChangeType.RECEIVE)
       expect(walletProvider.getAddresses).toBeCalled()
     })
     it("should throw IllegalArgumentException if startIndex is < 0.", () => {
-      expect(() => wallet.getAddresses(ChangeType.RECEIVE, -1)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddresses(ChangeType.RECEIVE, -1)).toThrow(IllegalArgumentException)
     })
     it("should throw IllegalArgumentException if startIndex is > 2147483647", () => {
-      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 2147483648)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddresses(ChangeType.RECEIVE, 2147483648)).toThrow(IllegalArgumentException)
     })
     it("should throw IllegalArgumentException if startIndex is not decimal.", () => {
-      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 0.1)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddresses(ChangeType.RECEIVE, 0.1)).toThrow(IllegalArgumentException)
     })
     it("should throw IllegalArgumentException if size is < 1.", () => {
-      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 0, 0)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddresses(ChangeType.RECEIVE, 0, 0)).toThrow(IllegalArgumentException)
     })
     it("should throw IllegalArgumentException if the sum of startIndex and size is > 2147483647.", () => {
-      expect(() => wallet.getAddresses(ChangeType.RECEIVE, 2147483647, 1)).toThrow(IllegalArgumentException)
+      expect(() => web3bch.getAddresses(ChangeType.RECEIVE, 2147483647, 1)).toThrow(IllegalArgumentException)
     })
     // ProviderException
     each([[undefined], [null], [true], [3], ["string"], [[]], [[true]], [[3]]])
@@ -133,15 +126,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
 
@@ -151,26 +144,25 @@ describe("Wallet", () => {
         getRedeemScripts: jest.fn(() =>
         Promise.resolve(["9c1657fb5142ca85ab2d27ea847f648ec172a012", "51519587"]))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
+      await web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
     })
     it("should calls IWalletProvider#getRedeemScripts", async () => {
-      await wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
+      await web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
       expect(walletProvider.getRedeemScripts).toBeCalled()
     })
     it("should returns a script corresponding to the address", async () => {
-      const script = await wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
+      const script = await web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
       expect(script).toBe("51519587")
     })
     it("should throws IllegalArgumentException if the address is invalid", async () => {
-      await expect(wallet.getRedeemScript("I am not Address"))
+      await expect(web3bch.getRedeemScript("I am not Address"))
         .rejects.toThrow(IllegalArgumentException)
     })
     it("should throws IllegalArgumentException if the address is P2PKHAdress.", async () => {
-      await expect(wallet.getRedeemScript("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p"))
+      await expect(web3bch.getRedeemScript("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p"))
         .rejects.toThrow(IllegalArgumentException)
     })
     each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]]])
@@ -179,16 +171,16 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
       .rejects.toThrow(ProviderException)
     })
     it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(""))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
       .rejects.toThrow(ProviderException)
     })
   })
@@ -198,18 +190,17 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"]))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getRedeemScripts()
+      await web3bch.getRedeemScripts()
     })
     it("should calls IWalletProvider#getRedeemScripts", async () => {
-      await wallet.getRedeemScripts()
+      await web3bch.getRedeemScripts()
       expect(walletProvider.getRedeemScripts).toBeCalled()
     })
     it("should return the same value as IWalletProvider#getRedeemScripts", async () => {
-      const sciprts = await wallet.getRedeemScripts()
+      const sciprts = await web3bch.getRedeemScripts()
       expect(sciprts).toEqual(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"])
     })
     // ProviderException
@@ -219,15 +210,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScripts()).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getRedeemScripts()).rejects.toThrow(ProviderException)
     })
     it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getRedeemScripts()).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getRedeemScripts()).rejects.toThrow(ProviderException)
     })
   })
 
@@ -236,18 +227,17 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve())
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.addRedeemScript("03424f587e06424954424f5887")
+      await web3bch.addRedeemScript("03424f587e06424954424f5887")
     })
     it("should call IWalletProvider#addRedeemScript", async () => {
-      await wallet.addRedeemScript("03424f587e06424954424f5887")
+      await web3bch.addRedeemScript("03424f587e06424954424f5887")
       expect(walletProvider.addRedeemScript).toBeCalled()
     })
     it("should throw IllegalArgumentException if the script is empty string.", async () => {
-      await expect(wallet.addRedeemScript("")).rejects.toThrow(IllegalArgumentException)
+      await expect(web3bch.addRedeemScript("")).rejects.toThrow(IllegalArgumentException)
     })
     // ProviderException
     each([[null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
@@ -255,15 +245,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
     })
   })
 
@@ -287,30 +277,29 @@ describe("Wallet", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo2]))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getUtxos()
+      await web3bch.getUtxos()
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+      await web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
     })
     it("should call IWalletProvider#getSpendableUtxos", async () => {
-      await wallet.getUtxos()
+      await web3bch.getUtxos()
       expect(walletProvider.getSpendableUtxos).toBeCalled()
     })
     it("should call IWalletProvider#getUnspendableUtxos", async () => {
-      await wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+      await web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
       expect(walletProvider.getUnspendableUtxos).toBeCalled()
     })
     it("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set.",
      async () => {
-      const utxos = await wallet.getUtxos()
+      const utxos = await web3bch.getUtxos()
       expect(utxos).toEqual([utxo])
     })
     it("should return the same value as IWalletProvider#getUnspendableUtxos if the DAppsID is set.", async () => {
-      const utxos = await wallet.getUtxos("foo")
+      const utxos = await web3bch.getUtxos("foo")
       expect(new Set(utxos)).toEqual(new Set([utxo, utxo2]))
     })
     // ProviderException
@@ -319,8 +308,8 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getUtxos()).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getUtxos()).rejects.toThrow(ProviderException)
     })
     each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
     .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
@@ -328,24 +317,24 @@ describe("Wallet", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getUtxos())
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getUtxos())
       .rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getUnspendableUtxos: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
   })
@@ -371,31 +360,30 @@ describe("Wallet", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo2]))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
 
     it("should be success if there is no problem.", async () => {
-      await wallet.getBalance()
+      await web3bch.getBalance()
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+      await web3bch.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
     })
     it("should calls IWalletProvider#getSpendableUtxos", async () => {
-      await wallet.getBalance()
+      await web3bch.getBalance()
       expect(walletProvider.getSpendableUtxos).toBeCalled()
     })
     it("should calls IWalletProvider#getUnspendableUtxos", async () => {
-      await wallet.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
+      await web3bch.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68")
       expect(walletProvider.getUnspendableUtxos).toBeCalled()
     })
     it("should return the same value as IWalletProvider#getSpendableUtxos if the DAppsID is not set."
     , async () => {
-      const utxos = await wallet.getBalance()
+      const utxos = await web3bch.getBalance()
       expect(utxos).toBe(50000)
     })
     it("should return the same value as IWalletProvider#getUnspendableUtxos if the DAppsID is set.", async () => {
-      const utxos = await wallet.getBalance("foo")
+      const utxos = await web3bch.getBalance("foo")
       expect(utxos).toBe(70000)
     })
     // ProviderException
@@ -404,8 +392,8 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getBalance()).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getBalance()).rejects.toThrow(ProviderException)
     })
     each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
     .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
@@ -413,16 +401,16 @@ describe("Wallet", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getBalance())
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getBalance())
       .rejects.toThrow(ProviderException)
     })
     it("should throws ProviderException if IWalletProvider#getUnspendableUtxos returns invalid value.",
@@ -430,8 +418,8 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getUnspendableUtxos: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
   })
@@ -443,42 +431,41 @@ describe("Wallet", () => {
           "II0XaiKCRsRROS6gIcRpwao74wc55ijZjfcGpay2vgQ/D1OJclEuFwp7aLYZwZNWjtHw7i5vbKsbcAPLWCmF11E="
         ))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
 
     it("should be success if there is no problem.", async () => {
-      await wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
+      await web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
     })
     it("should calls IWalletProvider#sign", async () => {
-      await wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
+      await web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
       expect(walletProvider.sign).toBeCalled()
     })
     it("should return the same value as IWalletProvider#sign.", async () => {
-      const signed = await wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
+      const signed = await web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch")
       expect(signed).toBe("II0XaiKCRsRROS6gIcRpwao74wc55ijZjfcGpay2vgQ/D1OJclEuFwp7aLYZwZNWjtHw7i5vbKsbcAPLWCmF11E=")
     })
     it("should throws IllegalArgumentException if the address is invalid", async () => {
-      await expect(wallet.sign("I'm an invalid address", "Hello web3bch")).rejects.toThrow(IllegalArgumentException)
+      await expect(web3bch.sign("I'm an invalid address", "Hello web3bch")).rejects.toThrow(IllegalArgumentException)
     })
     it("should throws IllegalArgumentException if the message is empty string.", async () => {
-      await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", ""))
+      await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", ""))
         .rejects.toThrow(IllegalArgumentException)
     })
     it("should throws ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
       .rejects.toThrow(ProviderException)
     })
     it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.resolve(1))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
         .rejects.toThrow(ProviderException)
     })
     // ProviderException
@@ -487,129 +474,39 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
     it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
 
   //
-  // send
+  // buildTransaction
   //
-  describe("send()", () => {
+  describe("buildTransaction()", () => {
     beforeEach(() => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
-      })))()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.resolve("rawtx"))
       })))()
-      const providers = new Providers(networkProvider, walletProvider)
-      wallet = new Wallet(providers)
-    })
-    const destination = new Destination("bitcoincash:qrsy0xwugcajsqa99c9nf05pz7ndckj55ctlsztu2p", 100000)
-    const destination2 = new Destination("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", 300000)
-    it("should be success if there is no problem.", async () => {
-      await wallet.send(destination)
-    })
-    it("should be success if there is no problem.", async () => {
-      await wallet.send(destination, "Hello Bitcoin Cash")
-    })
-    it("should be success if there is no problem.", async () => {
-      await wallet.send(destination, ["Hello", "Bitcoin", "Cash"])
-    })
-    it("should be success if there is no problem.", async () => {
-      await wallet.send([destination, destination2])
-    })
-    it("should calls IWalletProvider#createSignedTx", async () => {
-      await wallet.send(destination)
-      expect(walletProvider.createSignedTx).toBeCalled()
-    })
-    it("should calls networkProvider#broadcastRawTx", async () => {
-      await wallet.send(destination)
-      expect(networkProvider.broadcastRawTx).toBeCalled()
-    })
-    it("should return the same value as networkProvider#broadcastRawTx", async () => {
-      const txid = await wallet.send(destination)
-      expect(txid).toBe("txid")
-    })
-    it("should throw an error if the destination is an empty array.", async () => {
-      await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
-    })
-    // ProviderException
-    each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider#createSignedTx does not return a string value",
-     async (providerReturn) => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        createSignedTx: jest.fn(() => Promise.resolve(providerReturn))
-      })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.send(destination)).rejects.toThrow(ProviderException)
-    })
-    each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider#broadcastRawTx does not return a string value",
-     async (providerReturn) => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.resolve(providerReturn))
-      })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.send(destination)).rejects.toThrow(ProviderException)
-    })
-    it("should throw ProviderException if the wallet provider throws an error.", async () => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        createSignedTx: jest.fn(() => Promise.reject())
-      })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.send(destination)).rejects.toThrow(ProviderException)
-    })
-    it("should throw ProviderException if the wallet provider throws an error.", async () => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.reject())
-      })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.send(destination)).rejects.toThrow(ProviderException)
-    })
-  })
-
-  //
-  // advancedSend
-  //
-  describe("advancedSend()", () => {
-    beforeEach(() => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
-      })))()
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        createSignedTx: jest.fn(() => Promise.resolve("rawtx"))
-      })))()
-      const providers = new Providers(networkProvider, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     const output = new Output("76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac", 10000)
     const output2 = new Output("76a914d7e7c4e0b70eaa67ceff9d2823d1bbb9f6df9a5188ac", 30000)
     it("should be success if there is no problem.", async () => {
-      await wallet.advancedSend([output, output2])
+      await web3bch.buildTransaction([output, output2])
     })
     it("should calls IWalletProvider#createSignedTx", async () => {
-      await wallet.advancedSend([output, output2])
+      await web3bch.buildTransaction([output, output2])
       expect(walletProvider.createSignedTx).toBeCalled()
     })
-    it("should calls networkProvider#broadcastRawTx", async () => {
-      await wallet.advancedSend([output, output2])
-      expect(networkProvider.broadcastRawTx).toBeCalled()
-    })
-    it("should return the same value as networkProvider#broadcastRawTx", async () => {
-      const txid = await wallet.advancedSend([output, output2])
-      expect(txid).toBe("txid")
-    })
     it("should throw an error if the outputs is an empty array.", async () => {
-      await expect(wallet.send([])).rejects.toThrow(IllegalArgumentException)
+      await expect(web3bch.buildTransaction([])).rejects.toThrow(IllegalArgumentException)
     })
     // ProviderException
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
@@ -618,31 +515,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.advancedSend([output, output2])).rejects.toThrow(ProviderException)
-    })
-    each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider#broadcastRawTx does not return a string value",
-     async (providerReturn) => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.resolve(providerReturn))
-      })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.advancedSend([output, output2])).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.buildTransaction([output, output2])).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.advancedSend([output, output2])).rejects.toThrow(ProviderException)
-    })
-    it("should throw ProviderException if the wallet provider throws an error.", async () => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.reject())
-      })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.advancedSend([output, output2])).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.buildTransaction([output, output2])).rejects.toThrow(ProviderException)
     })
   })
 
@@ -651,40 +532,36 @@ describe("Wallet", () => {
   //
   describe("getProtocolVersion()", () => {
     beforeEach(() => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        getProtocolVersion: jest.fn(() => Promise.resolve(70015))
-      })))()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.resolve(70015))
       })))()
-      const providers = new Providers(networkProvider, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getProtocolVersion(ProviderType.NETWORK)
+      await web3bch.getProtocolVersion()
     })
     it("should call IWalletProvider#getProtocolVersion", async () => {
-      await wallet.getProtocolVersion(ProviderType.WALLET)
+      await web3bch.getProtocolVersion()
       expect(walletProvider.getProtocolVersion).toBeCalled()
     })
     it("should return expected value.", async () => {
       const expected = 70015
-      const actual = await wallet.getProtocolVersion(ProviderType.NETWORK)
+      const actual = await web3bch.getProtocolVersion()
       expect(actual).toBe(expected)
     })
     it("should throw ProviderException if the wallet provider returns a string.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getProtocolVersion: jest.fn(() => Promise.resolve("700155"))
+        getProtocolVersion: jest.fn(() => Promise.resolve("70015"))
       })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.getProtocolVersion(ProviderType.WALLET)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(networkProvider, walletProvider))
-      await expect(wallet.getProtocolVersion(ProviderType.WALLET)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
     // ProviderException
     each([[undefined], [null], [true], ["string"], [[]], [[true]], [[3]], [["string"]]])
@@ -692,15 +569,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getProtocolVersion(ProviderType.NETWORK)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
     it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getProtocolVersion(ProviderType.NETWORK)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
   })
 
@@ -709,83 +586,38 @@ describe("Wallet", () => {
   //
   describe("getNetwork()", () => {
     beforeEach(() => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        getNetworkMagic: jest.fn(() => Promise.resolve(0xE3E1f3E8))
-      })))()
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getNetworkMagic: jest.fn(() => Promise.resolve(0xE3E1f3E8))
       })))()
-      const providers = new Providers(networkProvider, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem", async () => {
-      await wallet.getNetwork(ProviderType.NETWORK)
-      await wallet.getNetwork(ProviderType.WALLET)
+      await web3bch.getNetwork()
     })
-    it("should call INetworkProvider#getNetworkMagic if ProviderType is NETWORK.", async () => {
-      await wallet.getNetwork(ProviderType.NETWORK)
-      expect(networkProvider.getNetworkMagic).toBeCalled()
-    })
-    it("should call IWalletProvider#getNetworkMagic if ProviderType is WALLET.", async () => {
-      await wallet.getNetwork(ProviderType.WALLET)
+    it("should call IWalletProvider#getNetworkMagic.", async () => {
+      await web3bch.getNetwork()
       expect(walletProvider.getNetworkMagic).toBeCalled()
     })
     it("should return expected value.", async () => {
       const expected = new Network(0xE3E1f3E8, NetworkType.MAINNET)
-      const actual = await wallet.getNetwork(ProviderType.NETWORK)
+      const actual = await web3bch.getNetwork()
       expect(actual).toEqual(expected)
     })
     // ProviderException
     each([[undefined], [null], [true], ["string"], [[]], [[true]], [[3]], [["string"]]])
     .it("should throw ProviderException when provider does not return a number value", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getNetwork: jest.fn(() => Promise.resolve(providerReturn))
+        getNetworkMagic: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getNetwork(ProviderType.NETWORK)).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getNetwork()).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getNetwork: jest.fn(() => Promise.reject())
+        getNetworkMagic: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getNetwork(ProviderType.NETWORK)).rejects.toThrow(ProviderException)
-    })
-  })
-
-  //
-  // broadcastRawTx
-  //
-  describe("broadcastRawTx()", () => {
-    beforeEach(() => {
-      networkProvider = new (jest.fn<INetworkProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.resolve("txid"))
-      })))()
-      const providers = new Providers(networkProvider, undefined)
-      wallet = new Wallet(providers)
-    })
-    it("should throw an error with invalid hex.", async () => {
-      await expect(wallet.broadcastRawTx("hex")).rejects.toThrow(IllegalArgumentException)
-    })
-    it("should call INetworkProvider#broadcastRawtx", async () => {
-      await wallet.broadcastRawTx("1234567890")
-      expect(networkProvider.broadcastRawTx).toBeCalled()
-    })
-    // ProviderException
-    each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider does not return a string value", async (providerReturn) => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.resolve(providerReturn))
-      })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.broadcastRawTx("1234567890")).rejects.toThrow(ProviderException)
-    })
-    it("should throw ProviderException if the wallet provider throws an error.", async () => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        broadcastRawTx: jest.fn(() => Promise.reject())
-      })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.broadcastRawTx("1234567890")).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getNetwork()).rejects.toThrow(ProviderException)
     })
   })
 
@@ -797,18 +629,17 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getFeePerByte: jest.fn(() => Promise.resolve(1))
       })))()
-      const providers = new Providers(undefined, walletProvider)
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
-      await wallet.getFeePerByte()
+      await web3bch.getFeePerByte()
     })
     it("should call IWalletProvider#getFeePerByte", async () => {
-      await wallet.getFeePerByte()
+      await web3bch.getFeePerByte()
       expect(walletProvider.getFeePerByte).toBeCalled()
     })
     it("should return 1.", async () => {
-      const actual = await wallet.getFeePerByte()
+      const actual = await web3bch.getFeePerByte()
       expect(actual).toBe(1)
     })
     // ProviderException
@@ -817,15 +648,15 @@ describe("Wallet", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getFeePerByte: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getFeePerByte()).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getFeePerByte()).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getFeePerByte: jest.fn(() => Promise.reject())
       })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.getFeePerByte()).rejects.toThrow(ProviderException)
+      web3bch = new Web3bch(walletProvider)
+      await expect(web3bch.getFeePerByte()).rejects.toThrow(ProviderException)
     })
   })
 
@@ -834,27 +665,26 @@ describe("Wallet", () => {
   //
   describe("get/setDefaultDAppId()", () => {
     beforeEach(() => {
-      const providers = new Providers()
-      wallet = new Wallet(providers)
+      web3bch = new Web3bch()
     })
     it("The initial value of defaultDAppId should be undefined.", async () => {
-      const actual = await wallet.getDefaultDAppId()
+      const actual = await web3bch.getDefaultDAppId()
       expect(actual).toBeUndefined()
     })
     it("should throw an error with invalid DAppId.", async () => {
-      await expect(wallet.setDefaultDAppId("dappid")).rejects.toThrow(IllegalArgumentException)
-      const actual = await wallet.getDefaultDAppId()
+      await expect(web3bch.setDefaultDAppId("dappid")).rejects.toThrow(IllegalArgumentException)
+      const actual = await web3bch.getDefaultDAppId()
       expect(actual).toBeUndefined()
     })
     it("should set defaultDAppId properly.", async () => {
       const dappId = "fa3c13e9283cff80edeea53958e5ad1b9d8942385408c1b3d2f3c67a06a92835"
-      await wallet.setDefaultDAppId(dappId)
-      const actual = await wallet.getDefaultDAppId()
+      await web3bch.setDefaultDAppId(dappId)
+      const actual = await web3bch.getDefaultDAppId()
       expect(actual).toBe(dappId)
     })
     it("should set defaultDAppId as undefined properly.", async () => {
-      await wallet.setDefaultDAppId(undefined)
-      const actual = await wallet.getDefaultDAppId()
+      await web3bch.setDefaultDAppId(undefined)
+      const actual = await web3bch.getDefaultDAppId()
       expect(actual).toBeUndefined()
     })
   })

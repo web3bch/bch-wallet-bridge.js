@@ -3,13 +3,18 @@ import Destination from "./entities/Destination"
 import Network from "./entities/Network"
 import Output from "../web3bch-providers/entities/Output"
 import Utxo from "../web3bch-providers/entities/Utxo"
-import ProviderType from "./entities/ProviderType"
+import IWalletProvider from "../web3bch-providers/IWalletProvider"
 
-export default interface IWallet {
+export default interface IWeb3bch {
+  /**
+   * The current provider set.
+   */
+  walletProvider?: IWalletProvider
+
   /**
    * Returns the current wallet address.
    * @example
-   * const address = await web3bch.wallet.getAddress(
+   * const address = await web3bch.getAddress(
    *   "receive",
    *   3,
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
@@ -30,7 +35,7 @@ export default interface IWallet {
   /**
    * Returns the current wallet address index.
    * @example
-   * const addrIdx = await web3bch.wallet.getAddressIndex(
+   * const addrIdx = await web3bch.getAddressIndex(
    *   "change",
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
@@ -48,7 +53,7 @@ export default interface IWallet {
   /**
    * Returns the wallet address list.
    * @example
-   * const addresses = await web3bch.wallet.getAddresses(
+   * const addresses = await web3bch.getAddresses(
    *   "receive",
    *   3,
    *   2,
@@ -72,7 +77,7 @@ export default interface IWallet {
   /**
    * Returns the stored redeem script.
    * @example
-   * const redeemScript = await web3bch.wallet.getRedeemScript(
+   * const redeemScript = await web3bch.getRedeemScript(
    *   "bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg",
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
@@ -90,7 +95,7 @@ export default interface IWallet {
   /**
    * Returns the stored redeem scripts belong to the DApp ID.
    * @example
-   * const redeemScripts = await web3bch.wallet.getRedeemScript(
+   * const redeemScripts = await web3bch.getRedeemScript(
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(redeemScript)
@@ -105,7 +110,7 @@ export default interface IWallet {
   /**
    * Add the redeem script into the wallet.
    * @example
-   * await web3bch.wallet.addRedeemScript(
+   * await web3bch.addRedeemScript(
    *   "03424f587e064249..."
    * )
    * @param redeemScript The redeem script you want to add.
@@ -119,7 +124,7 @@ export default interface IWallet {
   /**
    * Returns the unspent transaction outputs.
    * @example
-   * const utxos = await web3bch.wallet.getUtxos(
+   * const utxos = await web3bch.getUtxos(
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(utxos)
@@ -142,7 +147,7 @@ export default interface IWallet {
   /**
    * Returns the balance of the addresses.
    * @example
-   * const balance = await web3bch.wallet.getBalance(
+   * const balance = await web3bch.getBalance(
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(balance)
@@ -157,7 +162,7 @@ export default interface IWallet {
   /**
    * Signs data from a specific account. This account needs to be unlocked.
    * @example
-   * const result = await web3bch.wallet.sign(
+   * const result = await web3bch.sign(
    *   "bchtest:qq28xgrzkdyeg5vf7tp2s3mvx8u95zes5cf7wpwgux",
    *   "af4c61ddcc5e8a2d..." // second argument is SHA1("hello")
    * )
@@ -173,43 +178,22 @@ export default interface IWallet {
   ): Promise<string>
 
   /**
-   * Create a transaction with specified destination or destinations and send it to the network.
-   * The provider will add a change output to the change address.
-   * @example
-   * const txid = await web3bch.wallet.send(
-   *   {
-   *     address: "bitcoincash:qzg0esm3xr4gcq7u6vvgdwyjr4jwvl7seqrnjfzyc3"
-   *     amount: 2849119
-   *   }
-   * )
-   * console.log(txid)
-   * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
-   * @param destination The destination object. Throws an error when the destination is an empty array.
-   * @param data A data or a list of data to put to the transaction’s OP_RETURN output.
-   * @returns Hex format of txid.
-   */
-  send(
-    destination: Destination | Destination[],
-    data?: string | string[]
-  ): Promise<string>
-
-  /**
-   * Create a transaction with specified outputs and send it to the network.
+   * Create a transaction with specified outputs and return the signed raw transaction.
    * The provider will not add any outputs. The ordering of outputs remains as is.
    * @example
-   * const txid = await web3bch.wallet.advancedSend([
+   * const rawTx = await web3bch.buildTransaction([
    *   {
    *     lockScript: "76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac",
    *     amount: 10000
    *   }
    * ])
-   * console.log(txid)
-   * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
+   * console.log(rawtx)
+   * > "..."
    * @param outputs The Array of TransactionOutput objects. Throws an error, when the array is empty.
    * @param dAppId The DApp ID. If no dAppId is set the default DApp ID will be set.
-   * @returns Hex format of txid.
+   * @returns The signed raw transaction.
    */
-  advancedSend(
+  buildTransaction(
     outputs: Output[],
     dAppId?: string
   ): Promise<string>
@@ -217,47 +201,30 @@ export default interface IWallet {
   /**
    * Returns the bitcoin protocol version.
    * @example
-   * const version = await web3bch.wallet.getProtocolVersion(NetworkType.Network)
+   * const version = await web3bch.getProtocolVersion()
    * console.log(version)
    * > 70015
-   * @param providerType The provider name which you want to check the network type from
    * @returns The protocol version. The value is Int32.
    */
-  getProtocolVersion(providerType: ProviderType): Promise<number>
+  getProtocolVersion(): Promise<number>
 
   /**
    * Returns the current network.
    * @example
-   * const network = await web3bch.wallet.getNetwork(NetworkType.Network)
+   * const network = await web3bch.getNetwork()
    * console.log(network)
    * > {
    *     magicBytes: "e3e1f3e8",
    *     name: "Mainnet"
    *   }
-   * @param providerType The provider name which you want to check the network type from
    * @returns The network object.
    */
-  getNetwork(providerType: ProviderType): Promise<Network>
-
-  /**
-   * Broadcast an already signed transaction.
-   * @example
-   * const txId = await web3bch.wallet.broadcastRawtx(
-   *   "01000000013ba3ed..."
-   * )
-   * console.log(txId)
-   * > "d86c34adaeae19171fd98fe0ffd89bfb92a1e6f0339f5e4f18d837715fd25758"
-   * @param Signed transaction data in hex format.
-   * @returns Hex format of txid.
-   */
-  broadcastRawTx(
-    rawtx: string
-  ): Promise<string>
+  getNetwork(): Promise<Network>
 
   /**
    * Returns the transaction fee per byte.
    * @example
-   * const fee = await web3bch.wallet.getFeePerByte()
+   * const fee = await web3bch.getFeePerByte()
    * console.log(fee)
    * > 1
    * @returns Transaction fee per byte in satoshi.
@@ -268,7 +235,7 @@ export default interface IWallet {
    * Returns the default DApp ID the provider uses.
    * The default value is undefined.
    * @example
-   * const dAppId = await web3bch.wallet.defaultDAppId()
+   * const dAppId = await web3bch.defaultDAppId()
    * console.log(dAppId)
    * > "53212266f7994100..."
    * @returns The DApp ID
@@ -278,7 +245,7 @@ export default interface IWallet {
   /**
    * Changes the default DApp ID for the provider.
    * @example
-   * const result = await web3bch.wallet.setDefaultDAppId("53212266f7994100...")
+   * const result = await web3bch.setDefaultDAppId("53212266f7994100...")
    * console.log(result)
    * > true
    * @param The DApp ID.

@@ -1,0 +1,32 @@
+import IWeb3bch from "./IWeb3bch";
+import ChangeType from "../web3bch-providers/entities/ChangeType";
+import Utxo from "../web3bch-providers/entities/Utxo";
+import Network from "./entities/Network";
+import Output from "../web3bch-providers/entities/Output";
+import IWalletProvider from "../web3bch-providers/IWalletProvider";
+export default class Web3bch implements IWeb3bch {
+    walletProvider?: IWalletProvider | undefined;
+    private defaultDAppId?;
+    constructor(walletProvider?: IWalletProvider | undefined);
+    getAddress(changeType: ChangeType, index?: number, dAppId?: string): Promise<string>;
+    getAddressIndex(changeType: ChangeType, dAppId?: string): Promise<number>;
+    getAddresses(changeType: ChangeType, startIndex?: number, size?: number, dAppId?: string): Promise<string[]>;
+    getRedeemScript(p2shAddress: string, dAppId?: string): Promise<string | undefined>;
+    getRedeemScripts(dAppId?: string): Promise<string[]>;
+    addRedeemScript(redeemScript: string, dAppId: string): Promise<void>;
+    getUtxos(dAppId?: string): Promise<Utxo[]>;
+    getBalance(dAppId?: string): Promise<number>;
+    sign(address: string, dataToSign: string): Promise<string>;
+    buildTransaction(outputs: Output[], dAppId?: string): Promise<string>;
+    getProtocolVersion(): Promise<number>;
+    getNetwork(): Promise<Network>;
+    getFeePerByte(): Promise<number>;
+    getDefaultDAppId(): Promise<string | undefined>;
+    setDefaultDAppId(dAppId?: string): Promise<void>;
+    private isTxHash;
+    private checkWalletProvider;
+    private isP2SHCashAddress;
+    private isCashAddress;
+    private toAddressFromScript;
+    private createSignedTx;
+}
