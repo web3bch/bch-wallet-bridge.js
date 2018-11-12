@@ -2,7 +2,6 @@ import IWeb3bch from "./IWeb3bch";
 import ChangeType from "../web3bch-providers/entities/ChangeType";
 import Utxo from "../web3bch-providers/entities/Utxo";
 import Network from "./entities/Network";
-import Destination from "./entities/Destination";
 import Output from "../web3bch-providers/entities/Output";
 import IWalletProvider from "../web3bch-providers/IWalletProvider";
 export default class Web3bch implements IWeb3bch {
@@ -18,18 +17,16 @@ export default class Web3bch implements IWeb3bch {
     getUtxos(dAppId?: string): Promise<Utxo[]>;
     getBalance(dAppId?: string): Promise<number>;
     sign(address: string, dataToSign: string): Promise<string>;
-    send(destination: Destination | Destination[], data?: string | string[]): Promise<string>;
-    advancedSend(outputs: Output[], dAppId?: string): Promise<string>;
+    buildTransaction(outputs: Output[], dAppId?: string): Promise<string>;
     getProtocolVersion(): Promise<number>;
     getNetwork(): Promise<Network>;
     getFeePerByte(): Promise<number>;
     getDefaultDAppId(): Promise<string | undefined>;
     setDefaultDAppId(dAppId?: string): Promise<void>;
-    private isHex;
     private isTxHash;
     private checkWalletProvider;
     private isP2SHCashAddress;
     private isCashAddress;
     private toAddressFromScript;
-    private sendToOutputs;
+    private createSignedTx;
 }
