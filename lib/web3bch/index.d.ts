@@ -1,9 +1,9 @@
 import IWeb3bch from "./IWeb3bch";
 import Network from "./entities/Network";
-import IWalletProvider from "providers/src/IWalletProvider";
-import ChangeType from "providers/src/entities/ChangeType";
-import Utxo from "providers/src/entities/Utxo";
-import Output from "providers/src/entities/Output";
+import IWalletProvider from "providers/lib/IWalletProvider";
+import ChangeType from "providers/lib/entities/ChangeType";
+import Utxo from "providers/lib/entities/Utxo";
+import Output from "providers/lib/entities/Output";
 export default class Web3bch implements IWeb3bch {
     walletProvider?: IWalletProvider | undefined;
     private defaultDAppId?;

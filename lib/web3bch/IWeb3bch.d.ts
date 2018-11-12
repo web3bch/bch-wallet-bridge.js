@@ -1,8 +1,8 @@
 import Network from "./entities/Network";
-import IWalletProvider from "../web3bch-providers/IWalletProvider";
-import ChangeType from "providers/src/entities/ChangeType";
-import Output from "providers/src/entities/Output";
-import Utxo from "providers/src/entities/Utxo";
+import IWalletProvider from "providers/lib/IWalletProvider";
+import ChangeType from "providers/lib/entities/ChangeType";
+import Output from "providers/lib/entities/Output";
+import Utxo from "providers/lib/entities/Utxo";
 export default interface IWeb3bch {
     /**
      * The current provider set.
