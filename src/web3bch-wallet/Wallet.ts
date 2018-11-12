@@ -173,7 +173,7 @@ export default class Wallet implements IWallet {
         throw new ProviderException(e)
       })
 
-    if (typeof signature !== "string" || !this.isValidSignature(signature)) {
+    if (typeof signature !== "string") {
       throw new ProviderException("The wallet provider provides invalid value.")
     }
 
@@ -363,18 +363,5 @@ export default class Wallet implements IWallet {
         return txid
       })
       .catch((e) => { throw new ProviderException(e) })
-  }
-
-  private isValidSignature(signature: string) {
-    const buf = Buffer.from(signature, "base64")
-    if (buf.length !== 65) {
-      return false
-    }
-
-    const flagByte = buf.readUInt8(0) - 27
-    if (flagByte > 7) {
-      return false
-    }
-    return true
   }
 }

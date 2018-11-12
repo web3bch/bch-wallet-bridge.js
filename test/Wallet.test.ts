@@ -419,14 +419,6 @@ describe("Wallet", () => {
       await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
       .rejects.toThrow(ProviderException)
     })
-    it("should throws ProviderException if the wallet provider return invalid signed data.", async () => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        sign: jest.fn(() => Promise.resolve("invalid signed data"))
-      })))()
-      wallet = new Wallet(new Providers(undefined, walletProvider))
-      await expect(wallet.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
-      .rejects.toThrow(ProviderException)
-    })
     it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.resolve(1))
