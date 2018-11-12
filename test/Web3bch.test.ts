@@ -469,19 +469,21 @@ describe("Web3bch", () => {
     })
     // ProviderException
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider does not return a string value", async (providerReturn) => {
+    .it("should throw ProviderException when provider does not return a string value", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       web3bch = new Web3bch(walletProvider)
-      await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
+      .rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.reject())
       })))()
       web3bch = new Web3bch(walletProvider)
-      await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
+      await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
+      .rejects.toThrow(ProviderException)
     })
   })
 
