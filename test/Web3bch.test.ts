@@ -1,14 +1,13 @@
 import Web3bch from "../src/web3bch"
 import IWeb3bch from "../src/web3bch/IWeb3bch"
-import ChangeType from "../src/web3bch-providers/entities/ChangeType"
-import IWalletProvider from "../src/web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "../src/web3bch/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch/entities/ProviderException"
 import Network, { NetworkType } from "../src/web3bch/entities/Network"
-import Utxo from "../src/web3bch-providers/entities/Utxo"
-import Destination from "../src/web3bch/entities/Destination"
-import Output from "../src/web3bch-providers/entities/Output"
 import each from "jest-each"
+import IWalletProvider from "providers/src/IWalletProvider"
+import ChangeType from "providers/src/entities/ChangeType"
+import Utxo from "providers/src/entities/Utxo"
+import Output from "providers/src/entities/Output"
 
 describe("Web3bch", () => {
   let web3bch: IWeb3bch

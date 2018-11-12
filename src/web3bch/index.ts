@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/web3bch/index.ts
 import IWeb3bch from "./IWeb3bch"
 import ChangeType from "../web3bch-providers/entities/ChangeType"
 import Utxo from "../web3bch-providers/entities/Utxo"
@@ -7,9 +8,23 @@ import Output from "../web3bch-providers/entities/Output"
 import IWalletProvider from "../web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
+=======
+import IWallet from "./IWallet"
+import Network from "./entities/Network"
+import Destination from "./entities/Destination"
+import Providers from "../web3bch/Providers"
+import IllegalArgumentException from "./entities/IllegalArgumentException"
+import ProviderException from "./entities/ProviderException"
+import ProviderType from "./entities/ProviderType"
+>>>>>>> import providers:src/web3bch-wallet/Wallet.ts
 import { findNetwork } from "./networks"
 import { isCashAddress, isP2SHAddress, toCashAddress, toLegacyAddress } from "bchaddrjs"
 import * as bitcoincashjs from "bitcoincashjs"
+import INetworkProvider from "providers/src/INetworkProvider"
+import IWalletProvider from "providers/src/IWalletProvider"
+import ChangeType from "providers/src/entities/ChangeType"
+import Utxo from "providers/src/entities/Utxo"
+import Output from "providers/src/entities/Output"
 
 export default class Web3bch implements IWeb3bch {
   private defaultDAppId?: string

@@ -3025,6 +3025,10 @@ prototyped.js@^0.10.1:
   dependencies:
     pluralize "^7.0.0"
 
+providers@web3bch/providers#master:
+  version "0.1.0"
+  resolved "https://codeload.github.com/web3bch/providers/tar.gz/64f19a1634d6f2874741b2db48c5da3cfde5aa41"
+
 pseudomap@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"

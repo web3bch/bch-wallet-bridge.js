@@ -1,0 +1,37 @@
+import IWallet from "./IWallet";
+import Network from "./entities/Network";
+import Destination from "./entities/Destination";
+import Providers from "../web3bch/Providers";
+import ProviderType from "./entities/ProviderType";
+import ChangeType from "providers/src/entities/ChangeType";
+import Utxo from "providers/src/entities/Utxo";
+import Output from "providers/src/entities/Output";
+export default class Wallet implements IWallet {
+    readonly providers: Providers;
+    private defaultDAppId?;
+    constructor(providers: Providers);
+    getAddress(changeType: ChangeType, index?: number, dAppId?: string): Promise<string>;
+    getAddressIndex(changeType: ChangeType, dAppId?: string): Promise<number>;
+    getAddresses(changeType: ChangeType, startIndex?: number, size?: number, dAppId?: string): Promise<string[]>;
+    getRedeemScript(p2shAddress: string, dAppId?: string): Promise<string | undefined>;
+    getRedeemScripts(dAppId?: string): Promise<string[]>;
+    addRedeemScript(redeemScript: string, dAppId: string): Promise<void>;
+    getUtxos(dAppId?: string): Promise<Utxo[]>;
+    getBalance(dAppId?: string): Promise<number>;
+    sign(address: string, dataToSign: string): Promise<string>;
+    send(destination: Destination | Destination[], data?: string | string[]): Promise<string>;
+    advancedSend(outputs: Output[], dAppId?: string): Promise<string>;
+    getProtocolVersion(providerType: ProviderType): Promise<number>;
+    getNetwork(providerType: ProviderType): Promise<Network>;
+    broadcastRawTx(rawTx: string): Promise<string>;
+    getFeePerByte(): Promise<number>;
+    getDefaultDAppId(): Promise<string | undefined>;
+    setDefaultDAppId(dAppId?: string): Promise<void>;
+    private isHex;
+    private isTxHash;
+    private checkWalletProvider;
+    private checkNetworkProvider;
+    private isP2SHCashAddress;
+    private toAddressFromScript;
+    private sendToOutputs;
+}
