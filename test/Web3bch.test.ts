@@ -566,14 +566,14 @@ describe("Web3bch", () => {
     })
     // ProviderException
     each([[undefined], [null], [true], ["string"], [[]], [[true]], [[3]], [["string"]]])
-    .it.skip("should throw ProviderException when provider does not return a number value", async (providerReturn) => {
+    .it("should throw ProviderException when provider does not return a number value", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       web3bch = new Web3bch(walletProvider)
       await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
-    it.skip("should throw ProviderException if the wallet provider throws an error.", async () => {
+    it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.reject())
       })))()
