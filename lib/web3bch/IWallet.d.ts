@@ -4,7 +4,12 @@ import Network from "./entities/Network";
 import Output from "../web3bch-providers/entities/Output";
 import Utxo from "../web3bch-providers/entities/Utxo";
 import ProviderType from "./entities/ProviderType";
+import Providers from "./Providers";
 export default interface IWallet {
+    /**
+     * The current providers set.
+     */
+    providers: Providers;
     /**
      * Returns the current wallet address.
      * @example
@@ -148,7 +153,7 @@ export default interface IWallet {
      * console.log(txid)
      * > "9591fdf10b16d4de6f65bcc49aadadc21d7a3a9169a13815e59011b426fe494f"
      * @param destination The destination object. Throws an error when the destination is an empty array.
-     * @param data A data or a list of data to put to the transaction’s OP_RETURN output.
+     * @param data A data or a list of data to put to the transactionâ€™s OP_RETURN output.
      * @returns Hex format of txid.
      */
     send(destination: Destination | Destination[], data?: string | string[]): Promise<string>;

@@ -4,7 +4,7 @@ import Utxo from "../web3bch-providers/entities/Utxo"
 import Network from "./entities/Network"
 import Destination from "./entities/Destination"
 import Output from "../web3bch-providers/entities/Output"
-import Providers from "../web3bch/Providers"
+import Providers from "./Providers"
 import IWalletProvider from "../web3bch-providers/IWalletProvider"
 import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
@@ -15,9 +15,9 @@ import { isCashAddress, isP2SHAddress, toCashAddress, toLegacyAddress } from "bc
 import * as bitcoincashjs from "bitcoincashjs"
 
 export default class Wallet implements IWallet {
-  private defaultDAppId?: string
+  public providers = new Providers()
 
-  constructor(readonly providers: Providers) {}
+  private defaultDAppId?: string
 
   public getAddress(
     changeType: ChangeType,

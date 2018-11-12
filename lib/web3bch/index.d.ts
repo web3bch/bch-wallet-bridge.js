@@ -4,12 +4,11 @@ import Utxo from "../web3bch-providers/entities/Utxo";
 import Network from "./entities/Network";
 import Destination from "./entities/Destination";
 import Output from "../web3bch-providers/entities/Output";
-import Providers from "../web3bch/Providers";
+import Providers from "./Providers";
 import ProviderType from "./entities/ProviderType";
 export default class Wallet implements IWallet {
-    readonly providers: Providers;
+    providers: Providers;
     private defaultDAppId?;
-    constructor(providers: Providers);
     getAddress(changeType: ChangeType, index?: number, dAppId?: string): Promise<string>;
     getAddressIndex(changeType: ChangeType, dAppId?: string): Promise<number>;
     getAddresses(changeType: ChangeType, startIndex?: number, size?: number, dAppId?: string): Promise<string[]>;
