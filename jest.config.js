@@ -1,5 +1,5 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  transformIgnorePatterns: ["./node_modules/(?!providers/)"]
+  transformIgnorePatterns: ["<rootDir>/node_modules/(?!providers/)"]
 }
