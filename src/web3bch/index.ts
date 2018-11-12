@@ -1,4 +1,4 @@
-import IWeb3bch from "./IWeb3bch"
+import IBCHWalletBridge from "./IBCHWalletBridge"
 import Network from "./entities/Network"
 import IllegalArgumentException from "./entities/IllegalArgumentException"
 import ProviderException from "./entities/ProviderException"
@@ -10,7 +10,7 @@ import ChangeType from "providers/lib/entities/ChangeType"
 import Utxo from "providers/lib/entities/Utxo"
 import Output from "providers/lib/entities/Output"
 
-export default class Web3bch implements IWeb3bch {
+export default class BCHWalletBridge implements IBCHWalletBridge {
   private defaultDAppId?: string
 
   constructor(public walletProvider?: IWalletProvider) {}

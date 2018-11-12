@@ -4,7 +4,7 @@ import ChangeType from "providers/lib/entities/ChangeType"
 import Output from "providers/lib/entities/Output"
 import Utxo from "providers/lib/entities/Utxo"
 
-export default interface IWeb3bch {
+export default interface IBCHWalletBridge {
   /**
    * The current provider set.
    */

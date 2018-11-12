@@ -1,5 +1,5 @@
-import Web3bch from "../src/web3bch"
-import IWeb3bch from "../src/web3bch/IWeb3bch"
+import BCHWalletBridge from "../src/web3bch"
+import IBCHWalletBridge from "../src/web3bch/IBCHWalletBridge"
 import IllegalArgumentException from "../src/web3bch/entities/IllegalArgumentException"
 import ProviderException from "../src/web3bch/entities/ProviderException"
 import Network, { NetworkType } from "../src/web3bch/entities/Network"
@@ -10,7 +10,7 @@ import Utxo from "providers/lib/entities/Utxo"
 import Output from "providers/lib/entities/Output"
 
 describe("Web3bch", () => {
-  let web3bch: IWeb3bch
+  let web3bch: IBCHWalletBridge
   let walletProvider: IWalletProvider
 
   describe("getAddress()", () => {
@@ -18,7 +18,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getAddress(ChangeType.RECEIVE)
@@ -42,14 +42,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getAddress(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
@@ -59,7 +59,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddressIndex: jest.fn(() => Promise.resolve(3))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getAddressIndex(ChangeType.RECEIVE)
@@ -78,14 +78,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddressIndex: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getAddressIndex(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddressIndex: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getAddressIndex(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
@@ -95,7 +95,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(["bitcoincash:foo", "bitcoincash:bar"]))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getAddresses(ChangeType.RECEIVE)
@@ -125,14 +125,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getAddresses: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getAddresses(ChangeType.RECEIVE)).rejects.toThrow(ProviderException)
     })
   })
@@ -143,7 +143,7 @@ describe("Web3bch", () => {
         getRedeemScripts: jest.fn(() =>
         Promise.resolve(["9c1657fb5142ca85ab2d27ea847f648ec172a012", "51519587"]))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw")
@@ -170,7 +170,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
       .rejects.toThrow(ProviderException)
     })
@@ -178,7 +178,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(""))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getRedeemScript("bitcoincash:pr9cc50sfdfwmnd5d9udevvvep4s7w6swcvltg3dmw"))
       .rejects.toThrow(ProviderException)
     })
@@ -189,7 +189,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(["03424f587e06424954424f5887", "789787a72c21452a1c98ff"]))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getRedeemScripts()
@@ -209,14 +209,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getRedeemScripts()).rejects.toThrow(ProviderException)
     })
     it("should throws ProviderException if the wallet provider invalid value.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getRedeemScripts()).rejects.toThrow(ProviderException)
     })
   })
@@ -226,7 +226,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.addRedeemScript("03424f587e06424954424f5887")
@@ -244,14 +244,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.addRedeemScript("03424f587e06424954424f5887")).rejects.toThrow(ProviderException)
     })
   })
@@ -276,7 +276,7 @@ describe("Web3bch", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo2]))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getUtxos()
@@ -308,7 +308,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getUtxos()).rejects.toThrow(ProviderException)
     })
     each([[undefined], [null], [true], [3], ["string"], [[undefined]], [[true]], [[3]], [["string"]]])
@@ -318,7 +318,7 @@ describe("Web3bch", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
@@ -327,7 +327,7 @@ describe("Web3bch", () => {
         getSpendableUtxos: jest.fn(() => Promise.reject()),
         getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo]))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
@@ -336,7 +336,7 @@ describe("Web3bch", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
@@ -363,7 +363,7 @@ describe("Web3bch", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo2]))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
 
     it("should be success if there is no problem.", async () => {
@@ -396,7 +396,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getBalance()).rejects.toThrow(ProviderException)
     })
     each([[undefined], [null], [true], [3], ["string"], [[undefined]], [[true]], [[3]], [["string"]]])
@@ -406,7 +406,7 @@ describe("Web3bch", () => {
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
@@ -414,7 +414,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getBalance())
       .rejects.toThrow(ProviderException)
     })
@@ -423,7 +423,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getUnspendableUtxos: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getBalance("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
@@ -436,7 +436,7 @@ describe("Web3bch", () => {
           "II0XaiKCRsRROS6gIcRpwao74wc55ijZjfcGpay2vgQ/D1OJclEuFwp7aLYZwZNWjtHw7i5vbKsbcAPLWCmF11E="
         ))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
 
     it("should be success if there is no problem.", async () => {
@@ -463,7 +463,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
       .rejects.toThrow(ProviderException)
     })
@@ -471,7 +471,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         sign: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
       .rejects.toThrow(ProviderException)
     })
@@ -485,7 +485,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.resolve("rawtx"))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     const output = new Output("76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac", 10000)
     const output2 = new Output("76a914d7e7c4e0b70eaa67ceff9d2823d1bbb9f6df9a5188ac", 30000)
@@ -506,14 +506,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.buildTransaction([output, output2])).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         createSignedTx: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.buildTransaction([output, output2])).rejects.toThrow(ProviderException)
     })
   })
@@ -526,7 +526,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.resolve(70015))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getProtocolVersion()
@@ -544,14 +544,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.resolve("70015"))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
     // ProviderException
@@ -560,14 +560,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getProtocolVersion: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getProtocolVersion()).rejects.toThrow(ProviderException)
     })
   })
@@ -580,7 +580,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getNetworkMagic: jest.fn(() => Promise.resolve(0xE3E1f3E8))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem", async () => {
       await web3bch.getNetwork()
@@ -600,14 +600,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getNetworkMagic: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getNetwork()).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getNetworkMagic: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getNetwork()).rejects.toThrow(ProviderException)
     })
   })
@@ -620,7 +620,7 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getFeePerByte: jest.fn(() => Promise.resolve(1))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
     })
     it("should be success if there is no problem.", async () => {
       await web3bch.getFeePerByte()
@@ -639,14 +639,14 @@ describe("Web3bch", () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getFeePerByte: jest.fn(() => Promise.resolve(providerReturn))
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getFeePerByte()).rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getFeePerByte: jest.fn(() => Promise.reject())
       })))()
-      web3bch = new Web3bch(walletProvider)
+      web3bch = new BCHWalletBridge(walletProvider)
       await expect(web3bch.getFeePerByte()).rejects.toThrow(ProviderException)
     })
   })
@@ -656,7 +656,7 @@ describe("Web3bch", () => {
   //
   describe("get/setDefaultDAppId()", () => {
     beforeEach(() => {
-      web3bch = new Web3bch()
+      web3bch = new BCHWalletBridge()
     })
     it("The initial value of defaultDAppId should be undefined.", async () => {
       const actual = await web3bch.getDefaultDAppId()
