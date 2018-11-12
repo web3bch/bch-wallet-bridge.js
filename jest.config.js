@@ -1,5 +1,5 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  transformIgnorePatterns: ["./node_modules/(?!providers)"]
+  transformIgnorePatterns: ["./node_modules/(?!providers/)"]
 }
