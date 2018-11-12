@@ -165,7 +165,7 @@ describe("Web3bch", () => {
         .rejects.toThrow(IllegalArgumentException)
     })
     each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]]])
-    .it("should throw ProviderException when provider does not return a string array or an empty array"
+    .it("should throw ProviderException when provider.getRedeemScripts does not return a string array or an empty array"
     , async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getRedeemScripts: jest.fn(() => Promise.resolve(providerReturn))
@@ -240,7 +240,7 @@ describe("Web3bch", () => {
     })
     // ProviderException
     each([[null], [true], [3], ["string"], [[]], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider does not return undefined", async (providerReturn) => {
+    .it("should throw ProviderException when provider does not return void (undefined)", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         addRedeemScript: jest.fn(() => Promise.resolve(providerReturn))
       })))()
@@ -302,16 +302,18 @@ describe("Web3bch", () => {
       expect(new Set(utxos)).toEqual(new Set([utxo, utxo2]))
     })
     // ProviderException
-    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[undefined]], [[true]], [[3]], [["string"]]])
+    // tslint:disable-next-line:max-line-length
+    .it("should throw ProviderException when provider does not return an array of Utxo objects or an empty array", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       web3bch = new Web3bch(walletProvider)
       await expect(web3bch.getUtxos()).rejects.toThrow(ProviderException)
     })
-    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[undefined]], [[true]], [[3]], [["string"]]])
+    // tslint:disable-next-line:max-line-length
+    .it("should throw ProviderException when provider does not return  an array of Utxo objects or an empty array", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
@@ -322,14 +324,16 @@ describe("Web3bch", () => {
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        getSpendableUtxos: jest.fn(() => Promise.reject())
+        getSpendableUtxos: jest.fn(() => Promise.reject()),
+        getUnspendableUtxos: jest.fn(() => Promise.resolve([utxo]))
       })))()
       web3bch = new Web3bch(walletProvider)
-      await expect(web3bch.getUtxos())
+      await expect(web3bch.getUtxos("53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"))
       .rejects.toThrow(ProviderException)
     })
     it("should throw ProviderException if the wallet provider throws an error.", async () => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
+        getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.reject())
       })))()
       web3bch = new Web3bch(walletProvider)
@@ -386,16 +390,18 @@ describe("Web3bch", () => {
       expect(utxos).toBe(70000)
     })
     // ProviderException
-    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[undefined]], [[true]], [[3]], [["string"]]])
+    // tslint:disable-next-line:max-line-length
+    .it("should throw ProviderException when provider does not return  an array of Utxo objects or an empty array", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       web3bch = new Web3bch(walletProvider)
       await expect(web3bch.getBalance()).rejects.toThrow(ProviderException)
     })
-    each([[undefined], [null], [true], [3], ["string"], [[true]], [[3]], [["string"]]])
-    .it("should throw ProviderException when provider does not return a Utxo object", async (providerReturn) => {
+    each([[undefined], [null], [true], [3], ["string"], [[undefined]], [[true]], [[3]], [["string"]]])
+    // tslint:disable-next-line:max-line-length
+    .it("should throw ProviderException when provider does not return  an array of Utxo objects or an empty array", async (providerReturn) => {
       walletProvider = new (jest.fn<IWalletProvider>(() => ({
         getSpendableUtxos: jest.fn(() => Promise.resolve([utxo])),
         getUnspendableUtxos: jest.fn(() => Promise.resolve(providerReturn))
@@ -450,22 +456,6 @@ describe("Web3bch", () => {
     it("should throws IllegalArgumentException if the message is empty string.", async () => {
       await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", ""))
         .rejects.toThrow(IllegalArgumentException)
-    })
-    it("should throws ProviderException if the wallet provider throws an error.", async () => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        sign: jest.fn(() => Promise.reject())
-      })))()
-      web3bch = new Web3bch(walletProvider)
-      await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
-      .rejects.toThrow(ProviderException)
-    })
-    it("should throws ProviderException if the wallet provider invalid value.", async () => {
-      walletProvider = new (jest.fn<IWalletProvider>(() => ({
-        sign: jest.fn(() => Promise.resolve(1))
-      })))()
-      web3bch = new Web3bch(walletProvider)
-      await expect(web3bch.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello web3bch"))
-        .rejects.toThrow(ProviderException)
     })
     // ProviderException
     each([[undefined], [null], [true], [3], [[]], [[true]], [[3]], [["string"]]])
