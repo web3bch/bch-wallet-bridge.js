@@ -17,7 +17,7 @@
   },
   "keywords": [],
   "author": "web3bch",
-  "license": "",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/web3bch/bch-wallet-bridge.js/issues"
   },
