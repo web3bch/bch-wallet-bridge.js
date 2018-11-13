@@ -447,10 +447,12 @@ describe("BCHWalletBridge", () => {
       expect(walletProvider.sign).toBeCalled()
     })
     it("should return the same value as IWalletProvider#sign.", async () => {
+      // tslint:disable-next-line:max-line-length
       const signed = await bchWalletBridge.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello BCHWalletBridge")
       expect(signed).toBe("II0XaiKCRsRROS6gIcRpwao74wc55ijZjfcGpay2vgQ/D1OJclEuFwp7aLYZwZNWjtHw7i5vbKsbcAPLWCmF11E=")
     })
     it("should throws IllegalArgumentException if the address is invalid", async () => {
+      // tslint:disable-next-line:max-line-length
       await expect(bchWalletBridge.sign("I'm an invalid address", "Hello BCHWalletBridge")).rejects.toThrow(IllegalArgumentException)
     })
     it("should throws IllegalArgumentException if the message is empty string.", async () => {
@@ -464,6 +466,7 @@ describe("BCHWalletBridge", () => {
         sign: jest.fn(() => Promise.resolve(providerReturn))
       })))()
       bchWalletBridge = new BCHWalletBridge(walletProvider)
+      // tslint:disable-next-line:max-line-length
       await expect(bchWalletBridge.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello BCHWalletBridge"))
       .rejects.toThrow(ProviderException)
     })
@@ -472,6 +475,7 @@ describe("BCHWalletBridge", () => {
         sign: jest.fn(() => Promise.reject())
       })))()
       bchWalletBridge = new BCHWalletBridge(walletProvider)
+      // tslint:disable-next-line:max-line-length
       await expect(bchWalletBridge.sign("bitcoincash:qqk4zg334zpg9dpevnzz06rv2ffcwq96fctnutku5y", "Hello BCHWalletBridge"))
       .rejects.toThrow(ProviderException)
     })
