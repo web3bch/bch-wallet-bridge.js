@@ -1,8 +1,8 @@
 import Network from "./entities/Network"
-import IWalletProvider from "providers/lib/IWalletProvider"
-import ChangeType from "providers/lib/entities/ChangeType"
-import Output from "providers/lib/entities/Output"
-import Utxo from "providers/lib/entities/Utxo"
+import IWalletProvider from "bch-wallet-bridge-provider-interface/lib/IWalletProvider"
+import ChangeType from "bch-wallet-bridge-provider-interface/lib/entities/ChangeType"
+import Output from "bch-wallet-bridge-provider-interface/lib/entities/Output"
+import Utxo from "bch-wallet-bridge-provider-interface/lib/entities/Utxo"
 
 export default interface IBCHWalletBridge {
   /**

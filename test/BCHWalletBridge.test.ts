@@ -4,10 +4,10 @@ import IllegalArgumentException from "../src/bch-wallet-bridge/entities/IllegalA
 import ProviderException from "../src/bch-wallet-bridge/entities/ProviderException"
 import Network, { NetworkType } from "../src/bch-wallet-bridge/entities/Network"
 import each from "jest-each"
-import IWalletProvider from "providers/lib/IWalletProvider"
-import ChangeType from "providers/lib/entities/ChangeType"
-import Utxo from "providers/lib/entities/Utxo"
-import Output from "providers/lib/entities/Output"
+import IWalletProvider from "bch-wallet-bridge-provider-interface/lib/IWalletProvider"
+import ChangeType from "bch-wallet-bridge-provider-interface/lib/entities/ChangeType"
+import Utxo from "bch-wallet-bridge-provider-interface/lib/entities/Utxo"
+import Output from "bch-wallet-bridge-provider-interface/lib/entities/Output"
 
 describe("BCHWalletBridge", () => {
   let bchWalletBridge: IBCHWalletBridge

@@ -1,6 +1,6 @@
 {
   "name": "bch-wallet-bridge.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "lib/bch-wallet-bridge/index.js",
   "scripts": {
@@ -37,6 +37,6 @@
   "dependencies": {
     "bchaddrjs": "^0.2.2",
     "bitcoincashjs": "^0.1.10",
-    "providers": "web3bch/providers#master"
+    "bch-wallet-bridge-provider-interface": "^0.1.1"
   }
 }
