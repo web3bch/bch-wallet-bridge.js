@@ -1,6 +1,10 @@
-# web3bch.js - Bitcoin Cash JavaScript API
-[![Build Status](https://travis-ci.org/web3bch/web3bch.js.svg?branch=master)](https://travis-ci.org/web3bch/bch-wallet-bridge.js)
+# bch-wallet-bridge.js - Bridge between Bitcoin Cash application and wallet
+[![Build Status](https://travis-ci.org/web3bch/bch-wallet-bridge.js.svg?branch=master)](https://travis-ci.org/web3bch/bch-wallet-bridge.js)
 [![codecov](https://codecov.io/gh/web3bch/bch-wallet-bridge.js/branch/master/graph/badge.svg)](https://codecov.io/gh/web3bch/bch-wallet-bridge.js)
+
+## About
+Bitcoin Cash applications don't have to be castodial wallet anymore.
+With `bch-wallet-bridge.js`, they can request flexible actions to their users' wallet.
 
 ## Installation
 `yarn add bch-wallet-bridge`
@@ -13,7 +17,7 @@ if (!injected || !injected.wallet) {
   console.log("BCHWalletBridge wallet isn't injected!")
   return
 }
-const wallet = new BCHWalletBridge(injected.wallet)
+const bchWalletBridge = new BCHWalletBridge(injected.wallet)
 ```
 
 ## What is DApp ID?

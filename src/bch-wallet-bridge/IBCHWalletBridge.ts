@@ -12,7 +12,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the current wallet address.
    * @example
-   * const address = await web3bch.getAddress(
+   * const address = await bchWalletBridge.getAddress(
    *   "receive",
    *   3,
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
@@ -33,7 +33,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the current wallet address index.
    * @example
-   * const addrIdx = await web3bch.getAddressIndex(
+   * const addrIdx = await bchWalletBridge.getAddressIndex(
    *   "change",
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
@@ -51,7 +51,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the wallet address list.
    * @example
-   * const addresses = await web3bch.getAddresses(
+   * const addresses = await bchWalletBridge.getAddresses(
    *   "receive",
    *   3,
    *   2,
@@ -75,7 +75,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the stored redeem script.
    * @example
-   * const redeemScript = await web3bch.getRedeemScript(
+   * const redeemScript = await bchWalletBridge.getRedeemScript(
    *   "bitcoincash:prr7qqutastjmc9dn7nwkv2vcc58nn82uqwzq563hg",
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
@@ -93,7 +93,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the stored redeem scripts belong to the DApp ID.
    * @example
-   * const redeemScripts = await web3bch.getRedeemScript(
+   * const redeemScripts = await bchWalletBridge.getRedeemScript(
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(redeemScript)
@@ -108,7 +108,7 @@ export default interface IBCHWalletBridge {
   /**
    * Add the redeem script into the wallet.
    * @example
-   * await web3bch.addRedeemScript(
+   * await bchWalletBridge.addRedeemScript(
    *   "03424f587e064249..."
    * )
    * @param redeemScript The redeem script you want to add.
@@ -122,7 +122,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the unspent transaction outputs.
    * @example
-   * const utxos = await web3bch.getUtxos(
+   * const utxos = await bchWalletBridge.getUtxos(
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(utxos)
@@ -145,7 +145,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the balance of the addresses.
    * @example
-   * const balance = await web3bch.getBalance(
+   * const balance = await bchWalletBridge.getBalance(
    *   "53212266f7994100e442f6dff10fbdb50a93121d25c196ce0597517d35d42e68"
    * )
    * console.log(balance)
@@ -160,7 +160,7 @@ export default interface IBCHWalletBridge {
   /**
    * Signs data from a specific account. This account needs to be unlocked.
    * @example
-   * const result = await web3bch.sign(
+   * const result = await bchWalletBridge.sign(
    *   "bchtest:qq28xgrzkdyeg5vf7tp2s3mvx8u95zes5cf7wpwgux",
    *   "af4c61ddcc5e8a2d..." // second argument is SHA1("hello")
    * )
@@ -179,7 +179,7 @@ export default interface IBCHWalletBridge {
    * Create a transaction with specified outputs and return the signed raw transaction.
    * The provider will not add any outputs. The ordering of outputs remains as is.
    * @example
-   * const rawTx = await web3bch.buildTransaction([
+   * const rawTx = await bchWalletBridge.buildTransaction([
    *   {
    *     lockScript: "76a91467b2e55ada06c869547e93288a4cf7377211f1f088ac",
    *     amount: 10000
@@ -199,7 +199,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the bitcoin protocol version.
    * @example
-   * const version = await web3bch.getProtocolVersion()
+   * const version = await bchWalletBridge.getProtocolVersion()
    * console.log(version)
    * > 70015
    * @returns The protocol version. The value is Int32.
@@ -209,7 +209,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the current network.
    * @example
-   * const network = await web3bch.getNetwork()
+   * const network = await bchWalletBridge.getNetwork()
    * console.log(network)
    * > {
    *     magicBytes: "e3e1f3e8",
@@ -222,7 +222,7 @@ export default interface IBCHWalletBridge {
   /**
    * Returns the transaction fee per byte.
    * @example
-   * const fee = await web3bch.getFeePerByte()
+   * const fee = await bchWalletBridge.getFeePerByte()
    * console.log(fee)
    * > 1
    * @returns Transaction fee per byte in satoshi.
@@ -233,7 +233,7 @@ export default interface IBCHWalletBridge {
    * Returns the default DApp ID the provider uses.
    * The default value is undefined.
    * @example
-   * const dAppId = await web3bch.defaultDAppId()
+   * const dAppId = await bchWalletBridge.defaultDAppId()
    * console.log(dAppId)
    * > "53212266f7994100..."
    * @returns The DApp ID
@@ -243,7 +243,7 @@ export default interface IBCHWalletBridge {
   /**
    * Changes the default DApp ID for the provider.
    * @example
-   * const result = await web3bch.setDefaultDAppId("53212266f7994100...")
+   * const result = await bchWalletBridge.setDefaultDAppId("53212266f7994100...")
    * console.log(result)
    * > true
    * @param The DApp ID.
